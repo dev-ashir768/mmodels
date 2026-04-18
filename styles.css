@@ -1,0 +1,116 @@
+/* Base Styles */
+body { background-color: #f9fafb; color: #111827; }
+.glass-nav {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.glass-nav.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+.menu-link {
+    position: relative;
+    transition: color 0.3s ease;
+}
+.menu-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #C50A76;
+    transition: width 0.3s ease;
+}
+.menu-link:hover, .menu-link.active {
+    color: #C50A76;
+}
+.menu-link:hover::after, .menu-link.active::after {
+    width: 100%;
+}
+
+/* Home Page specific */
+.hero-bg {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('assets/hero.png');
+    background-size: cover;
+    background-position: top;
+    background-attachment: fixed;
+}
+.region-card {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+}
+.region-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Styles */
+.form-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+}
+.form-input {
+    background: #f9fafb;
+    border: 1px solid #d1d5db;
+    color: #111827;
+    transition: all 0.3s ease;
+}
+.form-input:focus {
+    border-color: #c50a76;
+    background: #ffffff;
+    box-shadow: 0 0 0 1px #c50a76;
+    outline: none;
+}
+.form-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+.required {
+    color: #dc2626; /* clear red for warnings */
+}
+
+/* FAQ Styles */
+.faq-item { background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; transition: all 0.3s ease; overflow: hidden; }
+.faq-item:hover { border-color: #C50A76; box-shadow: 0 4px 12px rgba(197, 10, 118, 0.05); }
+.faq-question { cursor: pointer; padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: #111827; }
+.faq-answer { padding: 0 1.5rem 1.5rem; color: #4B5563; font-size: 0.95rem; line-height: 1.6; display: none; }
+.faq-item.active .faq-question i { transform: rotate(180deg); color: #C50A76; }
+.faq-item.active .faq-answer { display: block; }
+
+/* News Styles */
+.news-card { background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; transition: all 0.3s ease; overflow: hidden; }
+.news-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05); border-color: #C50A76; }
+
+/* Models Styles */
+.model-card {
+    position: relative; overflow: hidden; cursor: pointer; aspect-ratio: 3/4; border-radius: 0.5rem;
+}
+.model-overlay {
+    position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s ease;
+}
+.model-card:hover .model-overlay { opacity: 1; }
+.model-card img { transition: transform 0.7s ease; }
+.model-card:hover img { transform: scale(1.05); }
+.model-info {
+    position: absolute; bottom: -20px; left: 0; width: 100%; padding: 2rem; opacity: 0; transition: all 0.4s ease; text-align: center;
+}
+.model-card:hover .model-info { bottom: 0; opacity: 1; }
+
+/* Clients */
+.client-box { background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; height: 120px; transition: all 0.3s ease; }
+.client-box:hover { border-color: #C50A76; box-shadow: 0 10px 25px rgba(0,0,0,0.05); transform: translateY(-5px); }
+.client-text { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #111827; opacity: 0.8; transition: opacity 0.3s ease; }
+.client-box:hover .client-text { opacity: 1; color: #C50A76; }
+
+/* Typography */
+.logo-text { font-family: 'Playfair Display', serif; }
+.link-divider { color: #d1d5db; font-weight: 300; }

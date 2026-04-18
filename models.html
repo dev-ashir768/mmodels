@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Models | mmodels</title>
+    <link rel="icon" href="/assets/logo.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { theme: { extend: { fontFamily: { sans: ["Inter", "sans-serif"], serif: ["Playfair Display", "serif"] }, colors: { primary: "#C50A76" } } } };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="antialiased overflow-x-hidden selection:bg-primary selection:text-white">
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 glass-nav transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-24">
+          <div class="flex-shrink-0 flex items-center">
+            <a href="index.html" class="block"><img src="/assets/logo.png" alt="M Models" class="h-10 md:h-12 w-auto object-contain" /></a>
+          </div>
+          <div class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider">
+            <a href="home.html" class="menu-link text-gray-600">Home</a>
+            <a href="news.html" class="menu-link text-gray-600">News</a>
+            <a href="video.html" class="menu-link text-gray-600">Video</a>
+            <a href="models.html" class="menu-link active text-primary">Models</a>
+            <a href="clients.html" class="menu-link text-gray-600">Our Clients</a>
+            <a href="become-a-model.html" class="menu-link text-gray-600">Become a Model</a>
+            <a href="hire-a-model.html" class="menu-link text-gray-600">Hire a Model</a>
+            <a href="faq.html" class="menu-link text-gray-600">FAQ's</a>
+            <a href="contact.html" class="menu-link text-gray-600">Contact Us</a>
+          </div>
+          <div class="lg:hidden flex items-center">
+            <button id="mobile-btn" class="text-gray-600 hover:text-primary"><i class="fas fa-bars text-2xl"></i></button>
+          </div>
+        </div>
+      </div>
+      <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 shadow-xl pb-4"></div>
+    </nav>
+
+    <!-- Header -->
+    <header class="pt-40 pb-16 bg-white border-b border-gray-200">
+      <div class="text-center container mx-auto px-4">
+        <h1 class="text-primary font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-4">Portfolio</h1>
+        <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6">Our Models</h2>
+        <div class="h-1 w-24 bg-primary mx-auto mb-10"></div>
+        
+        <!-- Filter Category -->
+        <div class="flex justify-center space-x-8 text-sm font-bold uppercase tracking-widest">
+            <a href="#" class="text-primary border-b-2 border-primary pb-1">Women</a>
+            <a href="#" class="text-gray-400 hover:text-gray-900 transition pb-1">Men</a>
+            <a href="#" class="text-gray-400 hover:text-gray-900 transition pb-1">New Faces</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="py-8 bg-gray-50 min-h-screen">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              
+              <!-- Model 1 -->
+              <div class="model-card">
+                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" alt="Model" class="w-full h-full object-cover">
+                  <div class="model-overlay"></div>
+                  <div class="model-info">
+                      <h3 class="font-serif text-2xl font-bold text-white mb-1">Sophia T.</h3>
+                      <p class="text-primary text-xs uppercase tracking-[0.2em] font-bold">View Portfolio</p>
+                  </div>
+              </div>
+
+              <!-- Model 2 -->
+              <div class="model-card">
+                  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&q=80&w=600" alt="Model" class="w-full h-full object-cover">
+                  <div class="model-overlay"></div>
+                  <div class="model-info">
+                      <h3 class="font-serif text-2xl font-bold text-white mb-1">Elena M.</h3>
+                      <p class="text-primary text-xs uppercase tracking-[0.2em] font-bold">View Portfolio</p>
+                  </div>
+              </div>
+
+              <!-- Model 3 -->
+              <div class="model-card">
+                  <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=600" alt="Model" class="w-full h-full object-cover">
+                  <div class="model-overlay"></div>
+                  <div class="model-info">
+                      <h3 class="font-serif text-2xl font-bold text-white mb-1">Chloe S.</h3>
+                      <p class="text-primary text-xs uppercase tracking-[0.2em] font-bold">View Portfolio</p>
+                  </div>
+              </div>
+
+              <!-- Model 4 -->
+              <div class="model-card">
+                  <img src="https://images.unsplash.com/photo-1512338634863-1258d4a6f7c5?auto=format&fit=crop&q=80&w=600" alt="Model" class="w-full h-full object-cover">
+                  <div class="model-overlay"></div>
+                  <div class="model-info">
+                      <h3 class="font-serif text-2xl font-bold text-white mb-1">Amelia W.</h3>
+                      <p class="text-primary text-xs uppercase tracking-[0.2em] font-bold">View Portfolio</p>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12 border-t border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <a href="index.html" class="block mb-6"><img src="/assets/logo.png" alt="M Models" class="max-h-16 w-auto object-contain mx-auto"></a>
+        <p class="text-gray-400 text-xs">© 2026 M Models Global. All rights reserved.</p>
+      </div>
+    </footer>
+    <script src="main.js"></script>
+  </body>
+</html>
