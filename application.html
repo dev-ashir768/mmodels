@@ -301,17 +301,22 @@
         const $fileInput = $('#file-upload-input');
         const $fileText = $('#file-upload-text');
 
+        function getT(text) {
+          const l = localStorage.getItem('mmodels_lang') || 'en';
+          return (l !== 'en' && typeof i18nDict !== 'undefined' && i18nDict[text] && i18nDict[text][l]) ? i18nDict[text][l] : text;
+        }
+
         $designation.on('change', function() {
           const val = $(this).val();
           
           if (val === 'model') {
             $fileContainer.slideDown();
-            $fileLabel.text('Upload Image (Headshot) *');
+            $fileLabel.text(getT('Upload Image (Headshot) *'));
             $fileInput.attr('required', true);
             $fileInput.attr('accept', 'image/*');
           } else if (val === 'designer') {
             $fileContainer.slideDown();
-            $fileLabel.text('Upload Look Book *');
+            $fileLabel.text(getT('Upload Look Book *'));
             $fileInput.attr('required', true);
             $fileInput.attr('accept', 'image/*,.pdf');
           } else {
@@ -323,17 +328,18 @@
         $fileInput.on('change', function(e) {
           const files = e.target.files;
           if (files.length > 4) {
-            alert('You can only upload a maximum of 4 files.');
+            alert(getT('You can only upload a maximum of 4 files.'));
             $fileInput.val('');
-            $fileText.text('Click to upload (Up to 4 files)');
+            $fileText.text(getT('Click to upload (Up to 4 files)'));
             return;
           }
           if (files.length === 1) {
             $fileText.text(files[0].name);
           } else if (files.length > 1) {
-            $fileText.text(files.length + ' files selected');
+            const fileStr = getT('files selected') || 'files selected';
+            $fileText.text(files.length + ' ' + fileStr);
           } else {
-            $fileText.text('Click to upload (Up to 4 files)');
+            $fileText.text(getT('Click to upload (Up to 4 files)'));
           }
         });
       });
