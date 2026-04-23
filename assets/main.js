@@ -65,6 +65,7 @@ const i18nDict = {
     'Apply': { 'fr': 'Postuler', 'ja': '応募する' },
     'files selected': { 'fr': 'fichiers sélectionnés', 'ja': '個のファイルが選択されました' },
     'You can only upload a maximum of 4 files.': { 'fr': 'Vous ne pouvez télécharger qu\'un maximum de 4 fichiers.', 'ja': 'アップロードできるファイルは最大4つまでです。' },
+    'Application submitted successfully!': { 'fr': 'Candidature soumise avec succès !', 'ja': '応募が正常に送信されました！' },
 
     // Become a Model
     'Application': { 'fr': 'Candidature', 'ja': '応用' },

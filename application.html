@@ -144,7 +144,7 @@
     <!-- Main Content -->
     <main class="py-16 bg-white min-h-[50vh] relative z-10">
       <div class="container mx-auto max-w-4xl px-4">
-        <form data-parsley-validate novalidate class="space-y-8 bg-white p-8 md:p-12 shadow-sm rounded-xl border border-gray-100">
+        <form id="application-form" data-parsley-validate novalidate class="space-y-8 bg-white p-8 md:p-12 shadow-sm rounded-xl border border-gray-100">
             
             <!-- Designation -->
             <div class="relative group">
@@ -249,6 +249,7 @@
                 accept="image/*,.pdf"
                 multiple
               />
+              <div id="image-preview-container" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 w-full"></div>
             </div>
 
             <!-- Submit -->
@@ -288,6 +289,9 @@
       </div>
     </footer>
 
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Parsley JS -->
     <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
     
@@ -325,22 +329,126 @@
           }
         });
 
+        let base64Files = [];
+        const fileDataTransfer = new DataTransfer();
+
         $fileInput.on('change', function(e) {
           const files = e.target.files;
-          if (files.length > 4) {
-            alert(getT('You can only upload a maximum of 4 files.'));
-            $fileInput.val('');
-            $fileText.text(getT('Click to upload (Up to 4 files)'));
-            return;
+
+          // Accumulate new files
+          for (let i = 0; i < files.length; i++) {
+            // Check if file is already added to prevent duplicates
+            let isDuplicate = false;
+            for (let j = 0; j < fileDataTransfer.items.length; j++) {
+                if (fileDataTransfer.items[j].getAsFile().name === files[i].name) {
+                    isDuplicate = true; break;
+                }
+            }
+            
+            if (!isDuplicate) {
+                if (fileDataTransfer.items.length < 4) {
+                    fileDataTransfer.items.add(files[i]);
+                } else {
+                    Swal.fire({
+                      title: 'Limit Reached',
+                      text: getT('You can only upload a maximum of 4 files.'),
+                      icon: 'warning',
+                      confirmButtonColor: '#C50A76'
+                    });
+                    break;
+                }
+            }
           }
-          if (files.length === 1) {
-            $fileText.text(files[0].name);
-          } else if (files.length > 1) {
+
+          // Update input files
+          $fileInput[0].files = fileDataTransfer.files;
+          const currentFiles = $fileInput[0].files;
+
+          const $previewContainer = $('#image-preview-container');
+          $previewContainer.empty();
+          base64Files = [];
+
+          if (currentFiles.length === 1) {
+            $fileText.text(currentFiles[0].name);
+          } else if (currentFiles.length > 1) {
             const fileStr = getT('files selected') || 'files selected';
-            $fileText.text(files.length + ' ' + fileStr);
+            $fileText.text(currentFiles.length + ' ' + fileStr);
           } else {
             $fileText.text(getT('Click to upload (Up to 4 files)'));
           }
+
+          Array.from(currentFiles).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+              const base64String = event.target.result;
+              base64Files.push({
+                name: file.name,
+                type: file.type,
+                size: file.size,
+                base64: base64String
+              });
+
+              if (file.type.startsWith('image/')) {
+                $previewContainer.append(`
+                  <div class="relative rounded-lg overflow-hidden border border-gray-200 aspect-square shadow-sm">
+                    <img src="${base64String}" class="w-full h-full object-cover" alt="Preview" />
+                  </div>
+                `);
+              } else if (file.type === 'application/pdf') {
+                 $previewContainer.append(`
+                  <div class="relative rounded-lg overflow-hidden border border-gray-200 aspect-square flex items-center justify-center bg-gray-50 text-gray-400 shadow-sm">
+                    <div class="text-center">
+                      <i class="fas fa-file-pdf text-3xl mb-1 text-red-400"></i>
+                      <div class="text-xs truncate px-2 max-w-[100px]">${file.name}</div>
+                    </div>
+                  </div>
+                `);
+              }
+            };
+            reader.readAsDataURL(file);
+          });
+        });
+
+        $('#application-form').on('submit', function(e) {
+          e.preventDefault();
+          
+          if (!$(this).parsley().isValid()) {
+             return;
+          }
+
+          const formDataArray = $(this).serializeArray();
+          const formDataObj = {};
+          formDataArray.forEach(item => {
+              if(item.name !== 'uploadFile[]') {
+                  formDataObj[item.name] = item.value;
+              }
+          });
+
+          formDataObj.files = base64Files;
+
+          console.log('--- Form Submitted Successfully ---');
+          console.log('Payload Data (including Base64):', formDataObj);
+
+          // Reset Form Data
+          $(this)[0].reset();
+          $(this).parsley().reset();
+          
+          // Reset File Upload State
+          fileDataTransfer.items.clear();
+          base64Files = [];
+          $('#image-preview-container').empty();
+          $fileText.text(getT('Click to upload (Up to 4 files)'));
+          $fileInput.val('');
+          $fileContainer.slideUp();
+          
+          // Show Success SweetAlert
+          const successMsg = getT('Application submitted successfully!') || 'Application submitted successfully!';
+          Swal.fire({
+            title: 'Success!',
+            text: successMsg,
+            icon: 'success',
+            confirmButtonColor: '#C50A76'
+          });
         });
       });
     </script>
