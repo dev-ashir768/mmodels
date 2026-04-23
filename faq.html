@@ -4,41 +4,82 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FAQ's | mmodels</title>
-    <link rel="icon" href="/assets/logo.png" type="image/png">
+    <link rel="icon" href="/assets/logo.png" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = { theme: { extend: { fontFamily: { sans: ["Inter", "sans-serif"], serif: ["Playfair Display", "serif"] }, colors: { primary: "#C50A76" } } } };
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+            colors: { primary: "#C50A76" },
+          },
+        },
+      };
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="styles.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="antialiased overflow-x-hidden selection:bg-primary selection:text-white">
+  <body
+    class="antialiased overflow-x-hidden selection:bg-primary selection:text-white"
+  >
     <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 glass-nav transition-all duration-300">
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 glass-nav transition-all duration-300"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-24">
           <div class="flex-shrink-0 flex items-center">
-            <a href="index.html" class="block"><img src="/assets/logo.png" alt="M Models" class="h-10 md:h-12 w-auto object-contain" /></a>
+            <a href="index.html" class="block"
+              ><img
+                src="/assets/logo.png"
+                alt="M Models"
+                class="h-10 md:h-12 w-auto object-contain"
+            /></a>
           </div>
-          <div class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider">
+          <div
+            class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider"
+          >
             <a href="home.html" class="menu-link text-gray-600">Home</a>
-            <a href="news.html" class="menu-link text-gray-600">News</a>
+            <!-- <a href="news.html" class="menu-link text-gray-600">News</a> -->
             <a href="video.html" class="menu-link text-gray-600">Video</a>
             <a href="models.html" class="menu-link text-gray-600">Models</a>
-            <a href="clients.html" class="menu-link text-gray-600">Our Clients</a>
-            <a href="become-a-model.html" class="menu-link text-gray-600">Become a Model</a>
-            <a href="hire-a-model.html" class="menu-link text-gray-600">Hire a Model</a>
+            <a href="clients.html" class="menu-link text-gray-600"
+              >Our Clients</a
+            >
+            <a href="become-a-model.html" class="menu-link text-gray-600"
+              >Become a Model</a
+            >
+            <a href="hire-a-model.html" class="menu-link text-gray-600"
+              >Hire a Model</a
+            >
             <a href="faq.html" class="menu-link active text-primary">FAQ's</a>
-            <a href="contact.html" class="menu-link text-gray-600">Contact Us</a>
+            <a href="contact.html" class="menu-link text-gray-600"
+              >Contact Us</a
+            >
           </div>
           <div class="lg:hidden flex items-center">
-            <button id="mobile-btn" class="text-gray-600 hover:text-primary"><i class="fas fa-bars text-2xl"></i></button>
+            <button id="mobile-btn" class="text-gray-600 hover:text-primary">
+              <i class="fas fa-bars text-2xl"></i>
+            </button>
           </div>
         </div>
       </div>
-      <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 shadow-xl pb-4">
+      <div
+        id="mobile-menu"
+        class="hidden lg:hidden bg-white border-t border-gray-100 shadow-xl pb-4"
+      >
         <!-- Add mobile links -->
       </div>
     </nav>
@@ -46,8 +87,16 @@
     <!-- Header -->
     <header class="pt-40 pb-16 bg-white border-b border-gray-200">
       <div class="text-center container mx-auto px-4">
-        <h1 class="text-primary font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-4">Knowledge Base</h1>
-        <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+        <h1
+          class="text-primary font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-4"
+        >
+          Knowledge Base
+        </h1>
+        <h2
+          class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+        >
+          Frequently Asked Questions
+        </h2>
         <div class="h-1 w-24 bg-primary mx-auto"></div>
       </div>
     </header>
@@ -55,35 +104,125 @@
     <!-- Main Content -->
     <section class="py-20 bg-gray-50">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-        
         <div class="faq-item">
-            <div class="faq-question"><span>What are the requirements to become a model?</span><i class="fas fa-chevron-down transition-transform"></i></div>
-            <div class="faq-answer">Requirements vary depending on the division (fashion, commercial, fitness). Generally, we look for unique features, a strong work ethic, and professionalism. Height requirements are typically stricter for high fashion runway divisions.</div>
+          <div class="faq-question">
+            <span>What are the different types of modeling?</span
+            ><i class="fas fa-chevron-down transition-transform"></i>
+          </div>
+          <div class="faq-answer">
+            <strong>Fashion:</strong> These are the models that walk the runway
+            in fashion shows and appear in the fashion magazines like Vogue,
+            Bazaar, Cosmopolitan and Elle. In the U.S., most of this takes place
+            in New York. Certainly most markets have a small amount of fashion
+            happening - but New York City is the fashion capital of the United
+            States. Fashion models account for an extremely small percentage of
+            the total model population in the industry.<br /><br />
+            <strong>Commercial:</strong> This is the biggest modeling category
+            and the one most often overlooked and misunderstood by young models.
+            Commercial models appear in ads, packaging, billboards, and magazine
+            articles for everything from medicine to insurance, from work out
+            equipment to office equipment. This is a category where personality
+            and the ability to show different expressions are equally important
+            as looks. While some are beautiful or handsome - most successful
+            commercial models look like everyday people.<br /><br />
+            <strong>Promotional:</strong> Promotions are how many models
+            actually make a living. Promotional modeling ranges from being hired
+            to hand out free samples of products to staffing trade show booths
+            in large convention halls. This is a category that rarely involves
+            being photographed and is very much about your personality and
+            ability to interact with people.<br /><br />
+            <strong>Glamor:</strong> Certainly not for everyone - but if you are
+            comfortable with your body and certainly - of legal age - glamour
+            modeling can range anywhere from calendar girl to swimwear catalog
+            model.
+          </div>
         </div>
 
         <div class="faq-item">
-            <div class="faq-question"><span>Do I need professional photos to apply?</span><i class="fas fa-chevron-down transition-transform"></i></div>
-            <div class="faq-answer">No, you do not need professional photos initially. Simple digitals taken with a smartphone in natural lighting (clear face and body shots) are perfectly acceptable for our scouting team to review your potential.</div>
+          <div class="faq-question">
+            <span>What does M Models do for you?</span
+            ><i class="fas fa-chevron-down transition-transform"></i>
+          </div>
+          <div class="faq-answer">
+            M Models represents you in front of clienteles.<br />
+            M Models handles your bookings.<br />
+            M Models Negotiates rates for you with the clientele.
+          </div>
         </div>
 
         <div class="faq-item">
-            <div class="faq-question"><span>How do I book a model for my campaign?</span><i class="fas fa-chevron-down transition-transform"></i></div>
-            <div class="faq-answer">Please visit our "Hire a Model" page to submit a booking inquiry, or reach out directly to our casting directors via the Contact Us page outlining your brand, project scope, budget, and dates.</div>
+          <div class="faq-question">
+            <span>What if I have no experience?</span
+            ><i class="fas fa-chevron-down transition-transform"></i>
+          </div>
+          <div class="faq-answer">
+            Don't worry- we regularly interview industry professionals as well
+            as novice, but we do not represent everyone we see.
+          </div>
         </div>
 
         <div class="faq-item">
-            <div class="faq-question"><span>Are there fees to join the agency?</span><i class="fas fa-chevron-down transition-transform"></i></div>
-            <div class="faq-answer">No reputable agency charges upfront sign-up fees or "registration fees." M Models operates purely on a commission basis based on the work we book for you.</div>
+          <div class="faq-question">
+            <span>What should I wear to the interview?</span
+            ><i class="fas fa-chevron-down transition-transform"></i>
+          </div>
+          <div class="faq-answer">
+            Remember its a interview you only get one chance to make a first
+            impression.
+          </div>
         </div>
 
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Can M Models guarantee me work?</span
+            ><i class="fas fa-chevron-down transition-transform"></i>
+          </div>
+          <div class="faq-answer">
+            No! It is ultimately the clients decision to make. M Models assists
+            you to get the auditions and market you as a individual.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Does M Models find work internationally?</span
+            ><i class="fas fa-chevron-down transition-transform"></i>
+          </div>
+          <div class="faq-answer">
+            The agency represents talented individuals on a local and
+            international level in order to satisfy the high demands of our
+            clients.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>What’s the height requirement?</span
+            ><i class="fas fa-chevron-down transition-transform"></i>
+          </div>
+          <div class="faq-answer">
+            For high fashion female models they should meet a minimum height of
+            5'7". For high fashion male models they should meet a minimum height
+            of 5’11'' to 6'2". When it comes to Commercial Print, height is not
+            a requirement such as television commercials, music videos,
+            infomercials, print ad’s, etc.
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Footer -->
     <footer class="bg-white py-12 border-t border-gray-200">
       <div class="max-w-7xl mx-auto px-4 text-center">
-        <a href="index.html" class="block mb-6"><img src="/assets/logo.png" alt="M Models" class="max-h-16 w-auto object-contain mx-auto"></a>
-        <p class="text-gray-400 text-xs">© 2026 M Models Global. All rights reserved.</p>
+        <a href="index.html" class="block mb-6"
+          ><img
+            src="/assets/logo.png"
+            alt="M Models"
+            class="max-h-16 w-auto object-contain mx-auto"
+        /></a>
+        <p class="text-gray-400 text-xs">
+          © 2026 M Models Global. All rights reserved.
+        </p>
       </div>
     </footer>
     <script src="main.js"></script>

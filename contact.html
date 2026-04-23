@@ -4,51 +4,96 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Us | mmodels</title>
-    <link rel="icon" href="/assets/logo.png" type="image/png">
+    <link rel="icon" href="/assets/logo.png" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
-            fontFamily: { sans: ["Inter", "sans-serif"], serif: ["Playfair Display", "serif"] },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
             colors: { primary: "#C50A76" },
           },
         },
       };
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="antialiased overflow-x-hidden selection:bg-primary selection:text-white">
+  <body
+    class="antialiased overflow-x-hidden selection:bg-primary selection:text-white"
+  >
     <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 glass-nav transition-all duration-300">
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 glass-nav transition-all duration-300"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-24">
           <div class="flex-shrink-0 flex items-center">
-            <a href="index.html" class="block"><img src="/assets/logo.png" alt="M Models" class="h-10 md:h-12 w-auto object-contain" /></a>
+            <a href="index.html" class="block"
+              ><img
+                src="/assets/logo.png"
+                alt="M Models"
+                class="h-10 md:h-12 w-auto object-contain"
+            /></a>
           </div>
-          <div class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider">
+          <div
+            class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider"
+          >
             <a href="home.html" class="menu-link text-gray-600">Home</a>
-            <a href="news.html" class="menu-link text-gray-600">News</a>
+            <!-- <a href="news.html" class="menu-link text-gray-600">News</a> -->
             <a href="video.html" class="menu-link text-gray-600">Video</a>
             <a href="models.html" class="menu-link text-gray-600">Models</a>
-            <a href="clients.html" class="menu-link text-gray-600">Our Clients</a>
-            <a href="become-a-model.html" class="menu-link text-gray-600">Become a Model</a>
-            <a href="hire-a-model.html" class="menu-link text-gray-600">Hire a Model</a>
+            <a href="clients.html" class="menu-link text-gray-600"
+              >Our Clients</a
+            >
+            <a href="become-a-model.html" class="menu-link text-gray-600"
+              >Become a Model</a
+            >
+            <a href="hire-a-model.html" class="menu-link text-gray-600"
+              >Hire a Model</a
+            >
             <a href="faq.html" class="menu-link text-gray-600">FAQ's</a>
-            <a href="contact.html" class="menu-link active text-primary">Contact Us</a>
+            <a href="contact.html" class="menu-link active text-primary"
+              >Contact Us</a
+            >
           </div>
           <div class="lg:hidden flex items-center">
-            <button id="mobile-btn" class="text-gray-600 hover:text-primary"><i class="fas fa-bars text-2xl"></i></button>
+            <button id="mobile-btn" class="text-gray-600 hover:text-primary">
+              <i class="fas fa-bars text-2xl"></i>
+            </button>
           </div>
         </div>
       </div>
-      <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 shadow-xl pb-4">
-        <div class="px-6 pt-4 pb-6 flex flex-col space-y-4 text-sm font-bold uppercase tracking-wider">
-          <a href="home.html" class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2">Home</a>
-          <a href="contact.html" class="text-primary border-b border-gray-50 pb-2">Contact Us</a>
+      <div
+        id="mobile-menu"
+        class="hidden lg:hidden bg-white border-t border-gray-100 shadow-xl pb-4"
+      >
+        <div
+          class="px-6 pt-4 pb-6 flex flex-col space-y-4 text-sm font-bold uppercase tracking-wider"
+        >
+          <a
+            href="home.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2"
+            >Home</a
+          >
+          <a
+            href="contact.html"
+            class="text-primary border-b border-gray-50 pb-2"
+            >Contact Us</a
+          >
         </div>
       </div>
     </nav>
@@ -56,8 +101,16 @@
     <!-- Header -->
     <header class="pt-40 pb-16 bg-white border-b border-gray-200">
       <div class="text-center container mx-auto px-4">
-        <h1 class="text-primary font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-4">Get In Touch</h1>
-        <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6">Contact Us</h2>
+        <h1
+          class="text-primary font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-4"
+        >
+          Get In Touch
+        </h1>
+        <h2
+          class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+        >
+          Contact Us
+        </h2>
         <div class="h-1 w-24 bg-primary mx-auto"></div>
       </div>
     </header>
@@ -66,56 +119,196 @@
     <section class="py-16 bg-gray-50" id="contact">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <!-- Contact Info -->
-            <div>
-                <h3 class="font-serif text-3xl font-bold text-gray-900 mb-6">Global Offices</h3>
-                <div class="space-y-6">
-                    <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                        <h4 class="font-bold text-gray-900 uppercase tracking-widest text-sm mb-2 text-primary">Toronto</h4>
-                        <p class="text-gray-600 text-sm">123 King Street West<br>Toronto, ON M5H 1A1<br>Canada</p>
-                        <p class="text-gray-600 text-sm mt-3"><i class="fas fa-phone mr-2"></i>+1 (416) 555-0198</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                        <h4 class="font-bold text-gray-900 uppercase tracking-widest text-sm mb-2 text-primary">Vancouver</h4>
-                        <p class="text-gray-600 text-sm">999 Canada Place<br>Vancouver, BC V6C 3E1<br>Canada</p>
-                        <p class="text-gray-600 text-sm mt-3"><i class="fas fa-phone mr-2"></i>+1 (604) 555-0122</p>
-                    </div>
+          <!-- Contact Info -->
+          <div>
+            <h3 class="font-serif text-3xl font-bold text-gray-900 mb-6">
+              Global Offices
+            </h3>
+            <div class="space-y-6">
+              <!-- Head Office -->
+              <div
+                class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm"
+              >
+                <h4
+                  class="font-bold text-gray-900 uppercase tracking-widest text-sm mb-2 text-primary"
+                >
+                  Head Office (Toronto)
+                </h4>
+                <p class="text-gray-600 text-sm mb-3">
+                  80 Sherbourne Street,<br />Suite 104 Toronto,<br />ON M5A 4S9
+                </p>
+                <div class="space-y-1 mb-4">
+                  <p class="text-gray-600 text-sm">
+                    <i class="fas fa-phone mr-2"></i>416-613-7906
+                  </p>
+                  <p class="text-gray-600 text-sm">
+                    <i class="fas fa-fax mr-2"></i>416-203-9455
+                  </p>
+                  <p class="text-gray-600 text-sm">
+                    <i class="fas fa-envelope mr-2"></i>info@mmodels.ca
+                  </p>
                 </div>
+                <iframe
+                  class="w-full h-48 rounded"
+                  src="https://www.google.com/maps?q=80+Sherbourne+Street,+Toronto,+ON+M5A+4S9&output=embed"
+                  frameborder="0"
+                  style="border: 0"
+                  allowfullscreen=""
+                  aria-hidden="false"
+                  tabindex="0"
+                ></iframe>
+              </div>
+
+              <!-- Mississauga -->
+              <div
+                class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm"
+              >
+                <h4
+                  class="font-bold text-gray-900 uppercase tracking-widest text-sm mb-2 text-primary"
+                >
+                  Mississauga
+                </h4>
+                <p class="text-gray-600 text-sm mb-3">
+                  1300 Britannia Rd East, 2nd Floor<br />Suite 208,
+                  Mississauga,<br />ON L4W 1C8
+                </p>
+                <div class="space-y-1 mb-4">
+                  <p class="text-gray-600 text-sm">
+                    <i class="fas fa-phone mr-2"></i>416-613-7906
+                  </p>
+                  <p class="text-gray-600 text-sm">
+                    <i class="fas fa-fax mr-2"></i>416-203-9455
+                  </p>
+                  <p class="text-gray-600 text-sm">
+                    <i class="fas fa-envelope mr-2"></i>info@mmodels.ca
+                  </p>
+                </div>
+                <iframe
+                  class="w-full h-48 rounded"
+                  src="https://www.google.com/maps?q=1300+Britannia+Rd+East,+Mississauga,+ON+L4W+1C8&output=embed"
+                  frameborder="0"
+                  style="border: 0"
+                  allowfullscreen=""
+                  aria-hidden="false"
+                  tabindex="0"
+                ></iframe>
+              </div>
+
+              <!-- Calgary -->
+              <div
+                class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm"
+              >
+                <h4
+                  class="font-bold text-gray-900 uppercase tracking-widest text-sm mb-2 text-primary"
+                >
+                  Calgary
+                </h4>
+                <p class="text-gray-600 text-sm mb-3">
+                  125 9 Avenue SE, Suite #2000<br />Calgary, AB, T2G 0P6
+                </p>
+                <div class="space-y-1 mb-4">
+                  <p class="text-gray-600 text-sm">
+                    <i class="fas fa-phone mr-2"></i>587-288-2973
+                  </p>
+                  <p class="text-gray-600 text-sm">
+                    <i class="fas fa-envelope mr-2"></i>Calgary@mmodels.ca
+                  </p>
+                </div>
+                <iframe
+                  class="w-full h-48 rounded"
+                  src="https://www.google.com/maps?q=125+9+Avenue+SE,+Calgary,+AB,+T2G+0P6&output=embed"
+                  frameborder="0"
+                  style="border: 0"
+                  allowfullscreen=""
+                  aria-hidden="false"
+                  tabindex="0"
+                ></iframe>
+              </div>
             </div>
-            
-            <!-- Send Message -->
-            <div>
-                <h3 class="font-serif text-3xl font-bold text-gray-900 mb-6">Send a Message</h3>
-                <form class="space-y-6 bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">Name</label>
-                        <input type="text" class="w-full form-input px-4 py-3 rounded text-sm text-gray-900" placeholder="Your name">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">E-mail</label>
-                        <input type="email" class="w-full form-input px-4 py-3 rounded text-sm text-gray-900" placeholder="Your e-mail">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">Subject</label>
-                        <input type="text" class="w-full form-input px-4 py-3 rounded text-sm text-gray-900" placeholder="Reason for contact">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">Message</label>
-                        <textarea class="w-full form-input px-4 py-3 rounded text-sm text-gray-900 h-32" placeholder="Write your message..."></textarea>
-                    </div>
-                    <button type="button" class="w-full px-6 py-4 bg-primary text-white font-bold uppercase tracking-widest text-sm hover:bg-black transition-all rounded shadow-md">Send Message</button>
-                </form>
-            </div>
+          </div>
+
+          <!-- Send Message -->
+          <div>
+            <h3 class="font-serif text-3xl font-bold text-gray-900 mb-6">
+              Send a Message
+            </h3>
+            <form
+              data-parsley-validate
+              class="space-y-6 bg-white p-8 rounded-lg border border-gray-200 shadow-sm"
+            >
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  required
+                  class="w-full form-input px-4 py-3 rounded text-sm text-gray-900"
+                  placeholder="Your name"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2"
+                  >E-mail</label
+                >
+                <input
+                  type="email"
+                  required
+                  class="w-full form-input px-4 py-3 rounded text-sm text-gray-900"
+                  placeholder="Your e-mail"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Subject</label
+                >
+                <input
+                  type="text"
+                  required
+                  class="w-full form-input px-4 py-3 rounded text-sm text-gray-900"
+                  placeholder="Reason for contact"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Message</label
+                >
+                <textarea
+                  required
+                  class="w-full form-input px-4 py-3 rounded text-sm text-gray-900 h-32"
+                  placeholder="Write your message..."
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="w-full px-6 py-4 bg-primary text-white font-bold uppercase tracking-widest text-sm hover:bg-black transition-all rounded shadow-md"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white py-16 border-t border-gray-200">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-        <a href="index.html" class="block mb-6"><img src="/assets/logo.png" alt="M Models" class="max-h-16 w-auto object-contain"></a>
-        <p class="text-gray-500 text-sm max-w-sm text-center mb-6">Elevating beauty and style on a global scale. Toronto • Vancouver • Calgary • Japan.</p>
-        <p class="text-gray-400 text-xs">© 2026 M Models Global. All rights reserved.</p>
+    <footer class="bg-white pt-16 pb-6 border-t border-gray-200">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center"
+      >
+        <a href="index.html" class="block mb-6"
+          ><img
+            src="/assets/logo.png"
+            alt="M Models"
+            class="max-h-16 w-auto object-contain"
+        /></a>
+        <p class="text-gray-500 text-sm max-w-sm text-center mb-6">
+          Elevating beauty and style on a global scale. <br />
+          Toronto • Vancouver • Calgary • Japan.
+        </p>
+        <p class="text-gray-400 text-xs">
+          © 2026 M Models Global. All rights reserved.
+        </p>
       </div>
     </footer>
     <script src="main.js"></script>

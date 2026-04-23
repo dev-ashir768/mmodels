@@ -74,15 +74,62 @@ const i18nDict = {
     // FAQ & Misc
     'Knowledge Base': { 'fr': 'Base de Connaissances', 'ja': '知識ベース' },
     'Frequently Asked Questions': { 'fr': 'Foire Aux Questions', 'ja': 'よくある質問' },
-    'What are the requirements to become a model?': { 'fr': 'Quelles sont les exigences pour devenir modèle?', 'ja': 'モデルになるための要件は何ですか？' },
-    'Do I need professional photos to apply?': { 'fr': 'Ai-je besoin de photos pro pour postuler?', 'ja': '応募にプロの写真は必要ですか？' },
-    'How do I book a model for my campaign?': { 'fr': 'Comment engager un modèle pour ma campagne?', 'ja': 'キャンペーンにモデルを予約するには？' },
-    'Are there fees to join the agency?': { 'fr': 'Y a-t-il des frais pour rejoindre l\'agence?', 'ja': '代理店への加入に費用はかかりますか？' },
-
+    'What are the different types of modeling?': { 'fr': 'Quels sont les différents types de mannequinat ?', 'ja': 'モデリングのさまざまな種類は何ですか？' },
+    'What does M Models do for you?': { 'fr': 'Que fait M Models pour vous ?', 'ja': 'M Modelsはあなたのために何をしますか？' },
+    'What if I have no experience?': { 'fr': 'Et si je n\'ai pas d\'expérience ?', 'ja': '経験がない場合はどうなりますか？' },
+    'What should I wear to the interview?': { 'fr': 'Que dois-je porter pour l\'entrevue ?', 'ja': '面接には何を着ていけばいいですか？' },
+    'Can M Models guarantee me work?': { 'fr': 'M Models peut-elle me garantir du travail ?', 'ja': 'M Modelsは仕事の保証をしますか？' },
+    'Does M Models find work internationally?': { 'fr': 'M Models trouve-t-elle du travail à l\'international ?', 'ja': 'M Modelsは国際的な仕事を見つけますか？' },
+    'What’s the height requirement?': { 'fr': 'Quelle est l\'exigence de taille ?', 'ja': '身長の要件は何ですか？' },
+    
+    // FAQ Answers
+    'Fashion:': { 'fr': 'Mode :', 'ja': 'ファッション：' },
+    ' These are the models that walk the runway in fashion shows and appear in the fashion magazines like Vogue, Bazaar, Cosmopolitan and Elle. In the U.S., most of this takes place in New York. Certainly most markets have a small amount of fashion happening - but New York City is the fashion capital of the United States. Fashion models account for an extremely small percentage of the total model population in the industry.': {
+        'fr': ' Ce sont les mannequins qui défilent lors des défilés de mode et qui apparaissent dans les magazines de mode comme Vogue, Bazaar, Cosmopolitan et Elle. Aux États-Unis, la plupart de cela se passe à New York. L\'industrie de la mode représente un très faible pourcentage de la population totale de mannequins.',
+        'ja': ' これらはファッションショーでランウェイを歩き、Vogue、Bazaar、Cosmopolitan、Elleなどのファッション雑誌に掲載されるモデルです。ファッションモデルは、業界の全モデル人口の極めて小さな割合を占めています。'
+    },
+    'Commercial:': { 'fr': 'Commercial :', 'ja': 'コマーシャル：' },
+    ' This is the biggest modeling category and the one most often overlooked and misunderstood by young models. Commercial models appear in ads, packaging, billboards, and magazine articles for everything from medicine to insurance, from work out equipment to office equipment. This is a category where personality and the ability to show different expressions are equally important as looks. While some are beautiful or handsome - most successful commercial models look like everyday people.': {
+        'fr': ' Il s\'agit de la plus grande catégorie de mannequinat. Les mannequins commerciaux apparaissent dans les publicités, les emballages, les panneaux d\'affichage et les articles de magazine. La personnalité et la capacité à montrer différentes expressions sont tout aussi importantes que l\'apparence.',
+        'ja': ' これは最大のモデリングカテゴリーであり、若いモデルによく見落とされがちです。コマーシャルモデルは、広告、パッケージ、看板、雑誌記事など、あらゆるものに登場します。外見と同じくらい性格やさまざまな表情を見せる能力が重要です。'
+    },
+    'Promotional:': { 'fr': 'Promotionnel :', 'ja': 'プロモーション：' },
+    ' Promotions are how many models actually make a living. Promotional modeling ranges from being hired to hand out free samples of products to staffing trade show booths in large convention halls. This is a category that rarely involves being photographed and is very much about your personality and ability to interact with people.': {
+        'fr': ' Les promotions sont le moyen par lequel de nombreux mannequins gagnent leur vie. Le mannequinat promotionnel va de la distribution d\'échantillons gratuits à la dotation en personnel de stands lors de salons. Il s\'agit de votre personnalité et de votre capacité à interagir.',
+        'ja': ' プロモーションは、多くのモデルが実際に生計を立てる方法です。製品の無料サンプルを配る仕事から、コンベンションホールでの見本市ブースのスタッフまで様々です。写真撮影を伴うことは少なく、人間関係を築く能力が重要です。'
+    },
+    'Glamor:': { 'fr': 'Glamour :', 'ja': 'グラマー：' },
+    ' Certainly not for everyone - but if you are comfortable with your body and certainly - of legal age - glamour modeling can range anywhere from calendar girl to swimwear catalog model.': {
+        'fr': ' Ce n\'est certainement pas pour tout le monde, mais si vous êtes à l\'aise avec votre corps et majeur, le mannequinat glamour peut aller de la fille de calendrier au mannequin de catalogue de maillots de bain.',
+        'ja': ' 誰にでも向いているわけではありませんが、自分の体に自信があり法定年齢に達していれば、カレンダーモデルから水着カタログモデルまで多岐にわたります。'
+    },
+    'M Models represents you in front of clienteles.': { 'fr': 'M Models vous représente devant les clientèles.', 'ja': 'M Modelsは顧客の前であなたを代表します。' },
+    'M Models handles your bookings.': { 'fr': 'M Models gère vos réservations.', 'ja': 'M Modelsはあなたの予約を処理します。' },
+    'M Models Negotiates rates for you with the clientele.': { 'fr': 'M Models négocie les tarifs pour vous avec la clientèle.', 'ja': 'M Modelsはクライアントとあなたの料金を交渉します。' },
+    'Don\'t worry- we regularly interview industry professionals as well as novice, but we do not represent everyone we see.': {
+        'fr': 'Ne vous inquiétez pas, nous interviewons régulièrement des professionnels de l\'industrie ainsi que des novices, mais nous ne représentons pas tous ceux que nous voyons.',
+        'ja': 'ご心配なく。業界の専門家や初心者と定期的に面接を行いますが、面接した全員を代表するわけではありません。'
+    },
+    'Remember its a interview you only get one chance to make a first impression.': {
+        'fr': 'N\'oubliez pas qu\'il s\'agit d\'une entrevue, vous n\'avez qu\'une seule chance de faire une première impression.',
+        'ja': '面接であることを忘れないでください。第一印象を与えるチャンスは一度しかありません。'
+    },
+    'No! It is ultimately the clients decision to make. M Models assists you to get the auditions and market you as a individual.': {
+        'fr': 'Non ! C\'est finalement au client de prendre la décision. M Models vous aide à obtenir les auditions et à vous commercialiser.',
+        'ja': 'いいえ！最終的にはクライアントが決定します。M Modelsはあなたがオーディションを受け、個人としてマーケティングされるのを支援します。'
+    },
+    'The agency represents talented individuals on a local and international level in order to satisfy the high demands of our clients.': {
+        'fr': 'L\'agence représente des individus talentueux au niveau local et international afin de satisfaire les fortes demandes de nos clients.',
+        'ja': '当社は、クライアントの厳しい要求に応えるため、国内および国際レベルで才能ある個人を代表しています。'
+    },
+    'For high fashion female models they should meet a minimum height of 5\'7". For high fashion male models they should meet a minimum height of 5’11\'\' to 6\'2". When it comes to Commercial Print, height is not a requirement such as television commercials, music videos, infomercials, print ad’s, etc.': {
+        'fr': 'Pour les mannequins haute couture femmes, la taille minimale est de 5\'7". Pour les hommes, c\'est de 5\'11" à 6\'2". Pour le print commercial (télévision, vidéos musicales, publicités), la taille n\'est pas un critère strict.',
+        'ja': 'ハイファッションの女性モデルの最低身長は5\'7"です。男性モデルは5\'11"から6\'2"です。コマーシャルプリント（テレビCM、ミュージックビデオなど）の場合、身長は必須条件ではありません。'
+    },
     // Footer
-    'Elevating beauty and style on a global scale. Toronto • Vancouver • Calgary • Japan.': {
-        'fr': 'Élever la beauté et le style à l\'échelle mondiale. Toronto • Vancouver • Calgary • Japon.',
-        'ja': 'グローバルな規模で美とスタイルを向上させます。トロント・バンクーバー・カルガリー・日本。'
+    'Elevating beauty and style on a global scale. <br/> Toronto • Vancouver • Calgary • Japan.': {
+        'fr': 'Élever la beauté et le style à l\'échelle mondiale. <br/> Toronto • Vancouver • Calgary • Japon.',
+        'ja': 'グローバルな規模で美とスタイルを向上させます。 <br/> トロント・バンクーバー・カルガリー・日本。'
     },
     '© 2026 M Models Global. All rights reserved.': {
         'fr': '© 2026 M Models Global. Tous droits réservés.',
