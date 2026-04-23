@@ -177,7 +177,29 @@ const i18nDict = {
     'Portfolio': { 'fr': 'Portfolio', 'ja': 'ポートフォリオ' },
     'Our Models': { 'fr': 'Nos Modèles', 'ja': '私たちのモデル' },
     'Women': { 'fr': 'Femmes', 'ja': '女性' },
-    'Men': { 'fr': 'Hommes', 'ja': '男性' }
+    'Men': { 'fr': 'Hommes', 'ja': '男性' },
+    
+    // Home Page About Section
+    'About M Models & Talent Agency': { 'fr': 'À propos de l\'Agence M Models & Talent', 'ja': 'M Models & Talent Agencyについて' },
+    'M Models and Talent is a Canadian based modeling agency with locations in Toronto, Mississauga and Calgary. We mainly focus on commercial print, principal acting and highly professional models and talents. Our highly professional staff consists of experienced agents that have been in the industry for a number of years. We carefully select potential models for a wide variety of diverse looks in order to best suit the needs for our clients.': {
+        'fr': 'M Models and Talent est une agence de mannequins canadienne avec des bureaux à Toronto, Mississauga et Calgary. Nous nous concentrons principalement sur l\'impression commerciale, le jeu d\'acteur principal et les mannequins hautement professionnels.',
+        'ja': 'M Models and Talentは、トロント、ミシサガ、カルガリーに拠点を持つカナダのモデルエージェンシーです。商業印刷、主役の演技、非常に専門的なモデルやタレントに焦点を当てています。'
+    },
+    'Who We Represent': { 'fr': 'Qui Nous Représentons', 'ja': '私たちが代表する人々' },
+    'We are dedicated to the promotion of models ranging from children to adults, beginners to well experienced models. Here at M Models and Talent Management Agency Inc, we represent models and talent from North America to the International market.': {
+        'fr': 'Nous nous consacrons à la promotion de mannequins allant des enfants aux adultes, des débutants aux modèles expérimentés. Ici, nous représentons des talents d\'Amérique du Nord vers le marché international.',
+        'ja': '子供から大人、初心者から経験豊富なモデルまで、幅広いモデルのプロモーションに専念しています。北米から国際市場までのモデルとタレントを代表しています。'
+    },
+    'Our Mission': { 'fr': 'Notre Mission', 'ja': '私たちの使命' },
+    'Our agency allows all models and talent, whether experienced or not, to flourish, allowing them to gain valuable experience in the industry while exposing them to opportunities such as television, commercial, advertisements, “real-people modelling” and fashion work. This valuable asset has allowed many of our models to extend their careers in the industry. We feel that it is an agency’s responsibility to invest in models and talents according to their potential. This has long been an integral element in our success in maintaining professional models and talents for our demanding clientele in this competitive industry.': {
+        'fr': 'Notre agence permet à tous les modèles, expérimentés ou non, de s\'épanouir en acquérant une expérience précieuse dans l\'industrie tout en les exposant à la télévision, aux publicités et au travail de mode.',
+        'ja': '当エージェンシーは、経験の有無にかかわらず、すべてのモデルとタレントが成長し、テレビ、コマーシャル、広告、ファッションなどの機会に触れながら貴重な経験を積むことを可能にします。'
+    },
+    'What We Offer': { 'fr': 'Ce Que Nous Offrons', 'ja': '私たちが提供するもの' },
+    'Unlike many other agencies, MMT does not negotiate with our principles. Here at MMT, we even cover for modelling courses for high-fashion models. Training for acting is not provided, except in exceptional cases, as it proves to be a high risk for any agency. However, in special cases such as those involving a Principal actor, the agency will cover for the proper training. Of course, it is ultimately the agency’s choice to cover the costs for potential models and talent.': {
+        'fr': 'Contrairement à d\'autres agences, MMT ne négocie pas avec nos principes. Nous couvrons même les cours de mannequinat pour les mannequins haute couture.',
+        'ja': '他とは異なり、MMTは私たちの原則に妥協しません。ハイファッションモデルのためのモデリングコースもカバーしています。'
+    }
 };
 
 function applyLanguage(lang) {
