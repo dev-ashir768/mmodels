@@ -240,6 +240,26 @@ $(document).ready(function() {
         });
     }
 
+    // Populate mobile menu dynamically
+    if ($('#mobile-menu').length && $.trim($('#mobile-menu').html()) === '') {
+        const navLinks = [
+            { name: 'Home', url: 'home.html' },
+            { name: 'Video', url: 'video.html' },
+            { name: 'Models', url: 'models.html' },
+            { name: 'Our Clients', url: 'clients.html' },
+            { name: 'Become a Model', url: 'become-a-model.html' },
+            { name: 'Hire a Model', url: 'hire-a-model.html' },
+            { name: "FAQ's", url: 'faq.html' },
+            { name: 'Contact Us', url: 'contact.html' }
+        ];
+        let menuHtml = '<div class="pt-4 pb-2 space-y-1">';
+        navLinks.forEach(link => {
+            menuHtml += `<a href="${link.url}" class="block pl-6 pr-4 py-3 text-sm font-bold uppercase tracking-wider text-gray-600 hover:text-primary hover:bg-gray-50 border-l-4 border-transparent hover:border-primary transition">${link.name}</a>`;
+        });
+        menuHtml += '</div>';
+        $('#mobile-menu').html(menuHtml);
+    }
+
     // Initialize Localization
     const urlParams = new URLSearchParams(window.location.search);
     const urlLang = urlParams.get('lang');

@@ -4,41 +4,82 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>News | mmodels</title>
-    <link rel="icon" href="/assets/logo.png" type="image/png">
+    <link rel="icon" href="/assets/logo.png" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = { theme: { extend: { fontFamily: { sans: ["Inter", "sans-serif"], serif: ["Playfair Display", "serif"] }, colors: { primary: "#C50A76" } } } };
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+            colors: { primary: "#C50A76" },
+          },
+        },
+      };
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="styles.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="antialiased overflow-x-hidden selection:bg-primary selection:text-white">
+  <body
+    class="antialiased overflow-x-hidden selection:bg-primary selection:text-white"
+  >
     <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 glass-nav transition-all duration-300">
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 glass-nav transition-all duration-300"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-24">
           <div class="flex-shrink-0 flex items-center">
-            <a href="index.html" class="block"><img src="/assets/logo.png" alt="M Models" class="h-10 md:h-12 w-auto object-contain" /></a>
+            <a href="index.html" class="block"
+              ><img
+                src="/assets/logo.png"
+                alt="M Models"
+                class="h-10 md:h-12 w-auto object-contain"
+            /></a>
           </div>
-          <div class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider">
+          <div
+            class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider"
+          >
             <a href="home.html" class="menu-link text-gray-600">Home</a>
             <a href="news.html" class="menu-link active text-primary">News</a>
             <a href="video.html" class="menu-link text-gray-600">Video</a>
             <a href="models.html" class="menu-link text-gray-600">Models</a>
-            <a href="clients.html" class="menu-link text-gray-600">Our Clients</a>
-            <a href="become-a-model.html" class="menu-link text-gray-600">Become a Model</a>
-            <a href="hire-a-model.html" class="menu-link text-gray-600">Hire a Model</a>
+            <a href="clients.html" class="menu-link text-gray-600"
+              >Our Clients</a
+            >
+            <a href="become-a-model.html" class="menu-link text-gray-600"
+              >Become a Model</a
+            >
+            <a href="hire-a-model.html" class="menu-link text-gray-600"
+              >Hire a Model</a
+            >
             <a href="faq.html" class="menu-link text-gray-600">FAQ's</a>
-            <a href="contact.html" class="menu-link text-gray-600">Contact Us</a>
+            <a href="contact.html" class="menu-link text-gray-600"
+              >Contact Us</a
+            >
           </div>
           <div class="lg:hidden flex items-center">
-            <button id="mobile-btn" class="text-gray-600 hover:text-primary"><i class="fas fa-bars text-2xl"></i></button>
+            <button id="mobile-btn" class="text-gray-600 hover:text-primary">
+              <i class="fas fa-bars text-2xl"></i>
+            </button>
           </div>
         </div>
       </div>
-      <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 shadow-xl pb-4">
+      <div
+        id="mobile-menu"
+        class="hidden lg:hidden bg-white border-t border-gray-100 shadow-xl pb-4"
+      >
         <!-- ... -->
       </div>
     </nav>
@@ -46,8 +87,16 @@
     <!-- Header -->
     <header class="pt-40 pb-16 bg-white border-b border-gray-200">
       <div class="text-center container mx-auto px-4">
-        <h1 class="text-primary font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-4">Updates & Press</h1>
-        <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6">Latest News</h2>
+        <h1
+          class="text-primary font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-4"
+        >
+          Updates & Press
+        </h1>
+        <h2
+          class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+        >
+          Latest News
+        </h2>
         <div class="h-1 w-24 bg-primary mx-auto"></div>
       </div>
     </header>
@@ -56,40 +105,95 @@
     <section class="py-20 bg-gray-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <!-- Article 1 -->
-            <article class="news-card">
-                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=600" alt="News Image" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <p class="text-xs text-primary font-bold uppercase tracking-widest mb-2">October 24, 2026</p>
-                    <h3 class="font-serif text-xl font-bold text-gray-900 mb-3 line-clamp-2">M Models Triumphs at Paris Fashion Week</h3>
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">Our leading faces walked the runway for incredibly prestigious, high-end European luxury brands this season...</p>
-                    <a href="#" class="text-primary font-bold text-sm tracking-widest uppercase hover:text-black transition">Read More →</a>
-                </div>
-            </article>
+          <!-- Article 1 -->
+          <article class="news-card">
+            <img
+              src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80&w=600"
+              alt="News Image"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <p
+                class="text-xs text-primary font-bold uppercase tracking-widest mb-2"
+              >
+                October 24, 2026
+              </p>
+              <h3
+                class="font-serif text-xl font-bold text-gray-900 mb-3 line-clamp-2"
+              >
+                M Models Triumphs at Paris Fashion Week
+              </h3>
+              <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                Our leading faces walked the runway for incredibly prestigious,
+                high-end European luxury brands this season...
+              </p>
+              <a
+                href="#"
+                class="text-primary font-bold text-sm tracking-widest uppercase hover:text-black transition"
+                >Read More →</a
+              >
+            </div>
+          </article>
 
-            <!-- Article 2 -->
-            <article class="news-card">
-                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=600" alt="News Image" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <p class="text-xs text-primary font-bold uppercase tracking-widest mb-2">September 12, 2026</p>
-                    <h3 class="font-serif text-xl font-bold text-gray-900 mb-3 line-clamp-2">New Office Opens in Downtown Vancouver</h3>
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">Expanding our West Coast presence, M Models officially opens a state-of-the-art talent management center in Vancouver.</p>
-                    <a href="#" class="text-primary font-bold text-sm tracking-widest uppercase hover:text-black transition">Read More →</a>
-                </div>
-            </article>
+          <!-- Article 2 -->
+          <article class="news-card">
+            <img
+              src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=600"
+              alt="News Image"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <p
+                class="text-xs text-primary font-bold uppercase tracking-widest mb-2"
+              >
+                September 12, 2026
+              </p>
+              <h3
+                class="font-serif text-xl font-bold text-gray-900 mb-3 line-clamp-2"
+              >
+                New Office Opens in Downtown Vancouver
+              </h3>
+              <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                Expanding our West Coast presence, M Models officially opens a
+                state-of-the-art talent management center in Vancouver.
+              </p>
+              <a
+                href="#"
+                class="text-primary font-bold text-sm tracking-widest uppercase hover:text-black transition"
+                >Read More →</a
+              >
+            </div>
+          </article>
 
-            <!-- Article 3 -->
-            <article class="news-card">
-                <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&q=80&w=600" alt="News Image" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <p class="text-xs text-primary font-bold uppercase tracking-widest mb-2">August 05, 2026</p>
-                    <h3 class="font-serif text-xl font-bold text-gray-900 mb-3 line-clamp-2">Japan Scouting Tour Prepares to Launch</h3>
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-3">Our elite scouting division is heading to Tokyo, Osaka, and Kyoto to discover the next generation of Asian faces.</p>
-                    <a href="#" class="text-primary font-bold text-sm tracking-widest uppercase hover:text-black transition">Read More →</a>
-                </div>
-            </article>
-
+          <!-- Article 3 -->
+          <article class="news-card">
+            <img
+              src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&q=80&w=600"
+              alt="News Image"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <p
+                class="text-xs text-primary font-bold uppercase tracking-widest mb-2"
+              >
+                August 05, 2026
+              </p>
+              <h3
+                class="font-serif text-xl font-bold text-gray-900 mb-3 line-clamp-2"
+              >
+                Japan Scouting Tour Prepares to Launch
+              </h3>
+              <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                Our elite scouting division is heading to Tokyo, Osaka, and
+                Kyoto to discover the next generation of Asian faces.
+              </p>
+              <a
+                href="#"
+                class="text-primary font-bold text-sm tracking-widest uppercase hover:text-black transition"
+                >Read More →</a
+              >
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -97,10 +201,17 @@
     <!-- Footer -->
     <footer class="bg-white py-12 border-t border-gray-200">
       <div class="max-w-7xl mx-auto px-4 text-center">
-        <a href="index.html" class="block mb-6"><img src="/assets/logo.png" alt="M Models" class="max-h-16 w-auto object-contain mx-auto"></a>
-        <p class="text-gray-400 text-xs">© 2026 M Models Global. All rights reserved.</p>
+        <a href="index.html" class="block mb-6"
+          ><img
+            src="/assets/logo.png"
+            alt="M Models"
+            class="max-h-16 w-auto object-contain mx-auto"
+        /></a>
+        <p class="text-gray-400 text-xs">
+          © 2026 M Models Global. All rights reserved.
+        </p>
       </div>
     </footer>
-    <script src="main.js"></script>
+    <script src="/assets/main.js"></script>
   </body>
 </html>
