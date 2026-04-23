@@ -179,6 +179,27 @@
         </p>
       </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/assets/main.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('form').on('submit', function(e) {
+          e.preventDefault();
+          if (!$(this).parsley().isValid()) {
+             return;
+          }
+          
+          Swal.fire({
+            title: 'Success!',
+            text: 'Your booking request has been submitted.',
+            icon: 'success',
+            confirmButtonColor: '#C50A76'
+          });
+          
+          $(this)[0].reset();
+          $(this).parsley().reset();
+        });
+      });
+    </script>
   </body>
 </html>
