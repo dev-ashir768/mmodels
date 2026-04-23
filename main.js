@@ -173,7 +173,11 @@ const i18nDict = {
     'Indicates required field': { 'fr': 'Indique un champ requis', 'ja': '必須項目を示します' },
     'Message': { 'fr': 'Message', 'ja': 'メッセージ' },
     'Get In Touch': { 'fr': 'Entrer en Contact', 'ja': '連絡を取る' },
-    'Send us a message': { 'fr': 'Envoyez-nous un message', 'ja': 'メッセージを送信する' }
+    'Send us a message': { 'fr': 'Envoyez-nous un message', 'ja': 'メッセージを送信する' },
+    'Portfolio': { 'fr': 'Portfolio', 'ja': 'ポートフォリオ' },
+    'Our Models': { 'fr': 'Nos Modèles', 'ja': '私たちのモデル' },
+    'Women': { 'fr': 'Femmes', 'ja': '女性' },
+    'Men': { 'fr': 'Hommes', 'ja': '男性' }
 };
 
 function applyLanguage(lang) {
@@ -290,5 +294,22 @@ $(document).ready(function() {
             parent.addClass('active');
             parent.find('.faq-answer').slideDown(300);
         }
+    });
+
+    // Portfolio Filtering Logic
+    $('.filter-btn').click(function(e) {
+        e.preventDefault();
+        
+        // Update active button styling
+        $('.filter-btn').removeClass('text-primary border-b-2 border-primary').addClass('text-gray-400 hover:text-gray-900');
+        $(this).addClass('text-primary border-b-2 border-primary').removeClass('text-gray-400 hover:text-gray-900');
+        
+        // Hide all grids, show targeted grid
+        const target = $(this).data('target');
+        $('.model-grid').addClass('hidden');
+        $('#' + target).removeClass('hidden');
+        
+        // Animate grid items
+        $('#' + target + ' .model-card').css({opacity: 0, marginTop: '20px'}).animate({opacity: 1, marginTop: '0px'}, 400);
     });
 });
