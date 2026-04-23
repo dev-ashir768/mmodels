@@ -134,7 +134,46 @@ const i18nDict = {
     '© 2026 M Models Global. All rights reserved.': {
         'fr': '© 2026 M Models Global. Tous droits réservés.',
         'ja': '© 2026 M Models Global. 無断転載を禁じます。'
-    }
+    },
+
+    // Additional Missing Texts & Form Labels
+    'Partnerships': { 'fr': 'Partenariats', 'ja': 'パートナーシップ' },
+    'We are incredibly proud to have our talent work with some of the most prestigious fashion and commercial brands in the world.': {
+        'fr': 'Nous sommes incroyablement fiers de voir nos talents travailler avec certaines des marques de mode et commerciales les plus prestigieuses au monde.',
+        'ja': '私たちは、当社のタレントが世界で最も権威のあるファッションおよび商業ブランドのいくつかと仕事をしていることを非常に誇りに思っています。'
+    },
+    'First Name': { 'fr': 'Prénom', 'ja': '名' },
+    'Last Name': { 'fr': 'Nom de Famille', 'ja': '姓' },
+    'ex: myname@example.com': { 'fr': 'ex: monnom@exemple.com', 'ja': '例：myname@example.com' },
+    'Area': { 'fr': 'Zone', 'ja': '市外局番' },
+    'Please describe the campaign, intended dates, usage rights required, and specific model requirements...': {
+        'fr': 'Veuillez décrire la campagne, les dates prévues, les droits d\'utilisation requis et les exigences spécifiques concernant le modèle...',
+        'ja': 'キャンペーン、予定日、必要な使用権、および特定のモデルの要件について説明してください...'
+    },
+    'contact@example.com': { 'fr': 'contact@exemple.com', 'ja': 'contact@example.com' },
+    'Full Name': { 'fr': 'Nom Complet', 'ja': 'フルネーム' },
+    'Your brand or company': { 'fr': 'Votre marque ou entreprise', 'ja': 'あなたのブランドや会社' },
+    'Send Message': { 'fr': 'Envoyer le Message', 'ja': 'メッセージを送る' },
+    'Subject': { 'fr': 'Sujet', 'ja': '件名' },
+    'Your message here...': { 'fr': 'Votre message ici...', 'ja': 'ここにメッセージを...' },
+    'How can we help?': { 'fr': 'Comment pouvons-nous aider ?', 'ja': 'ご用件は何でしょうか？' },
+    'Head Office:': { 'fr': 'Siège Social:', 'ja': '本社:' },
+    'Mississauga:': { 'fr': 'Mississauga:', 'ja': 'ミシサガ:' },
+    'Calgary:': { 'fr': 'Calgary:', 'ja': 'カルガリー:' },
+    'Video Portfolio': { 'fr': 'Portfolio Vidéo', 'ja': 'ビデオポートフォリオ' },
+    'Watch our talents in action across campaigns, music videos, and commercials.': {
+        'fr': 'Regardez nos talents en action dans des campagnes, des clips musicaux et des publicités.',
+        'ja': 'キャンペーン、ミュージックビデオ、コマーシャルで活躍する当社のタレントをご覧ください。'
+    },
+    'Visit our YOUTUBE CHANNEL': { 'fr': 'Visitez notre CHAÎNE YOUTUBE', 'ja': 'YOUTUBEチャンネルをご覧ください' },
+    'Please upload recent shots (images do not need to be professional)': {
+        'fr': 'Veuillez télécharger des clichés récents (les images n\'ont pas besoin d\'être professionnelles)',
+        'ja': '最近のショットをアップロードしてください（画像はプロフェッショナルである必要はありません）'
+    },
+    'Indicates required field': { 'fr': 'Indique un champ requis', 'ja': '必須項目を示します' },
+    'Message': { 'fr': 'Message', 'ja': 'メッセージ' },
+    'Get In Touch': { 'fr': 'Entrer en Contact', 'ja': '連絡を取る' },
+    'Send us a message': { 'fr': 'Envoyez-nous un message', 'ja': 'メッセージを送信する' }
 };
 
 function applyLanguage(lang) {
