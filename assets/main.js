@@ -215,7 +215,7 @@ function applyLanguage(lang) {
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
         let node;
         while ((node = walker.nextNode())) {
-            let original = node.originalText || node.nodeValue.trim();
+            let original = node.originalText || node.nodeValue.trim().replace(/\s+/g, ' ');
             if(!node.originalText && original !== '') {
                 node.originalText = original; 
             }
