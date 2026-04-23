@@ -33,7 +33,7 @@ body { background-color: #f9fafb; color: #111827; }
 
 /* Home Page specific */
 .hero-bg {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('/assets/hero.png');
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('/assets/others/hero.png');
     background-size: cover;
     background-position: top;
     background-attachment: fixed;
