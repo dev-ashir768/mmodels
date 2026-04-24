@@ -69,7 +69,7 @@ const i18nDict = {
 
     // Become a Model
     'Application': { 'fr': 'Candidature', 'ja': '応用' },
-    'Model & Talent Application': { 'fr': 'Candidature Modèle & Talent', 'ja': 'モデルとタレントの応募' },
+    'Model & Talent Application': { 'fr': 'Candidature Modèle & Talent', 'ja': 'モデルとタレント의 応募' },
     'Name': { 'fr': 'Nom', 'ja': '名前' },
     'E-mail': { 'fr': 'E-mail', 'ja': 'Eメール' },
     'Phone Number': { 'fr': 'Numéro de Tél', 'ja': '電話番号' },
@@ -222,9 +222,9 @@ const i18nDict = {
         'ja': '当エージェンシーは、経験の有無にかかわらず、すべてのモデルとタレントが成長し、テレビ、コマーシャル、広告、ファッションなどの機会に触れながら貴重な経験を積むことを可能にします。'
     },
     'What We Offer': { 'fr': 'Ce Que Nous Offrons', 'ja': '私たちが提供するもの' },
-    'Unlike many other agencies, MMT does not negotiate with our principles. Here at MMT, we even cover for modelling courses for high-fashion models. Training for acting is not provided, except in exceptional cases, as it proves to be a high risk for any agency. However, in special cases such as those involving a Principal actor, the agency will cover for the proper training. Of course, it is ultimately the agency’s choice to cover the costs for potential models and talent.': {
+    'Unlike many other agencies, MMT does not negotiate with our principles. Here at MMT, we even cover for modelling courses for high-fashion models. Training for acting is not provided, except in exceptional cases, as it proves to be a high risk for any agency. Cependant, dans des cas exceptionnels comme ceux impliquant un acteur principal, l\'agence couvrira la formation appropriée. Bien sûr, c\'est finalement le choix de l\'agence de couvrir les frais pour les modèles et talents potentiels.': {
         'fr': 'Contrairement à d\'autres agences, MMT ne négocie pas avec nos principes. Nous couvrons même les cours de mannequinat pour les mannequins haute couture.',
-        'ja': '他とは異なり、MMTは私たちの原則に妥協しません。ハイファッションモデルのためのモデリングコースもカバーしています。'
+        'ja': '他とは異なり,MMTは私たちの原則に妥協しません.ハイファッションモデルのためのモデリングコースもカバーしています.'
     }
 };
 
@@ -313,7 +313,6 @@ $(document).ready(function() {
     const urlLang = urlParams.get('lang');
     if (urlLang) {
         applyLanguage(urlLang);
-        // Clean URL to prevent staying stuck in forced param state visually
         window.history.replaceState({}, '', window.location.pathname);
     } else {
         const savedLang = localStorage.getItem('mmodels_lang') || 'en';
@@ -331,20 +330,10 @@ $(document).ready(function() {
         } else {
             $('#navbar').removeClass('scrolled');
         }
-        
-        $('.section-header, .region-anim').each(function() {
-            var elementTop = $(this).offset().top;
-            var windowBottom = $(window).scrollTop() + $(window).height();
-            
-            if(windowBottom > elementTop + 100) {
-                $(this).animate({'opacity': '1', 'margin-top': '0px'}, 800);
-            }
-        });
     });
 
     if ($('#hero-content').length) {
         $('#hero-content').animate({'opacity': '1', 'margin-top': '0px'}, 1200);
-        $('.section-header, .region-anim').css('margin-top', '50px');
     } else {
         if ($('#navbar').length && !$('#home').length) {
             $('#navbar').addClass('scrolled');
@@ -367,17 +356,46 @@ $(document).ready(function() {
     // Portfolio Filtering Logic
     $('.filter-btn').click(function(e) {
         e.preventDefault();
-        
-        // Update active button styling
         $('.filter-btn').removeClass('text-primary border-b-2 border-primary').addClass('text-gray-400 hover:text-gray-900');
         $(this).addClass('text-primary border-b-2 border-primary').removeClass('text-gray-400 hover:text-gray-900');
-        
-        // Hide all grids, show targeted grid
         const target = $(this).data('target');
         $('.model-grid').addClass('hidden');
         $('#' + target).removeClass('hidden');
-        
-        // Animate grid items
         $('#' + target + ' .model-card').css({opacity: 0, marginTop: '20px'}).animate({opacity: 1, marginTop: '0px'}, 400);
     });
+
+    // Banner Slider Logic
+    if ($('#project-banner').length) {
+        const $banner = $('#project-banner');
+        const $slides = $banner.find('.banner-slide');
+        let currentIndex = 0;
+        const slideCount = $slides.length;
+
+        function showSlide(index) {
+            $slides.removeClass('active');
+            $slides.eq(index).addClass('active');
+            currentIndex = index;
+        }
+
+        function nextSlide() {
+            let next = (currentIndex + 1) % slideCount;
+            showSlide(next);
+        }
+
+        // Auto play
+        let slideInterval = setInterval(nextSlide, 5000);
+
+        // Click to change image
+        $banner.on('click', function() {
+            clearInterval(slideInterval);
+            nextSlide();
+            slideInterval = setInterval(nextSlide, 5000);
+        });
+
+        // Pause on hover
+        $banner.hover(
+            function() { clearInterval(slideInterval); },
+            function() { slideInterval = setInterval(nextSlide, 5000); }
+        );
+    }
 });
