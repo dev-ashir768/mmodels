@@ -437,24 +437,39 @@
           <div class="h-px w-full bg-gray-200 my-8"></div>
 
           <!-- Referral Section -->
-          <div>
-            <label class="form-label"
-              >How did you hear about us? <span class="required">*</span></label
-            >
-            <select
-              required
-              class="w-full form-input px-4 py-3 text-sm rounded-md bg-white border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-            >
-              <option value="">HOW DID YOU HEAR ABOUT US?</option>
-              <option value="Billboard">Billboard</option>
-              <option value="Friend">Friend</option>
-              <option value="Internet">Internet</option>
-              <option value="Newspaper">Newspaper</option>
-              <option value="Radio">Radio</option>
-              <option value="Scout">Scout</option>
-              <option value="Social Media">Social Media</option>
-              <option value="TV">TV</option>
-            </select>
+          <div class="space-y-4">
+            <div>
+              <label class="form-label"
+                >How did you hear about us? <span class="required">*</span></label
+              >
+              <select
+                id="referral-select"
+                required
+                class="w-full form-input px-4 py-3 text-sm rounded-md bg-white border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+              >
+                <option value="">HOW DID YOU HEAR ABOUT US?</option>
+                <option value="Billboard">Billboard</option>
+                <option value="Friend">Friend</option>
+                <option value="Internet">Internet</option>
+                <option value="Newspaper">Newspaper</option>
+                <option value="Radio">Radio</option>
+                <option value="Scout">Scout</option>
+                <option value="Social Media">Social Media</option>
+                <option value="TV">TV</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <!-- Other Referral Input -->
+            <div id="other-referral-container" class="hidden animate-fade-in">
+              <label class="form-label">Please specify <span class="required">*</span></label>
+              <input
+                type="text"
+                id="other-referral-input"
+                class="w-full form-input px-4 py-3 text-sm rounded-md"
+                placeholder="How did you hear about us?"
+              />
+            </div>
           </div>
 
           <div class="pt-8">
@@ -532,6 +547,19 @@
           
           $(this)[0].reset();
           $(this).parsley().reset();
+          $('#other-referral-container').addClass('hidden');
+          $('#other-referral-input').removeAttr('required').val('');
+        });
+
+        // Referral "Other" logic
+        $('#referral-select').on('change', function() {
+          if ($(this).val() === 'Other') {
+            $('#other-referral-container').removeClass('hidden');
+            $('#other-referral-input').attr('required', true);
+          } else {
+            $('#other-referral-container').addClass('hidden');
+            $('#other-referral-input').removeAttr('required').val('');
+          }
         });
       });
     </script>
