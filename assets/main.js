@@ -225,7 +225,9 @@ const i18nDict = {
     'Unlike many other agencies, MMT does not negotiate with our principles. Here at MMT, we even cover for modelling courses for high-fashion models. Training for acting is not provided, except in exceptional cases, as it proves to be a high risk for any agency. Cependant, dans des cas exceptionnels comme ceux impliquant un acteur principal, l\'agence couvrira la formation appropriée. Bien sûr, c\'est finalement le choix de l\'agence de couvrir les frais pour les modèles et talents potentiels.': {
         'fr': 'Contrairement à d\'autres agences, MMT ne négocie pas avec nos principes. Nous couvrons même les cours de mannequinat pour les mannequins haute couture.',
         'ja': '他とは異なり,MMTは私たちの原則に妥協しません.ハイファッションモデルのためのモデリングコースもカバーしています.'
-    }
+    },
+    'Explore Portfolio': { 'fr': 'Explorer le Portfolio', 'ja': 'ポートフォリオを探索する' },
+    'Representing Excellence in Every Frame': { 'fr': 'Représenter l\'Excellence dans Chaque Image', 'ja': 'すべてのフレームで卓越性を表現する' }
 };
 
 function applyLanguage(lang) {
