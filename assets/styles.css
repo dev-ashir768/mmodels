@@ -149,51 +149,26 @@ body { background-color: #f9fafb; color: #111827; }
     animation: fadeIn 0.4s ease-out forwards;
 }
 
-/* Banner Slider Styles */
-.banner-container {
-    position: relative;
-    width: 100%;
-    height: 600px;
-    overflow: hidden;
-    border-radius: 2rem;
-    background: #f3f4f6;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-    cursor: pointer;
+/* Swiper Works Slider Styles */
+.worksSwiper .swiper-wrapper {
+    transition-timing-function: linear !important;
 }
 
-.hero-bg .banner-container {
-    position: absolute;
-    inset: 0;
-    height: 100%;
-    border-radius: 0;
-    box-shadow: none;
-    z-index: 1;
+.worksSwiper .swiper-slide {
+    transition: transform 0.3s ease;
 }
 
-.banner-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out, transform 2.5s ease-in-out;
-    transform: scale(1.1);
-    z-index: 1;
+.worksSwiper .swiper-slide:hover {
+    transform: scale(0.98);
 }
 
-.banner-slide.active {
-    opacity: 1;
-    transform: scale(1);
-    z-index: 2;
-}
-
-.banner-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.worksSwiper img {
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 @media (max-width: 768px) {
-    .banner-container {
-        height: 400px;
-        border-radius: 1rem;
+    .worksSwiper img {
+        border-radius: 0.25rem;
     }
 }

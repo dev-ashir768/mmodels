@@ -364,38 +364,24 @@ $(document).ready(function() {
         $('#' + target + ' .model-card').css({opacity: 0, marginTop: '20px'}).animate({opacity: 1, marginTop: '0px'}, 400);
     });
 
-    // Banner Slider Logic
-    if ($('#project-banner').length) {
-        const $banner = $('#project-banner');
-        const $slides = $banner.find('.banner-slide');
-        let currentIndex = 0;
-        const slideCount = $slides.length;
-
-        function showSlide(index) {
-            $slides.removeClass('active');
-            $slides.eq(index).addClass('active');
-            currentIndex = index;
-        }
-
-        function nextSlide() {
-            let next = (currentIndex + 1) % slideCount;
-            showSlide(next);
-        }
-
-        // Auto play
-        let slideInterval = setInterval(nextSlide, 5000);
-
-        // Click to change image
-        $banner.on('click', function() {
-            clearInterval(slideInterval);
-            nextSlide();
-            slideInterval = setInterval(nextSlide, 5000);
+    // Swiper Works Slider Initialization
+    if ($('.worksSwiper').length) {
+        new Swiper('.worksSwiper', {
+            slidesPerView: 'auto',
+            spaceBetween: 20,
+            loop: true,
+            speed: 8000,
+            freeMode: true,
+            allowTouchMove: true,
+            autoplay: {
+                delay: 0,
+                disableOnInteraction: false,
+            },
+            breakpoints: {
+                768: {
+                    spaceBetween: 30,
+                }
+            }
         });
-
-        // Pause on hover
-        $banner.hover(
-            function() { clearInterval(slideInterval); },
-            function() { slideInterval = setInterval(nextSlide, 5000); }
-        );
     }
 });

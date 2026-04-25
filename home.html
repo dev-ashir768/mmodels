@@ -39,6 +39,8 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="/assets/styles.css" />
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   </head>
   <body
     class="antialiased overflow-x-hidden selection:bg-primary selection:text-white border-none m-0 p-0"
@@ -156,85 +158,55 @@
       </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header
-      id="home"
-      class="relative w-full h-screen hero-bg flex items-center justify-center"
-    >
-      <!-- Background Slider -->
-      <div class="banner-container" id="project-banner">
-        <div class="banner-slide active">
-          <img src="/assets/past-works/work-1.jpeg" alt="Recent Work" />
-        </div>
-        <!-- <div class="banner-slide">
-          <img src="/assets/past-works/work-2.jpeg" alt="Recent Work" />
-        </div> -->
-        <div class="banner-slide">
-          <img src="/assets/past-works/work-3.jpeg" alt="Recent Work" />
-        </div>
-        <!-- <div class="banner-slide">
-          <img src="/assets/past-works/work-4.jpeg" alt="Recent Work" />
-        </div> -->
-        <!-- <div class="banner-slide">
-          <img src="/assets/past-works/work-5.jpeg" alt="Recent Work" />
-        </div> -->
-        <!-- <div class="banner-slide">
-          <img src="/assets/past-works/work-6.jpeg" alt="Recent Work" />
-        </div> -->
-        <!-- <div class="banner-slide">
-          <img src="/assets/past-works/work-7.jpeg" alt="Recent Work" />
-        </div> -->
-        <div class="banner-slide">
-          <img src="/assets/past-works/work-8.jpeg" alt="Recent Work" />
-        </div>
-        <!-- <div class="banner-slide">
-          <img src="/assets/past-works/work-10.jpeg" alt="Recent Work" />
-        </div> -->
-        <!-- <div class="banner-slide">
-          <img src="/assets/past-works/work-11.jpeg" alt="Recent Work" />
-        </div>
-        <div class="banner-slide">
-          <img src="/assets/past-works/work-19.jpeg" alt="Recent Work" /> -->
+    <!-- Hero Section: Works Slider -->
+    <header id="home" class="relative w-full h-[70vh] md:h-screen overflow-hidden bg-black flex items-center">
+      <div class="swiper worksSwiper w-full h-full">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide !w-auto h-full px-2">
+            <img src="/assets/past-works/work-1.jpeg" alt="Recent Work" class="h-full w-auto object-cover" />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-2">
+            <img src="/assets/past-works/work-2.jpeg" alt="Recent Work" class="h-full w-auto object-cover" />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-2">
+            <img src="/assets/past-works/work-3.jpeg" alt="Recent Work" class="h-full w-auto object-cover" />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-2">
+            <img src="/assets/past-works/work-4.jpeg" alt="Recent Work" class="h-full w-auto object-cover" />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-2">
+            <img src="/assets/past-works/work-5.jpeg" alt="Recent Work" class="h-full w-auto object-cover" />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-2">
+            <img src="/assets/past-works/work-6.jpeg" alt="Recent Work" class="h-full w-auto object-cover" />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-2">
+            <img src="/assets/past-works/work-7.jpeg" alt="Recent Work" class="h-full w-auto object-cover" />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-2">
+            <img src="/assets/past-works/work-8.jpeg" alt="Recent Work" class="h-full w-auto object-cover" />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-2">
+            <img src="/assets/past-works/work-10.jpeg" alt="Recent Work" class="h-full w-auto object-cover" />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-2">
+            <img src="/assets/past-works/work-11.jpeg" alt="Recent Work" class="h-full w-auto object-cover" />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-2">
+            <img src="/assets/past-works/work-19.jpeg" alt="Recent Work" class="h-full w-auto object-cover" />
+          </div>
         </div>
       </div>
-
-      <!-- Overlay -->
-      <div class="hero-overlay"></div>
-
-      <!-- <div
-        class="text-center px-4 mt-16 max-w-4xl opacity-0 hero-content-wrapper"
-        id="hero-content"
-      >
-        <p
-          class="text-primary font-bold uppercase tracking-[0.3em] text-sm md:text-base mb-6"
-        >
-          Premier International Representation
-        </p>
-        <h1
-          class="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight text-white drop-shadow-2xl"
-        >
-          Defining The<br /><span class="italic font-light">Future</span> Of
-          Fashion
+      
+      <!-- Overlay for Branding -->
+      <div class="absolute inset-0 pointer-events-none z-20 flex flex-col items-center justify-center text-center px-4 bg-black/30">
+        <h1 class="font-serif text-5xl md:text-8xl font-bold mb-4 leading-tight text-white drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)]">
+          OUR <span class="italic font-light">WORKS</span>
         </h1>
-        <p
-          class="text-gray-100 font-medium text-lg md:text-xl mb-12 max-w-2xl mx-auto drop-shadow-lg"
-        >
-          Discover the faces that are shaping the global narrative of style,
-          luxury, and art across top fashion capitals.
+        <p class="text-white font-medium text-lg md:text-xl tracking-widest uppercase opacity-90 drop-shadow-md">
+          Representing Excellence in Every Frame
         </p>
-        <div class="flex flex-col sm:flex-row justify-center gap-6">
-          <a
-            href="models.html"
-            class="px-8 py-4 bg-white text-black border border-white hover:bg-transparent hover:text-white transition-all duration-300 uppercase tracking-widest text-sm font-semibold shadow-lg"
-            >View Portfolio</a
-          >
-          <a
-            href="contact.html"
-            class="px-8 py-4 bg-primary text-white border border-primary hover:bg-white hover:text-primary transition-all duration-300 uppercase tracking-widest text-sm font-semibold shadow-lg"
-            >Inquire Now</a
-          >
-        </div>
-      </div> -->
+      </div>
     </header>
 
     <!-- About Section -->
@@ -1027,6 +999,8 @@
       </div>
     </footer>
 
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <!-- Global JavaScript -->
     <script src="/assets/main.js"></script>
     <script async src="//www.instagram.com/embed.js"></script>
