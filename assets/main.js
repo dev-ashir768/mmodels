@@ -368,7 +368,7 @@ $(document).ready(function() {
     if ($('.worksSwiper').length) {
         new Swiper('.worksSwiper', {
             slidesPerView: 'auto',
-            spaceBetween: 20,
+            spaceBetween: 10,
             loop: true,
             speed: 8000,
             freeMode: true,
