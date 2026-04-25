@@ -33,10 +33,19 @@ body { background-color: #f9fafb; color: #111827; }
 
 /* Home Page specific */
 .hero-bg {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('/assets/others/hero.png');
-    background-size: cover;
-    background-position: top;
-    background-attachment: fixed;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+}
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+    z-index: 5;
+}
+.hero-content-wrapper {
+    position: relative;
+    z-index: 10;
 }
 .region-card {
     background: white;
@@ -152,24 +161,34 @@ body { background-color: #f9fafb; color: #111827; }
     cursor: pointer;
 }
 
+.hero-bg .banner-container {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    z-index: 1;
+}
+
 .banner-slide {
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
-    transform: scale(1.05);
+    transition: opacity 1.5s ease-in-out, transform 2.5s ease-in-out;
+    transform: scale(1.1);
+    z-index: 1;
 }
 
 .banner-slide.active {
     opacity: 1;
     transform: scale(1);
-    z-index: 10;
+    z-index: 2;
 }
 
 .banner-slide img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 @media (max-width: 768px) {
