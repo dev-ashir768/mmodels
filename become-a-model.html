@@ -55,7 +55,6 @@
             class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider"
           >
             <a href="home.html" class="menu-link text-gray-600">Home</a>
-            <!-- <a href="news.html" class="menu-link text-gray-600">News</a> -->
             <a href="video.html" class="menu-link text-gray-600">Video</a>
             <a href="models.html" class="menu-link text-gray-600">Models</a>
             <a href="clients.html" class="menu-link text-gray-600"
@@ -67,12 +66,12 @@
             <a href="hire-a-model.html" class="menu-link text-gray-600"
               >Hire a Model</a
             >
+            <a href="application.html" class="menu-link text-gray-600">Apply</a>
             <a href="faq.html" class="menu-link text-gray-600">FAQ's</a>
             <a href="contact.html" class="menu-link text-gray-600"
               >Contact Us</a
             >
           </div>
-
           <div class="lg:hidden flex items-center">
             <button
               id="mobile-btn"
@@ -83,7 +82,6 @@
           </div>
         </div>
       </div>
-
       <div
         id="mobile-menu"
         class="hidden lg:hidden bg-white border-t border-gray-100 shadow-xl pb-4"
@@ -95,11 +93,6 @@
             href="home.html"
             class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
             >Home</a
-          >
-          <a
-            href="news.html"
-            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
-            >News</a
           >
           <a
             href="video.html"
@@ -125,6 +118,11 @@
             href="hire-a-model.html"
             class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
             >Hire a Model</a
+          >
+          <a
+            href="application.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Apply</a
           >
           <a
             href="faq.html"
@@ -440,7 +438,8 @@
           <div class="space-y-4">
             <div>
               <label class="form-label"
-                >How did you hear about us? <span class="required">*</span></label
+                >How did you hear about us?
+                <span class="required">*</span></label
               >
               <select
                 id="referral-select"
@@ -462,7 +461,9 @@
 
             <!-- Other Referral Input -->
             <div id="other-referral-container" class="hidden animate-fade-in">
-              <label class="form-label">Please specify <span class="required">*</span></label>
+              <label class="form-label"
+                >Please specify <span class="required">*</span></label
+              >
               <input
                 type="text"
                 id="other-referral-input"
@@ -485,45 +486,16 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white pt-16 pb-6 border-t border-gray-200">
-      <div
-        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center md:items-start gap-8"
-      >
-        <div class="text-center md:text-left">
-          <a href="index.html" class="block inline-block">
-            <img
-              src="/assets/others/logo.png"
-              alt="M Models"
-              class="max-h-20 w-auto object-contain mb-4"
-            />
-          </a>
-          <p class="text-gray-500 text-sm max-w-sm">
-            Elevating beauty and style on a global scale. <br />
-            Toronto • Vancouver • Calgary • Japan.
-          </p>
-        </div>
-
-        <div class="flex space-x-4 mt-6 md:mt-4">
-          <a
-            href="#"
-            class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary hover:bg-gray-50 transition-all"
-            ><i class="fab fa-instagram"></i
-          ></a>
-          <a
-            href="#"
-            class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary hover:bg-gray-50 transition-all"
-            ><i class="fab fa-twitter"></i
-          ></a>
-          <a
-            href="#"
-            class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary hover:bg-gray-50 transition-all"
-            ><i class="fab fa-facebook-f"></i
-          ></a>
-        </div>
-      </div>
-      <div class="text-center mt-12 border-t border-gray-200 pt-8">
-        <p class="text-gray-600 text-sm">
-          © 2026 M Models Global. All rights reserved. | <a href="privacy-policy.html" class="hover:text-primary transition-colors">Privacy Policy</a>
+    <footer class="bg-white py-12 border-t border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <a href="index.html" class="block mb-6"
+          ><img
+            src="/assets/others/logo.png"
+            alt="M Models"
+            class="max-h-16 w-auto object-contain mx-auto"
+        /></a>
+        <p class="text-gray-400 text-xs">
+          © 2026 M Models Global. All rights reserved.
         </p>
       </div>
     </footer>
@@ -531,34 +503,34 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/assets/main.js"></script>
     <script>
-      $(document).ready(function() {
-        $('form').on('submit', function(e) {
+      $(document).ready(function () {
+        $("form").on("submit", function (e) {
           e.preventDefault();
           if (!$(this).parsley().isValid()) {
-             return;
+            return;
           }
-          
+
           Swal.fire({
-            title: 'Success!',
-            text: 'Your application has been submitted successfully.',
-            icon: 'success',
-            confirmButtonColor: '#C50A76'
+            title: "Success!",
+            text: "Your application has been submitted successfully.",
+            icon: "success",
+            confirmButtonColor: "#C50A76",
           });
-          
+
           $(this)[0].reset();
           $(this).parsley().reset();
-          $('#other-referral-container').addClass('hidden');
-          $('#other-referral-input').removeAttr('required').val('');
+          $("#other-referral-container").addClass("hidden");
+          $("#other-referral-input").removeAttr("required").val("");
         });
 
         // Referral "Other" logic
-        $('#referral-select').on('change', function() {
-          if ($(this).val() === 'Other') {
-            $('#other-referral-container').removeClass('hidden');
-            $('#other-referral-input').attr('required', true);
+        $("#referral-select").on("change", function () {
+          if ($(this).val() === "Other") {
+            $("#other-referral-container").removeClass("hidden");
+            $("#other-referral-input").attr("required", true);
           } else {
-            $('#other-referral-container').addClass('hidden');
-            $('#other-referral-input').removeAttr('required').val('');
+            $("#other-referral-container").addClass("hidden");
+            $("#other-referral-input").removeAttr("required").val("");
           }
         });
       });

@@ -9,6 +9,8 @@ const i18nDict = {
     'Hire a Model': { 'fr': 'Engager un Modèle', 'ja': 'モデルを雇う' },
     "FAQ's": { 'fr': 'FAQ', 'ja': 'よくある質問' },
     'Contact Us': { 'fr': 'Contact', 'ja': 'お問い合わせ' },
+    'Apply': { 'fr': 'Postuler', 'ja': '応募する' },
+    'Kids': { 'fr': 'Enfants', 'ja': 'キッズ' },
     
     // Index
     'Toronto': { 'fr': 'Toronto', 'ja': 'トロント' },
@@ -133,7 +135,7 @@ const i18nDict = {
     'M Models handles your bookings.': { 'fr': 'M Models gère vos réservations.', 'ja': 'M Modelsはあなたの予約を処理します。' },
     'M Models Negotiates rates for you with the clientele.': { 'fr': 'M Models négocie les tarifs pour vous avec la clientèle.', 'ja': 'M Modelsはクライアントとあなたの料金を交渉します。' },
     'Don\'t worry- we regularly interview industry professionals as well as novice, but we do not represent everyone we see.': {
-        'fr': 'Ne vous inquiétez pas, nous interviewons régulièrement des professionnels de l\'industrie ainsi que des novices, mais nous ne représentons pas tous ceux que nous voyons.',
+        'fr': 'Ne vous inquiétez pas, nous interviewons régulièrement des professionnels de l\'industrie ainsi que des novices, but we do not represent everyone we see.',
         'ja': 'ご心配なく。業界の専門家や初心者と定期的に面接を行いますが、面接した全員を代表するわけではありません。'
     },
     'Remember its a interview you only get one chance to make a first impression.': {
@@ -205,26 +207,42 @@ const i18nDict = {
     'Women': { 'fr': 'Femmes', 'ja': '女性' },
     'Men': { 'fr': 'Hommes', 'ja': '男性' },
     
-    // Home Page About Section
+    // Home Page About Section (New)
     'About M Models & Talent Agency': { 'fr': 'À propos de l\'Agence M Models & Talent', 'ja': 'M Models & Talent Agencyについて' },
-    'M Models and Talent is a Canadian based modeling agency with locations in Toronto, Mississauga and Calgary. We mainly focus on commercial print, principal acting and highly professional models and talents. Our highly professional staff consists of experienced agents that have been in the industry for a number of years. We carefully select potential models for a wide variety of diverse looks in order to best suit the needs for our clients.': {
-        'fr': 'M Models and Talent est une agence de mannequins canadienne avec des bureaux à Toronto, Mississauga et Calgary. Nous nous concentrons principalement sur l\'impression commerciale, le jeu d\'acteur principal et les mannequins hautement professionnels.',
-        'ja': 'M Models and Talentは、トロント、ミシサガ、カルガリーに拠点を持つカナダのモデルエージェンシーです。商業印刷、主役の演技、非常に専門的なモデルやタレントに焦点を当てています。'
+    'M Models and Talent is a premier Canadian agency with a strategic presence in': {
+        'fr': 'M Models and Talent est une agence canadienne de premier plan avec une présence stratégique à',
+        'ja': 'M Models and Talentは、以下の都市に戦略的な拠点を置くカナダ屈指のエージェンシーです：'
+    },
+    'Toronto, Vancouver, and Calgary': {
+        'fr': 'Toronto, Vancouver, et Calgary',
+        'ja': 'トロント、バンクーバー、カルガリー'
+    },
+    '. Our expertise lies in commercial print, principal acting, and high-caliber professional modeling. Led by a team of seasoned agents with decades of collective industry experience, we pride ourselves on a curated roster that reflects a vast range of diverse looks, ensuring we meet the specific creative demands of our global clientele.': {
+        'fr': '. Notre expertise réside dans l\'impression commerciale, le jeu d\'acteur principal et le mannequinat professionnel de haut calibre. Dirigés par une équipe d\'agents chevronnés, nous sommes fiers d\'un effectif qui reflète une vaste gamme de looks diversifiés.',
+        'ja': '。私たちの専門知識は、コマーシャルプリント、主要な演技、そしてハイレベルなプロフェッショナルモデリングにあります。数十年業界経験を持つベテランエージェントのチームに率いられ、多様なルックスを反映した厳選された所属タレントを誇り、グローバルな顧客の特定の要求に応えています。'
     },
     'Who We Represent': { 'fr': 'Qui Nous Représentons', 'ja': '私たちが代表する人々' },
-    'We are dedicated to the promotion of models ranging from children to adults, beginners to well experienced models. Here at M Models and Talent Management Agency Inc, we represent models and talent from North America to the International market.': {
-        'fr': 'Nous nous consacrons à la promotion de mannequins allant des enfants aux adultes, des débutants aux modèles expérimentés. Ici, nous représentons des talents d\'Amérique du Nord vers le marché international.',
-        'ja': '子供から大人、初心者から経験豊富なモデルまで、幅広いモデルのプロモーションに専念しています。北米から国際市場までのモデルとタレントを代表しています。'
+    'We are dedicated to the strategic promotion of a wide demographic, ranging from children to adults. M Models and Talent Management Agency Inc. provides a bridge for our roster to navigate both North American and International markets. To better serve our global partners, we now operate a dedicated office in': {
+        'fr': 'Nous nous consacrons à la promotion d\'une large démographie, allant des enfants aux adultes. Pour mieux servir nos partenaires mondiaux, nous exploitons désormais un bureau dédié à',
+        'ja': '私たちは、子供から大人まで、幅広い層の戦略的なプロモーションに専念しています。M Models and Talent Management Agency Inc.は、所属タレントが北米と国際市場の両方で活躍するための架け橋となります。グローバルなパートナーにより良いサービスを提供するため、現在以下の場所に専用のオフィスを構えています：'
+    },
+    'Japan': { 'fr': 'Japon', 'ja': '日本' },
+    ', further expanding our reach into the international fashion and commercial sectors.': {
+        'fr': ', élargissant encore notre portée dans les secteurs de la mode et du commerce international.',
+        'ja': '。これにより、国際的なファッションおよび商業セクターへのリーチをさらに拡大しています。'
     },
     'Our Mission': { 'fr': 'Notre Mission', 'ja': '私たちの使命' },
-    'Our agency allows all models and talent, whether experienced or not, to flourish, allowing them to gain valuable experience in the industry while exposing them to opportunities such as television, commercial, advertisements, “real-people modelling” and fashion work. This valuable asset has allowed many of our models to extend their careers in the industry. We feel that it is an agency’s responsibility to invest in models and talents according to their potential. This has long been an integral element in our success in maintaining professional models and talents for our demanding clientele in this competitive industry.': {
-        'fr': 'Notre agence permet à tous les modèles, expérimentés ou non, de s\'épanouir en acquérant une expérience précieuse dans l\'industrie tout en les exposant à la télévision, aux publicités et au travail de mode.',
-        'ja': '当エージェンシーは、経験の有無にかかわらず、すべてのモデルとタレントが成長し、テレビ、コマーシャル、広告、ファッションなどの機会に触れながら貴重な経験を積むことを可能にします。'
+    'Our mission is to provide an environment where talent can flourish and secure high-value opportunities across television, commercials, advertisements, fashion, and "real-people" modeling. We believe an agency’s primary responsibility is to invest in individuals based on their unique potential. By fostering this growth, we maintain a roster of sophisticated professionals capable of excelling within a highly competitive and demanding industry.': {
+        'fr': 'Notre mission est de fournir un environnement où les talents peuvent s\'épanouir et saisir des opportunités de grande valeur. Nous pensons qu\'il est de la responsabilité première d\'une agence d\'investir dans les individus en fonction de leur potentiel unique.',
+        'ja': '私たちの使命は、タレントが成長し、テレビ、コマーシャル、広告、ファッション、「リアルピープル」モデリングにわたる価値の高い機会を確保できる環境を提供することです。エージェンシーの主な責任は、個々のユニークな可能性に基づいて投資することであると信じています。この成長を促進することで、非常に競争が激しく要求の厳しい業界で卓越した能力を発揮できる、洗練されたプロフェッショナルのリストを維持しています。'
     },
-    'What We Offer': { 'fr': 'Ce Que Nous Offrons', 'ja': '私たちが提供するもの' },
-    'Unlike many other agencies, MMT does not negotiate with our principles. Here at MMT, we even cover for modelling courses for high-fashion models. Training for acting is not provided, except in exceptional cases, as it proves to be a high risk for any agency. Cependant, dans des cas exceptionnels comme ceux impliquant un acteur principal, l\'agence couvrira la formation appropriée. Bien sûr, c\'est finalement le choix de l\'agence de couvrir les frais pour les modèles et talents potentiels.': {
-        'fr': 'Contrairement à d\'autres agences, MMT ne négocie pas avec nos principes. Nous couvrons même les cours de mannequinat pour les mannequins haute couture.',
-        'ja': '他とは異なり,MMTは私たちの原則に妥協しません.ハイファッションモデルのためのモデリングコースもカバーしています.'
+    'Professional Development & Unique Investment': {
+        'fr': 'Développement Professionnel & Investissement Unique',
+        'ja': 'プロフェッショナルな能力開発と独自の投資'
+    },
+    'M Models and Talent takes a distinct approach to talent investment. *We are the only agency in Canada that covers the costs associated with building and maintaining a professional portfolio*, ensuring our talent is market-ready without the traditional financial barriers. We are committed to the long-term success of our roster, which includes covering the costs of modeling courses for high-fashion talent in specific cases. While acting training is typically managed independently, the agency may facilitate professional coaching for Principal actors on a case-by-case basis. These investments are made at the agency\'s discretion to ensure our talent remains at the forefront of the industry\'s standards.': {
+        'fr': 'M Models and Talent adopte une approche distincte de l\'investissement dans les talents. *Nous sommes la seule agence au Canada qui couvre les coûts associés à la création et à l\'entretien d\'un portfolio professionnel*.',
+        'ja': 'M Models and Talentは、タレントへの投資に対して独自のアプローチをとっています。*私たちは、プロフェッショナルなポートフォリオの作成と維持に関連する費用を負担するカナダで唯一のエージェンシーです*。これにより、タレントが伝統的な経済的障壁なしに市場に出る準備ができるようにします。私たちは所属タレントの長期的な成功にコミットしており、特定のケースではハイファッションタレントのためのモデリングコースの費用をカバーすることも含まれます。演技トレーニングは通常独立して管理されますが、エージェンシーはケースバイケースで主要な俳優のためのプロフェッショナルなコーチングを促進する場合があります。これらの投資は、私たちのタレントが業界標準の最前線に留まることを確実にするために、エージェンシーの裁量で行われます。'
     },
     'Explore Portfolio': { 'fr': 'Explorer le Portfolio', 'ja': 'ポートフォリオを探索する' },
     'Representing Excellence in Every Frame': { 'fr': 'Représenter l\'Excellence dans Chaque Image', 'ja': 'すべてのフレームで卓越性を表現する' }
@@ -299,6 +317,7 @@ $(document).ready(function() {
             { name: 'Our Clients', url: 'clients.html' },
             { name: 'Become a Model', url: 'become-a-model.html' },
             { name: 'Hire a Model', url: 'hire-a-model.html' },
+            { name: 'Apply', url: 'application.html' },
             { name: "FAQ's", url: 'faq.html' },
             { name: 'Contact Us', url: 'contact.html' }
         ];

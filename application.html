@@ -38,21 +38,24 @@
     />
 
     <!-- Parsley CSS & Custom Error Styles -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/guillaumepotier/Parsley.js@2.9.2/src/parsley.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/guillaumepotier/Parsley.js@2.9.2/src/parsley.css"
+    />
     <style>
       .parsley-errors-list {
-          list-style-type: none;
-          padding: 0;
-          margin-top: 0.5rem;
-          font-size: 0.75rem;
-          color: #ef4444; /* Tailwind red-500 */
-          font-weight: 500;
+        list-style-type: none;
+        padding: 0;
+        margin-top: 0.5rem;
+        font-size: 0.75rem;
+        color: #ef4444; /* Tailwind red-500 */
+        font-weight: 500;
       }
       .parsley-error {
-          border-color: #ef4444 !important;
-          border-width: 2px !important;
-          background-color: #f9fafb !important;
-          color: #1f2937 !important;
+        border-color: #ef4444 !important;
+        border-width: 2px !important;
+        background-color: #f9fafb !important;
+        color: #1f2937 !important;
       }
     </style>
 
@@ -60,26 +63,31 @@
     <link rel="stylesheet" href="/assets/styles.css" />
     <style>
       .custom-file-upload {
-          border: 1px dashed #e5e7eb;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          padding: 2rem;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          background: #f9fafb;
-          border-radius: 8px;
+        border: 1px dashed #e5e7eb;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #f9fafb;
+        border-radius: 8px;
       }
       .custom-file-upload:hover {
-          border-color: #C50A76;
-          background: #fdf2f8;
+        border-color: #c50a76;
+        background: #fdf2f8;
       }
     </style>
   </head>
-  <body class="antialiased overflow-x-hidden selection:bg-primary selection:text-white border-none m-0 p-0">
+  <body
+    class="antialiased overflow-x-hidden selection:bg-primary selection:text-white border-none m-0 p-0"
+  >
     <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 glass-nav transition-all duration-300 shadow-md bg-white">
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 glass-nav transition-all duration-300 shadow-md bg-white"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-24">
           <div class="flex-shrink-0 flex items-center">
@@ -93,21 +101,36 @@
           </div>
 
           <!-- Desktop Menu -->
-          <div class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider">
+          <div
+            class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider"
+          >
             <a href="home.html" class="menu-link text-gray-600">Home</a>
             <a href="video.html" class="menu-link text-gray-600">Video</a>
             <a href="models.html" class="menu-link text-gray-600">Models</a>
-            <a href="clients.html" class="menu-link text-gray-600">Our Clients</a>
-            <a href="become-a-model.html" class="menu-link text-gray-600">Become a Model</a>
-            <a href="hire-a-model.html" class="menu-link text-gray-600">Hire a Model</a>
-            <a href="application.html" class="menu-link active text-primary">Apply</a>
+            <a href="clients.html" class="menu-link text-gray-600"
+              >Our Clients</a
+            >
+            <a href="become-a-model.html" class="menu-link text-gray-600"
+              >Become a Model</a
+            >
+            <a href="hire-a-model.html" class="menu-link text-gray-600"
+              >Hire a Model</a
+            >
+            <a href="application.html" class="menu-link active text-primary"
+              >Apply</a
+            >
             <a href="faq.html" class="menu-link text-gray-600">FAQ's</a>
-            <a href="contact.html" class="menu-link text-gray-600">Contact Us</a>
+            <a href="contact.html" class="menu-link text-gray-600"
+              >Contact Us</a
+            >
           </div>
 
           <!-- Mobile menu button -->
           <div class="lg:hidden flex items-center">
-            <button id="mobile-btn" class="text-gray-600 hover:text-primary focus:outline-none">
+            <button
+              id="mobile-btn"
+              class="text-gray-600 hover:text-primary focus:outline-none"
+            >
               <i class="fas fa-bars text-2xl"></i>
             </button>
           </div>
@@ -115,17 +138,58 @@
       </div>
 
       <!-- Mobile Menu Panel -->
-      <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 shadow-xl pb-4">
-        <div class="px-6 pt-4 pb-6 flex flex-col space-y-4 text-sm font-bold uppercase tracking-wider">
-          <a href="home.html" class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition">Home</a>
-          <a href="video.html" class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition">Video</a>
-          <a href="models.html" class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition">Models</a>
-          <a href="clients.html" class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition">Our Clients</a>
-          <a href="become-a-model.html" class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition">Become a Model</a>
-          <a href="hire-a-model.html" class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition">Hire a Model</a>
-          <a href="application.html" class="text-primary border-b border-gray-50 pb-2">Apply</a>
-          <a href="faq.html" class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition">FAQ's</a>
-          <a href="contact.html" class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition">Contact Us</a>
+      <div
+        id="mobile-menu"
+        class="hidden lg:hidden bg-white border-t border-gray-100 shadow-xl pb-4"
+      >
+        <div
+          class="px-6 pt-4 pb-6 flex flex-col space-y-4 text-sm font-bold uppercase tracking-wider"
+        >
+          <a
+            href="home.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Home</a
+          >
+          <a
+            href="video.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Video</a
+          >
+          <a
+            href="models.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Models</a
+          >
+          <a
+            href="clients.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Our Clients</a
+          >
+          <a
+            href="become-a-model.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Become a Model</a
+          >
+          <a
+            href="hire-a-model.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Hire a Model</a
+          >
+          <a
+            href="application.html"
+            class="text-primary border-b border-gray-50 pb-2"
+            >Apply</a
+          >
+          <a
+            href="faq.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >FAQ's</a
+          >
+          <a
+            href="contact.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Contact Us</a
+          >
         </div>
       </div>
     </nav>
@@ -133,10 +197,15 @@
     <!-- Page Header -->
     <div class="pt-32 pb-16 bg-gray-50 border-b border-gray-100 relative z-10">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="font-serif text-4xl md:text-5xl font-bold mb-4 text-gray-900">Application Form</h1>
+        <h1
+          class="font-serif text-4xl md:text-5xl font-bold mb-4 text-gray-900"
+        >
+          Application Form
+        </h1>
         <div class="h-1 w-24 bg-primary mx-auto mb-6"></div>
         <p class="text-gray-600 text-lg md:text-xl font-light">
-            Please fill out the details below to apply. Your requirements may change based on your designation.
+          Please fill out the details below to apply. Your requirements may
+          change based on your designation.
         </p>
       </div>
     </div>
@@ -144,195 +213,227 @@
     <!-- Main Content -->
     <main class="py-16 bg-white min-h-[50vh] relative z-10">
       <div class="container mx-auto max-w-4xl px-4">
-        <form id="application-form" data-parsley-validate novalidate class="space-y-8 bg-white p-8 md:p-12 shadow-sm rounded-xl border border-gray-100">
-            
-            <!-- Designation -->
+        <form
+          id="application-form"
+          data-parsley-validate
+          novalidate
+          class="space-y-8 bg-white p-8 md:p-12 shadow-sm rounded-xl border border-gray-100"
+        >
+          <!-- Designation -->
+          <div class="relative group">
+            <label class="block text-sm font-semibold text-gray-700 mb-2"
+              >What is your designation? *</label
+            >
+            <select
+              name="designation"
+              id="designation"
+              required
+              class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800"
+            >
+              <option value="" disabled selected>
+                Select an option that best represents you
+              </option>
+              <option value="designer">Designer</option>
+              <option value="model">Model</option>
+              <option value="volunteer">Volunteer</option>
+            </select>
+          </div>
+
+          <!-- Name -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="relative group">
-              <label class="block text-sm font-semibold text-gray-700 mb-2">What is your designation? *</label>
-              <select
-                name="designation"
-                id="designation"
+              <label class="block text-sm font-semibold text-gray-700 mb-2"
+                >First Name *</label
+              >
+              <input
+                type="text"
+                name="firstName"
+                required
+                placeholder="e.g. Oz"
+                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800 placeholder:text-gray-400"
+              />
+            </div>
+            <div class="relative group">
+              <label class="block text-sm font-semibold text-gray-700 mb-2"
+                >Last Name *</label
+              >
+              <input
+                type="text"
+                name="lastName"
+                required
+                placeholder="e.g. Kahn"
+                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800 placeholder:text-gray-400"
+              />
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div class="space-y-6">
+            <div class="relative group">
+              <label class="block text-sm font-semibold text-gray-700 mb-2"
+                >Street Address *</label
+              >
+              <input
+                type="text"
+                name="address"
                 required
                 class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800"
-              >
-                <option value="" disabled selected>Select an option that best represents you</option>
-                <option value="designer">Designer</option>
-                <option value="model">Model</option>
-                <option value="volunteer">Volunteer</option>
-              </select>
+              />
             </div>
-
-            <!-- Name -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="relative group">
-                <label class="block text-sm font-semibold text-gray-700 mb-2">First Name *</label>
+                <label class="block text-sm font-semibold text-gray-700 mb-2"
+                  >City *</label
+                >
                 <input
                   type="text"
-                  name="firstName"
-                  required
-                  placeholder="e.g. Oz"
-                  class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800 placeholder:text-gray-400"
-                />
-              </div>
-              <div class="relative group">
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Last Name *</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  required
-                  placeholder="e.g. Kahn"
-                  class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800 placeholder:text-gray-400"
-                />
-              </div>
-            </div>
-
-            <!-- Address -->
-            <div class="space-y-6">
-              <div class="relative group">
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Street Address *</label>
-                <input
-                  type="text"
-                  name="address"
+                  name="city"
                   required
                   class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800"
                 />
               </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="relative group">
-                  <label class="block text-sm font-semibold text-gray-700 mb-2">City *</label>
-                  <input
-                    type="text"
-                    name="city"
-                    required
-                    class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800"
-                  />
-                </div>
-                <div class="relative group">
-                  <label class="block text-sm font-semibold text-gray-700 mb-2">Postal Code *</label>
-                  <input
-                    type="text"
-                    name="postalCode"
-                    required
-                    class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800"
-                  />
-                </div>
+              <div class="relative group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2"
+                  >Postal Code *</label
+                >
+                <input
+                  type="text"
+                  name="postalCode"
+                  required
+                  class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800"
+                />
               </div>
             </div>
+          </div>
 
-            <!-- Phone -->
-            <div class="relative group">
-              <label class="block text-sm font-semibold text-gray-700 mb-2">Phone *</label>
-              <input
-                type="tel"
-                name="phone"
-                required
-                data-parsley-type="digits"
-                data-parsley-length="[10, 10]"
-                data-parsley-length-message="This value should be a valid 10 digit phone number"
-                placeholder="e.g. 5555555555"
-                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800 placeholder:text-gray-400"
-              />
-            </div>
+          <!-- Phone -->
+          <div class="relative group">
+            <label class="block text-sm font-semibold text-gray-700 mb-2"
+              >Phone *</label
+            >
+            <input
+              type="tel"
+              name="phone"
+              required
+              data-parsley-type="digits"
+              data-parsley-length="[10, 10]"
+              data-parsley-length-message="This value should be a valid 10 digit phone number"
+              placeholder="e.g. 5555555555"
+              class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800 placeholder:text-gray-400"
+            />
+          </div>
 
-            <!-- Dynamic File Upload -->
-            <div id="file-upload-container" class="relative group" style="display: none;">
-              <label id="file-upload-label" class="block text-sm font-semibold text-gray-700 mb-2">Upload File</label>
-              <label for="file-upload-input" class="custom-file-upload">
-                <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
-                <span id="file-upload-text" class="text-sm text-gray-500 font-medium">Click to upload (Up to 4 files)</span>
-              </label>
-              <input
-                id="file-upload-input"
-                type="file"
-                name="uploadFile[]"
-                class="hidden"
-                accept="image/*,.pdf"
-                multiple
-              />
-              <div id="image-preview-container" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 w-full"></div>
-            </div>
-
-            <!-- Submit -->
-            <div class="pt-6">
-              <button
-                type="submit"
-                class="w-full bg-primary text-white px-8 py-4 uppercase tracking-widest text-sm font-semibold shadow-lg hover:bg-white hover:text-primary border border-primary transition-all duration-300"
+          <!-- Dynamic File Upload -->
+          <div
+            id="file-upload-container"
+            class="relative group"
+            style="display: none"
+          >
+            <label
+              id="file-upload-label"
+              class="block text-sm font-semibold text-gray-700 mb-2"
+              >Upload File</label
+            >
+            <label for="file-upload-input" class="custom-file-upload">
+              <i
+                class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"
+              ></i>
+              <span
+                id="file-upload-text"
+                class="text-sm text-gray-500 font-medium"
+                >Click to upload (Up to 4 files)</span
               >
-                Submit Application
-              </button>
-            </div>
+            </label>
+            <input
+              id="file-upload-input"
+              type="file"
+              name="uploadFile[]"
+              class="hidden"
+              accept="image/*,.pdf"
+              multiple
+            />
+            <div
+              id="image-preview-container"
+              class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 w-full"
+            ></div>
+          </div>
+
+          <!-- Submit -->
+          <div class="pt-6">
+            <button
+              type="submit"
+              class="w-full bg-primary text-white px-8 py-4 uppercase tracking-widest text-sm font-semibold shadow-lg hover:bg-white hover:text-primary border border-primary transition-all duration-300"
+            >
+              Submit Application
+            </button>
+          </div>
         </form>
       </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white pt-16 pb-6 border-t border-gray-200 relative z-10">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
-        <div class="text-center md:text-left">
-          <a href="index.html" class="block inline-block">
-            <img src="/assets/others/logo.png" alt="M Models" class="max-h-20 w-auto object-contain mb-4" />
-          </a>
-          <p class="text-gray-500 text-sm max-w-sm">
-            Elevating beauty and style on a global scale. <br />
-            Toronto • Vancouver • Calgary • Japan.
-          </p>
-        </div>
-
-        <div class="flex space-x-4 mt-6 md:mt-4">
-          <a href="#" class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary hover:bg-gray-50 transition-all"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary hover:bg-gray-50 transition-all"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary hover:bg-gray-50 transition-all"><i class="fab fa-facebook-f"></i></a>
-        </div>
-      </div>
-      <div class="text-center mt-12 border-t border-gray-200 pt-8">
-        <p class="text-gray-600 text-sm">© 2026 M Models Global. All rights reserved.</p>
+    <footer class="bg-white py-12 border-t border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <a href="index.html" class="block mb-6"
+          ><img
+            src="/assets/others/logo.png"
+            alt="M Models"
+            class="max-h-16 w-auto object-contain mx-auto"
+        /></a>
+        <p class="text-gray-400 text-xs">
+          © 2026 M Models Global. All rights reserved.
+        </p>
       </div>
     </footer>
-
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Parsley JS -->
     <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
-    
+
     <!-- Global JavaScript -->
     <script src="/assets/main.js"></script>
     <script>
-      $(document).ready(function() {
-        const $designation = $('#designation');
-        const $fileContainer = $('#file-upload-container');
-        const $fileLabel = $('#file-upload-label');
-        const $fileInput = $('#file-upload-input');
-        const $fileText = $('#file-upload-text');
+      $(document).ready(function () {
+        const $designation = $("#designation");
+        const $fileContainer = $("#file-upload-container");
+        const $fileLabel = $("#file-upload-label");
+        const $fileInput = $("#file-upload-input");
+        const $fileText = $("#file-upload-text");
 
         function getT(text) {
-          const l = localStorage.getItem('mmodels_lang') || 'en';
-          return (l !== 'en' && typeof i18nDict !== 'undefined' && i18nDict[text] && i18nDict[text][l]) ? i18nDict[text][l] : text;
+          const l = localStorage.getItem("mmodels_lang") || "en";
+          return l !== "en" &&
+            typeof i18nDict !== "undefined" &&
+            i18nDict[text] &&
+            i18nDict[text][l]
+            ? i18nDict[text][l]
+            : text;
         }
 
-        $designation.on('change', function() {
+        $designation.on("change", function () {
           const val = $(this).val();
-          
-          if (val === 'model') {
+
+          if (val === "model") {
             $fileContainer.slideDown();
-            $fileLabel.text(getT('Upload Image (Headshot) *'));
-            $fileInput.attr('required', true);
-            $fileInput.attr('accept', 'image/*');
-          } else if (val === 'designer') {
+            $fileLabel.text(getT("Upload Image (Headshot) *"));
+            $fileInput.attr("required", true);
+            $fileInput.attr("accept", "image/*");
+          } else if (val === "designer") {
             $fileContainer.slideDown();
-            $fileLabel.text(getT('Upload Look Book *'));
-            $fileInput.attr('required', true);
-            $fileInput.attr('accept', 'image/*,.pdf');
+            $fileLabel.text(getT("Upload Look Book *"));
+            $fileInput.attr("required", true);
+            $fileInput.attr("accept", "image/*,.pdf");
           } else {
             $fileContainer.slideUp();
-            $fileInput.removeAttr('required');
+            $fileInput.removeAttr("required");
           }
         });
 
         let base64Files = [];
         const fileDataTransfer = new DataTransfer();
 
-        $fileInput.on('change', function(e) {
+        $fileInput.on("change", function (e) {
           const files = e.target.files;
 
           // Accumulate new files
@@ -340,23 +441,26 @@
             // Check if file is already added to prevent duplicates
             let isDuplicate = false;
             for (let j = 0; j < fileDataTransfer.items.length; j++) {
-                if (fileDataTransfer.items[j].getAsFile().name === files[i].name) {
-                    isDuplicate = true; break;
-                }
+              if (
+                fileDataTransfer.items[j].getAsFile().name === files[i].name
+              ) {
+                isDuplicate = true;
+                break;
+              }
             }
-            
+
             if (!isDuplicate) {
-                if (fileDataTransfer.items.length < 4) {
-                    fileDataTransfer.items.add(files[i]);
-                } else {
-                    Swal.fire({
-                      title: 'Limit Reached',
-                      text: getT('You can only upload a maximum of 4 files.'),
-                      icon: 'warning',
-                      confirmButtonColor: '#C50A76'
-                    });
-                    break;
-                }
+              if (fileDataTransfer.items.length < 4) {
+                fileDataTransfer.items.add(files[i]);
+              } else {
+                Swal.fire({
+                  title: "Limit Reached",
+                  text: getT("You can only upload a maximum of 4 files."),
+                  icon: "warning",
+                  confirmButtonColor: "#C50A76",
+                });
+                break;
+              }
             }
           }
 
@@ -364,38 +468,38 @@
           $fileInput[0].files = fileDataTransfer.files;
           const currentFiles = $fileInput[0].files;
 
-          const $previewContainer = $('#image-preview-container');
+          const $previewContainer = $("#image-preview-container");
           $previewContainer.empty();
           base64Files = [];
 
           if (currentFiles.length === 1) {
             $fileText.text(currentFiles[0].name);
           } else if (currentFiles.length > 1) {
-            const fileStr = getT('files selected') || 'files selected';
-            $fileText.text(currentFiles.length + ' ' + fileStr);
+            const fileStr = getT("files selected") || "files selected";
+            $fileText.text(currentFiles.length + " " + fileStr);
           } else {
-            $fileText.text(getT('Click to upload (Up to 4 files)'));
+            $fileText.text(getT("Click to upload (Up to 4 files)"));
           }
 
-          Array.from(currentFiles).forEach(file => {
+          Array.from(currentFiles).forEach((file) => {
             const reader = new FileReader();
-            reader.onload = function(event) {
+            reader.onload = function (event) {
               const base64String = event.target.result;
               base64Files.push({
                 name: file.name,
                 type: file.type,
                 size: file.size,
-                base64: base64String
+                base64: base64String,
               });
 
-              if (file.type.startsWith('image/')) {
+              if (file.type.startsWith("image/")) {
                 $previewContainer.append(`
                   <div class="relative rounded-lg overflow-hidden border border-gray-200 aspect-square shadow-sm">
                     <img src="${base64String}" class="w-full h-full object-cover" alt="Preview" />
                   </div>
                 `);
-              } else if (file.type === 'application/pdf') {
-                 $previewContainer.append(`
+              } else if (file.type === "application/pdf") {
+                $previewContainer.append(`
                   <div class="relative rounded-lg overflow-hidden border border-gray-200 aspect-square flex items-center justify-center bg-gray-50 text-gray-400 shadow-sm">
                     <div class="text-center">
                       <i class="fas fa-file-pdf text-3xl mb-1 text-red-400"></i>
@@ -409,45 +513,47 @@
           });
         });
 
-        $('#application-form').on('submit', function(e) {
+        $("#application-form").on("submit", function (e) {
           e.preventDefault();
-          
+
           if (!$(this).parsley().isValid()) {
-             return;
+            return;
           }
 
           const formDataArray = $(this).serializeArray();
           const formDataObj = {};
-          formDataArray.forEach(item => {
-              if(item.name !== 'uploadFile[]') {
-                  formDataObj[item.name] = item.value;
-              }
+          formDataArray.forEach((item) => {
+            if (item.name !== "uploadFile[]") {
+              formDataObj[item.name] = item.value;
+            }
           });
 
           formDataObj.files = base64Files;
 
-          console.log('--- Form Submitted Successfully ---');
-          console.log('Payload Data (including Base64):', formDataObj);
+          console.log("--- Form Submitted Successfully ---");
+          console.log("Payload Data (including Base64):", formDataObj);
 
           // Reset Form Data
           $(this)[0].reset();
           $(this).parsley().reset();
-          
+
           // Reset File Upload State
           fileDataTransfer.items.clear();
           base64Files = [];
-          $('#image-preview-container').empty();
-          $fileText.text(getT('Click to upload (Up to 4 files)'));
-          $fileInput.val('');
+          $("#image-preview-container").empty();
+          $fileText.text(getT("Click to upload (Up to 4 files)"));
+          $fileInput.val("");
           $fileContainer.slideUp();
-          
+
           // Show Success SweetAlert
-          const successMsg = getT('Application submitted successfully!') || 'Application submitted successfully!';
+          const successMsg =
+            getT("Application submitted successfully!") ||
+            "Application submitted successfully!";
           Swal.fire({
-            title: 'Success!',
+            title: "Success!",
             text: successMsg,
-            icon: 'success',
-            confirmButtonColor: '#C50A76'
+            icon: "success",
+            confirmButtonColor: "#C50A76",
           });
         });
       });

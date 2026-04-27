@@ -53,7 +53,6 @@
             class="hidden lg:flex items-center space-x-6 text-sm font-bold uppercase tracking-wider"
           >
             <a href="home.html" class="menu-link text-gray-600">Home</a>
-            <!-- <a href="news.html" class="menu-link text-gray-600">News</a> -->
             <a href="video.html" class="menu-link text-gray-600">Video</a>
             <a href="models.html" class="menu-link text-gray-600">Models</a>
             <a href="clients.html" class="menu-link text-gray-600"
@@ -65,6 +64,7 @@
             <a href="hire-a-model.html" class="menu-link text-gray-600"
               >Hire a Model</a
             >
+            <a href="application.html" class="menu-link text-gray-600">Apply</a>
             <a href="faq.html" class="menu-link text-gray-600">FAQ's</a>
             <a href="contact.html" class="menu-link active text-primary"
               >Contact Us</a
@@ -86,12 +86,47 @@
         >
           <a
             href="home.html"
-            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
             >Home</a
           >
           <a
+            href="video.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Video</a
+          >
+          <a
+            href="models.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Models</a
+          >
+          <a
+            href="clients.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Our Clients</a
+          >
+          <a
+            href="become-a-model.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Become a Model</a
+          >
+          <a
+            href="hire-a-model.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Hire a Model</a
+          >
+          <a
+            href="application.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >Apply</a
+          >
+          <a
+            href="faq.html"
+            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
+            >FAQ's</a
+          >
+          <a
             href="contact.html"
-            class="text-primary border-b border-gray-50 pb-2"
+            class="text-primary border-b border-gray-50 pb-2 transition"
             >Contact Us</a
           >
         </div>
@@ -292,20 +327,14 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white pt-16 pb-6 border-t border-gray-200">
-      <div
-        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center"
-      >
+    <footer class="bg-white py-12 border-t border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 text-center">
         <a href="index.html" class="block mb-6"
           ><img
             src="/assets/others/logo.png"
             alt="M Models"
-            class="max-h-16 w-auto object-contain"
+            class="max-h-16 w-auto object-contain mx-auto"
         /></a>
-        <p class="text-gray-500 text-sm max-w-sm text-center mb-6">
-          Elevating beauty and style on a global scale. <br />
-          Toronto • Vancouver • Calgary • Japan.
-        </p>
         <p class="text-gray-400 text-xs">
           © 2026 M Models Global. All rights reserved.
         </p>
@@ -314,20 +343,20 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/assets/main.js"></script>
     <script>
-      $(document).ready(function() {
-        $('form').on('submit', function(e) {
+      $(document).ready(function () {
+        $("form").on("submit", function (e) {
           e.preventDefault();
           if (!$(this).parsley().isValid()) {
-             return;
+            return;
           }
-          
+
           Swal.fire({
-            title: 'Success!',
-            text: 'Your message has been sent successfully.',
-            icon: 'success',
-            confirmButtonColor: '#C50A76'
+            title: "Success!",
+            text: "Your message has been sent successfully.",
+            icon: "success",
+            confirmButtonColor: "#C50A76",
           });
-          
+
           $(this)[0].reset();
           $(this).parsley().reset();
         });
