@@ -444,6 +444,7 @@ $(document).ready(function() {
             { name: 'Video', url: 'video.html' },
             { name: 'Models', url: 'models.html' },
             { name: 'Our Clients', url: 'clients.html' },
+            { name: 'Our Works', url: 'our-works.html' },
             { name: 'Become a Model', url: 'become-a-model.html' },
             { name: 'Hire a Model', url: 'hire-a-model.html' },
             { name: 'Apply', url: 'application.html' },
