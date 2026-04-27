@@ -167,9 +167,14 @@
     <section class="py-16 bg-gray-50 relative z-10" id="apply">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <form
+          id="becomeAModelForm"
           data-parsley-validate
+          action="process-form.php"
+          method="POST"
+          enctype="multipart/form-data"
           class="space-y-8 form-card p-8 md:p-12 rounded-lg"
         >
+          <input type="hidden" name="form_type" value="become_a_model" />
           <!-- Personal Info -->
           <div class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -181,6 +186,7 @@
                   <div class="w-1/2">
                     <input
                       type="text"
+                      name="first_name"
                       required
                       class="w-full form-input px-4 py-3 text-sm rounded-md"
                       placeholder="First Name"
@@ -189,6 +195,7 @@
                   <div class="w-1/2">
                     <input
                       type="text"
+                      name="last_name"
                       required
                       class="w-full form-input px-4 py-3 text-sm rounded-md"
                       placeholder="Last Name"
@@ -203,6 +210,7 @@
                 >
                 <input
                   type="email"
+                  name="email"
                   required
                   class="w-full form-input px-4 py-3 text-sm rounded-md"
                   placeholder="ex: myname@example.com"
@@ -219,6 +227,7 @@
                   <div class="w-1/3">
                     <input
                       type="text"
+                      name="area_code"
                       required
                       class="w-full form-input px-4 py-3 text-sm rounded-md text-center"
                       placeholder="Area"
@@ -228,6 +237,7 @@
                   <div class="w-2/3">
                     <input
                       type="text"
+                      name="phone_number"
                       required
                       class="w-full form-input px-4 py-3 text-sm rounded-md block"
                       placeholder="Phone Number"
@@ -292,6 +302,7 @@
               >
               <input
                 type="number"
+                name="age"
                 required
                 class="w-full form-input px-4 py-3 text-sm rounded-md"
                 placeholder=""
@@ -315,6 +326,7 @@
                 <div class="w-2/3">
                   <input
                     type="text"
+                    name="height"
                     required
                     class="w-full form-input px-3 py-2 text-sm rounded-md text-center"
                   />
@@ -448,6 +460,7 @@
               >
               <select
                 id="referral-select"
+                name="referral_source"
                 required
                 class="w-full form-input px-4 py-3 text-sm rounded-md bg-white border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
               >
@@ -472,6 +485,7 @@
               <input
                 type="text"
                 id="other-referral-input"
+                name="referral_other"
                 class="w-full form-input px-4 py-3 text-sm rounded-md"
                 placeholder="How did you hear about us?"
               />
@@ -511,21 +525,48 @@
       $(document).ready(function () {
         $("form").on("submit", function (e) {
           e.preventDefault();
-          if (!$(this).parsley().isValid()) {
+          const $form = $(this);
+          if (!$form.parsley().isValid()) {
             return;
           }
 
-          Swal.fire({
-            title: "Success!",
-            text: "Your application has been submitted successfully.",
-            icon: "success",
-            confirmButtonColor: "#C50A76",
-          });
+          const formData = new FormData(this);
 
-          $(this)[0].reset();
-          $(this).parsley().reset();
-          $("#other-referral-container").addClass("hidden");
-          $("#other-referral-input").removeAttr("required").val("");
+          // Show loading state
+          const submitBtn = $form.find('button[type="submit"]');
+          const originalText = submitBtn.text();
+          submitBtn.prop('disabled', true).text('Submitting...');
+
+          $.ajax({
+            url: "process-form.php",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+              Swal.fire({
+                title: "Success!",
+                text: "Your application has been submitted successfully.",
+                icon: "success",
+                confirmButtonColor: "#C50A76",
+              });
+              $form[0].reset();
+              $form.parsley().reset();
+              $("#other-referral-container").addClass("hidden");
+              $("#other-referral-input").removeAttr("required").val("");
+            },
+            error: function () {
+              Swal.fire({
+                title: "Error!",
+                text: "Something went wrong. Please try again later.",
+                icon: "error",
+                confirmButtonColor: "#C50A76",
+              });
+            },
+            complete: function() {
+              submitBtn.prop('disabled', false).text(originalText);
+            }
+          });
         });
 
         // Referral "Other" logic
