@@ -248,7 +248,7 @@ const i18nDict = {
     'Representing Excellence in Every Frame': { 'fr': 'Représenter l\'Excellence dans Chaque Image', 'ja': 'すべてのフレームで卓越性を表現する' },
     'OUR': { 'fr': 'NOTRE', 'ja': '私たちの' },
     'WORKS': { 'fr': 'RÉALISATIONS', 'ja': '実績' },
-    'Our Works': { 'fr': 'Nos Réalisations', 'ja': '私たちの実績' },
+    'Our Works': { 'fr': 'Nos Réalisations', 'ja': '実績' },
     'Gallery': { 'fr': 'Galerie', 'ja': 'ギャラリー' },
     'Instagram': { 'fr': 'Instagram', 'ja': 'インスタグラム' },
     'Latest Reels': { 'fr': 'Derniers Reels', 'ja': '最新のリール' },
