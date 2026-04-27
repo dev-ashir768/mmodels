@@ -418,6 +418,61 @@ function applyLanguage(lang) {
     $('html').attr('lang', lang);
     localStorage.setItem('mmodels_lang', lang);
     $('#lang-switcher').val(lang);
+
+    // Global Parsley translations if available
+    if (window.Parsley) {
+        window.Parsley.addMessages('fr', {
+            defaultMessage: "Cette valeur semble être non valide.",
+            type: {
+                email: "Cette valeur n'est pas une adresse courriel valide.",
+                url: "Cette valeur n'est pas une URL valide.",
+                number: "Cette valeur doit être un nombre.",
+                integer: "Cette valeur doit être un entier.",
+                digits: "Cette valeur doit être numérique.",
+                alphanum: "Cette valeur doit être alphanumérique."
+            },
+            notblank: "Cette valeur ne peut pas être vide.",
+            required: "Ce champ est obligatoire.",
+            pattern: "Cette valeur semble mal formatée.",
+            min: "Cette valeur doit être supérieure ou égale à %s.",
+            max: "Cette valeur doit être inférieure ou égale à %s.",
+            range: "Cette valeur doit être comprise entre %s et %s.",
+            minlength: "Cette chaîne est trop courte. Elle doit avoir au moins %s caractères.",
+            maxlength: "Cette chaîne est trop longue. Elle doit avoir au plus %s caractères.",
+            length: "Cette chaîne doit avoir entre %s et %s caractères.",
+            mincheck: "Vous devez sélectionner au moins %s choix.",
+            maxcheck: "Vous devez sélectionner au plus %s choix.",
+            rangecheck: "Vous devez sélectionner entre %s et %s choix.",
+            equalto: "Cette valeur doit être identique."
+        });
+
+        window.Parsley.addMessages('ja', {
+            defaultMessage: "無効な値です。",
+            type: {
+                email: "有効なメールアドレスを入力してください。",
+                url: "有効なURLを入力してください。",
+                number: "数値を入力してください。",
+                integer: "整数を入力してください。",
+                digits: "数字を入力してください。",
+                alphanum: "英数字を入力してください。"
+            },
+            notblank: "空欄にすることはできません。",
+            required: "このフィールドは必須です。",
+            pattern: "値が正しくありません。",
+            min: "%s 以上の値を入力してください。",
+            max: "%s 以下の値を入力してください。",
+            range: "%s から %s までの値を入力してください。",
+            minlength: "%s 文字以上で入力してください。",
+            maxlength: "%s 文字以下で入力してください。",
+            length: "%s から %s 文字の間で入力してください。",
+            mincheck: "%s 個以上選択してください。",
+            maxcheck: "%s 個以下選択してください。",
+            rangecheck: "%s から %s 個の間で選択してください。",
+            equalto: "値が一致しません。"
+        });
+
+        window.Parsley.setLocale(lang);
+    }
 }
 
 $(document).ready(function() {
