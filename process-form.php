@@ -10,10 +10,17 @@ $admin_email = 'toolgram3@gmail.com'; // Admin notification email
 $smtp_user = 'toolgram3@gmail.com';
 $smtp_pass = 'fihwrjdzscwhx4xx';
 
-// Set timezone
-date_default_timezone_set('America/Toronto');
+// Error Reporting for Debugging (Remove in production)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Ensure data directory exists
+    if (!file_exists('data')) {
+        mkdir('data', 0755, true);
+    }
+
     $form_type = $_POST['form_type'] ?? 'general';
     $timestamp = date('Y-m-d H:i:s');
     
@@ -24,6 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Add metadata
     $row = [$timestamp, $form_type];
     foreach ($data as $key => $value) {
+        // Handle arrays (e.g., multi-select or checkboxes)
+        if (is_array($value)) {
+            $value = implode('; ', $value);
+        }
         $row[] = str_replace(["\r", "\n", ","], [" ", " ", ";"], $value);
     }
 
@@ -40,25 +51,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         fputcsv($file_handle, $row);
         fclose($file_handle);
+    } else {
+        header('Content-Type: application/json');
+        echo json_encode(['status' => 'error', 'message' => 'Cannot open CSV file for writing. Check folder permissions.']);
+        exit;
     }
 
     // Email Notification Logic
-    // Note: To use SMTP in PHP properly without a library like PHPMailer is complex.
-    // For now, we'll use native mail() if available, but for Gmail SMTP, PHPMailer is recommended.
-    // I will provide the CSV saving logic which is the primary request.
-    
     $subject = "New Form Submission: " . ucwords(str_replace('_', ' ', $form_type));
     $message = "You have a new submission from your website.\n\n";
     $message .= "Form Type: $form_type\n";
     $message .= "Time: $timestamp\n\n";
     $message .= "Details:\n";
     foreach ($data as $key => $value) {
+        if (is_array($value)) $value = implode('; ', $value);
         $message .= ucwords(str_replace('_', ' ', $key)) . ": $value\n";
     }
     
     $headers = "From: webmaster@mmodels.com\r\n";
-    
-    // Attempting mail() - Note: This might not work on local dev environments without a mail server.
     @mail($admin_email, $subject, $message, $headers);
 
     // Return success response for AJAX
