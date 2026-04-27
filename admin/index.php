@@ -1,13 +1,14 @@
 <?php
 /**
- * M Models - Admin Dashboard
- * View and Manage Form Submissions
+ * M Models - Premium Admin Dashboard
+ * High-end UI for Managing Form Submissions
  */
 
 session_start();
 
-// Simple Password Protection
-$admin_pass = 'mmodels2026'; // Default password
+// Configuration
+$admin_pass = 'mmodels2026';
+$csv_file = '../data/submissions.csv';
 
 if (isset($_GET['logout'])) {
     session_destroy();
@@ -19,10 +20,11 @@ if (isset($_POST['password'])) {
     if ($_POST['password'] === $admin_pass) {
         $_SESSION['loggedin'] = true;
     } else {
-        $error = "Invalid password";
+        $error = "Access Denied. Incorrect password.";
     }
 }
 
+// Login Screen UI
 if (!isset($_SESSION['loggedin'])) {
     ?>
     <!DOCTYPE html>
@@ -30,17 +32,43 @@ if (!isset($_SESSION['loggedin'])) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin Login - M Models</title>
+        <title>Admin Login | M Models</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <style>
+            body { font-family: 'Inter', sans-serif; }
+            .bg-mesh {
+                background-color: #ffffff;
+                background-image: radial-gradient(at 0% 0%, hsla(327,87%,53%,0.15) 0, transparent 50%), 
+                                  radial-gradient(at 50% 0%, hsla(225,39%,30%,0.05) 0, transparent 50%);
+            }
+        </style>
     </head>
-    <body class="bg-gray-100 flex items-center justify-center h-screen">
-        <div class="bg-white p-8 rounded-lg shadow-md w-96">
-            <h1 class="text-2xl font-bold mb-6 text-center text-[#C50A76]">M Models Admin</h1>
-            <?php if (isset($error)) echo "<p class='text-red-500 text-sm mb-4'>$error</p>"; ?>
-            <form method="POST">
-                <input type="password" name="password" placeholder="Enter Password" class="w-full border p-2 rounded mb-4 outline-none focus:border-[#C50A76]" required>
-                <button type="submit" class="w-full bg-[#C50A76] text-white p-2 rounded hover:bg-black transition">Login</button>
-            </form>
+    <body class="bg-mesh min-h-screen flex items-center justify-center p-6">
+        <div class="w-full max-w-md">
+            <div class="text-center mb-10">
+                <img src="/assets/others/logo.png" alt="M Models" class="h-16 mx-auto mb-4">
+                <h1 class="text-2xl font-bold text-gray-900">Agency Dashboard</h1>
+                <p class="text-gray-500 mt-2 text-sm">Secure access for authorized personnel only</p>
+            </div>
+            
+            <div class="bg-white/80 backdrop-blur-xl p-10 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white">
+                <?php if (isset($error)) echo "<div class='bg-red-50 text-red-600 p-4 rounded-xl text-xs font-semibold mb-6 border border-red-100'>$error</div>"; ?>
+                
+                <form method="POST" class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 ml-1">Password</label>
+                        <input type="password" name="password" 
+                               class="w-full bg-gray-50 border-0 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-[#C50A76]/20 transition-all text-sm" 
+                               placeholder="••••••••" required autofocus>
+                    </div>
+                    <button type="submit" 
+                            class="w-full bg-[#C50A76] text-white py-4 rounded-2xl font-bold uppercase tracking-widest text-xs hover:bg-black transition-all duration-300 shadow-lg shadow-[#C50A76]/20 transform hover:-translate-y-1">
+                        Authenticate
+                    </button>
+                </form>
+            </div>
+            <p class="text-center text-gray-400 text-[10px] mt-8 uppercase tracking-[0.2em]">© 2026 M Models & Talent Agency</p>
         </div>
     </body>
     </html>
@@ -48,15 +76,68 @@ if (!isset($_SESSION['loggedin'])) {
     exit;
 }
 
-$csv_file = '../data/submissions.csv';
+if (isset($_GET['delete'])) {
+    $delete_idx = (int)$_GET['delete'];
+    $all_data = [];
+    if (file_exists($csv_file)) {
+        if (($handle = fopen($csv_file, "r")) !== FALSE) {
+            while (($row = fgetcsv($handle, 10000, ",")) !== FALSE) {
+                $all_data[] = $row;
+            }
+            fclose($handle);
+        }
+        
+        // Remove the entry (adjusted for newest-first display in UI vs file index)
+        // Note: $data in UI is array_reverse of $all_data (minus headers)
+        // File index = count(all_data) - 1 - ui_index (if headers exist)
+        // Better: just use the timestamp to match.
+    }
+}
+
+// Improved Deletion Logic using Timestamp
+if (isset($_POST['delete_timestamp'])) {
+    $ts = $_POST['delete_timestamp'];
+    $new_data = [];
+    if (file_exists($csv_file)) {
+        if (($handle = fopen($csv_file, "r")) !== FALSE) {
+            $header = fgetcsv($handle, 10000, ",");
+            $new_data[] = $header;
+            while (($row = fgetcsv($handle, 10000, ",")) !== FALSE) {
+                if ($row[0] !== $ts) {
+                    $new_data[] = $row;
+                }
+            }
+            fclose($handle);
+            
+            // Rewrite CSV
+            $handle = fopen($csv_file, "w");
+            foreach ($new_data as $row) {
+                fputcsv($handle, $row);
+            }
+            fclose($handle);
+        }
+    }
+    header('Location: index.php');
+    exit;
+}
+
+// Data Processing
 $data = [];
+$total_submissions = 0;
+$today_submissions = 0;
+$current_date = date('Y-m-d');
+
 if (file_exists($csv_file)) {
     if (($handle = fopen($csv_file, "r")) !== FALSE) {
-        while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        $headers = fgetcsv($handle, 10000, ","); // Keep headers separate
+        while (($row = fgetcsv($handle, 10000, ",")) !== FALSE) {
             $data[] = $row;
+            $total_submissions++;
+            if (strpos($row[0], $current_date) === 0) $today_submissions++;
         }
         fclose($handle);
     }
+    $data = array_reverse($data); // Newest first
 }
 ?>
 <!DOCTYPE html>
@@ -64,60 +145,183 @@ if (file_exists($csv_file)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submissions Dashboard - M Models</title>
+    <title>Submissions | M Models Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
+        .sidebar { background-color: #0F172A; }
         .dataTables_wrapper .dataTables_paginate .paginate_button.current {
             background: #C50A76 !important;
             color: white !important;
             border-color: #C50A76 !important;
+            border-radius: 12px;
         }
+        .dataTables_wrapper .dataTables_filter input {
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 8px 16px;
+            outline: none;
+            margin-bottom: 20px;
+        }
+        table.dataTable thead th { border-bottom: 1px solid #E2E8F0 !important; }
         .text-primary { color: #C50A76; }
+        .bg-primary { background-color: #C50A76; }
     </style>
 </head>
-<body class="bg-gray-50">
-    <nav class="bg-white shadow-sm border-b p-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold text-primary">M Models Dashboard</h1>
-            <a href="?logout=1" class="text-sm text-gray-500 hover:text-red-500">Logout</a>
+<body class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="sidebar w-64 fixed inset-y-0 left-0 z-50 hidden lg:flex flex-col">
+        <div class="p-8">
+            <img src="/assets/others/logo.png" alt="Logo" class="h-10 brightness-0 invert opacity-90">
         </div>
-    </nav>
+        
+        <nav class="flex-1 px-4 space-y-2 mt-4">
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 bg-white/10 text-white rounded-xl transition">
+                <i class="fas fa-th-large w-5"></i>
+                <span class="text-sm font-semibold">Submissions</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
+                <i class="fas fa-users w-5"></i>
+                <span class="text-sm font-semibold">Models</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
+                <i class="fas fa-cog w-5"></i>
+                <span class="text-sm font-semibold">Settings</span>
+            </a>
+        </nav>
 
-    <main class="max-w-7xl mx-auto py-10 px-4">
-        <div class="bg-white rounded-lg shadow-sm border p-6">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-lg font-bold text-gray-800">Form Submissions</h2>
-                <a href="../data/submissions.csv" download class="text-sm bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Download CSV</a>
+        <div class="p-6 border-t border-white/10">
+            <a href="?logout=1" class="flex items-center space-x-3 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-xl transition">
+                <i class="fas fa-sign-out-alt w-5"></i>
+                <span class="text-sm font-semibold">Log Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 min-w-0 lg:ml-64 p-6 md:p-10 flex flex-col h-screen overflow-y-auto">
+        <!-- Top Header -->
+        <header class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4 shrink-0">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Form Submissions</h1>
+                <p class="text-gray-500 text-sm mt-1">Review and manage your agency applications</p>
             </div>
+            
+            <div class="flex items-center gap-3">
+                <a href="../data/submissions.csv" download class="flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-2xl text-sm font-semibold hover:bg-gray-50 transition shadow-sm">
+                    <i class="fas fa-download text-xs"></i> Export CSV
+                </a>
+                <div class="h-12 w-12 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#C50A76]/20">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </header>
 
-            <div class="overflow-x-auto">
-                <table id="submissionsTable" class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                        <tr>
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 shrink-0">
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Total Entries</span>
+                </div>
+                <div class="text-3xl font-bold text-gray-900"><?php echo $total_submissions; ?></div>
+            </div>
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">New Today</span>
+                </div>
+                <div class="text-3xl font-bold text-gray-900"><?php echo $today_submissions; ?></div>
+            </div>
+            <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400">System Status</span>
+                </div>
+                <div class="text-sm font-bold text-green-500 uppercase tracking-widest">Active & Secure</div>
+            </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex-1 min-h-0 flex flex-col">
+            <div class="p-8 overflow-y-auto flex-1">
+                <div class="overflow-x-auto">
+                    <table id="submissionsTable" class="w-full text-sm min-w-[1500px]">
+                        <thead class="text-gray-400 uppercase text-[10px] font-bold tracking-[0.2em] bg-gray-50/50">
+                            <tr>
+                                <?php 
+                                if (!empty($headers)) {
+                                    foreach ($headers as $header) {
+                                        $label = $header;
+                                        if (strpos(strtolower($header), 'photo') !== false) {
+                                            $label = str_replace('photo', 'Image ', strtolower($header));
+                                        }
+                                        echo "<th class='px-6 py-5 text-left'>$label</th>";
+                                    }
+                                    echo "<th class='px-6 py-5 text-left'>Actions</th>";
+                                }
+                                ?>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
                             <?php 
                             if (!empty($data)) {
-                                foreach ($data[0] as $header) {
-                                    echo "<th class='px-4 py-3'>$header</th>";
+                                foreach ($data as $row) {
+                                    $row_ts = $row[0]; // First col is timestamp
+                                    echo "<tr class='hover:bg-gray-50/50 transition-colors'>";
+                                    foreach ($row as $cell) {
+                                        if (strpos($cell, 'data:image/') === 0) {
+                                            // Handle Image Cell
+                                            echo "<td class='px-6 py-4'>
+                                                    <div class='flex flex-col items-center gap-1 min-w-[70px]'>
+                                                        <a href='$cell' target='_blank' class='w-12 h-12 block group relative'>
+                                                            <img src='$cell' class='w-full h-full object-cover rounded-lg border border-gray-100 shadow-sm transition-all group-hover:ring-2 group-hover:ring-primary/30' alt='Photo'>
+                                                            <div class='absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center text-white text-[8px]'>
+                                                                <i class='fas fa-eye'></i>
+                                                            </div>
+                                                        </a>
+                                                        <div class='flex gap-2 mt-1'>
+                                                            <a href='$cell' target='_blank' class='text-[9px] text-gray-400 hover:text-blue-500 font-bold tracking-tighter uppercase'>View</a>
+                                                            <a href='$cell' download='mmodels_photo.png' class='text-[9px] text-gray-400 hover:text-green-500 font-bold tracking-tighter uppercase'>Save</a>
+                                                        </div>
+                                                    </div>
+                                                  </td>";
+                                        } else {
+                                            $display = htmlspecialchars($cell);
+                                            if ($cell == 'become_a_model') {
+                                                $display = "<span class='px-3 py-1 bg-pink-50 text-[#C50A76] rounded-full text-[10px] font-bold uppercase tracking-tighter'>Model App</span>";
+                                            } elseif (strpos($display, 'No photo') !== false || strpos($display, 'Not sent') !== false) {
+                                                $display = "<span class='text-gray-300 italic text-[10px]'>Empty</span>";
+                                            }
+                                            echo "<td class='px-6 py-4 font-medium text-gray-700 whitespace-nowrap'>$display</td>";
+                                        }
+                                    }
+                                    // Add Actions Column
+                                    echo "<td class='px-6 py-4 text-center'>
+                                            <form method='POST' onsubmit='return confirm(\"Permanently delete this entry?\");' class='inline-block'>
+                                                <input type='hidden' name='delete_timestamp' value='$row_ts'>
+                                                <button type='submit' class='w-8 h-8 flex items-center justify-center rounded-lg bg-red-50 text-red-400 hover:bg-red-500 hover:text-white transition-all shadow-sm'>
+                                                    <i class='fas fa-trash-alt text-xs'></i>
+                                                </button>
+                                            </form>
+                                          </td>";
+                                    echo "</tr>";
                                 }
                             }
                             ?>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                        if (count($data) > 1) {
-                            for ($i = 1; $i < count($data); $i++) {
-                                echo "<tr class='bg-white border-b hover:bg-gray-50'>";
-                                foreach ($data[$i] as $cell) {
-                                    echo "<td class='px-4 py-3'>" . htmlspecialchars($cell) . "</td>";
-                                }
-                                echo "</tr>";
-                            }
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </main>
@@ -128,7 +332,16 @@ if (file_exists($csv_file)) {
         $(document).ready(function() {
             $('#submissionsTable').DataTable({
                 order: [[0, 'desc']],
-                pageLength: 25,
+                pageLength: 10,
+                dom: '<"flex flex-col md:flex-row justify-between mb-4"f>rt<"flex flex-col md:flex-row justify-between mt-6 items-center"ip>',
+                language: {
+                    search: "",
+                    searchPlaceholder: "Search submissions...",
+                    paginate: {
+                        next: '<i class="fas fa-chevron-right text-xs"></i>',
+                        previous: '<i class="fas fa-chevron-left text-xs"></i>'
+                    }
+                }
             });
         });
     </script>
