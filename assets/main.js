@@ -397,6 +397,12 @@ const i18nDict = {
     fr: "Showcase Points Forts",
     ja: "ショーケース・キャンペーンハイライト",
   },
+  "Campaign / 2026": { fr: "Campagne / 2026", ja: "キャンペーン / 2026" },
+  "Fragrance / 2026": { fr: "Parfum / 2026", ja: "フレグランス / 2026" },
+  "View All Campaigns": {
+    fr: "Voir toutes les campagnes",
+    ja: "すべてのキャンペーンを見る",
+  },
   "This value is required.": {
     fr: "Ce champ est obligatoire.",
     ja: "このフィールドは必須です。",
