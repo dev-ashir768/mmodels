@@ -315,19 +315,23 @@ if (file_exists($csv_file)) {
                                     $row_ts = $row[0]; // First col is timestamp
                                     echo "<tr class='hover:bg-gray-50/50 transition-colors'>";
                                     foreach ($row as $cell) {
-                                        if (strpos($cell, 'data:image/') === 0) {
-                                            // Handle Image Cell
+                                        if (is_string($cell) && strpos($cell, 'data:') === 0 && strpos($cell, ';base64,') !== false) {
+                                            // Handle File Cell
+                                            $is_image = strpos($cell, 'data:image/') === 0;
+                                            $preview = $is_image 
+                                                ? "<img src='$cell' class='w-full h-full object-cover rounded-lg border border-gray-100 shadow-sm transition-all group-hover:ring-2 group-hover:ring-primary/30' alt='Photo'>"
+                                                : "<div class='w-full h-full rounded-lg border border-gray-100 bg-gray-50 flex items-center justify-center text-gray-400 group-hover:ring-2 group-hover:ring-primary/30'><i class='fas fa-file-alt text-xl'></i></div>";
+                                                
                                             echo "<td class='px-6 py-4'>
                                                     <div class='flex flex-col items-center gap-1 min-w-[70px]'>
                                                         <a href='$cell' target='_blank' class='w-12 h-12 block group relative'>
-                                                            <img src='$cell' class='w-full h-full object-cover rounded-lg border border-gray-100 shadow-sm transition-all group-hover:ring-2 group-hover:ring-primary/30' alt='Photo'>
+                                                            $preview
                                                             <div class='absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center text-white text-[8px]'>
-                                                                <i class='fas fa-eye'></i>
+                                                                <i class='fas " . ($is_image ? "fa-eye" : "fa-download") . "'></i>
                                                             </div>
                                                         </a>
                                                         <div class='flex gap-2 mt-1'>
-                                                            <a href='$cell' target='_blank' class='text-[9px] text-gray-400 hover:text-blue-500 font-bold tracking-tighter uppercase'>View</a>
-                                                            <a href='$cell' download='mmodels_photo.png' class='text-[9px] text-gray-400 hover:text-green-500 font-bold tracking-tighter uppercase'>Save</a>
+                                                            <a href='$cell' download='mmodels_file' class='text-[9px] text-gray-400 hover:text-green-500 font-bold tracking-tighter uppercase'>Save</a>
                                                         </div>
                                                     </div>
                                                   </td>";
@@ -335,7 +339,13 @@ if (file_exists($csv_file)) {
                                             $display = htmlspecialchars($cell);
                                             if ($cell == 'become_a_model') {
                                                 $display = "<span class='px-3 py-1 bg-pink-50 text-[#C50A76] rounded-full text-[10px] font-bold uppercase tracking-tighter'>Model App</span>";
-                                            } elseif (strpos($display, 'No photo') !== false || strpos($display, 'Not sent') !== false) {
+                                            } elseif ($cell == 'hire_a_model') {
+                                                $display = "<span class='px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Hire Model</span>";
+                                            } elseif ($cell == 'application') {
+                                                $display = "<span class='px-3 py-1 bg-purple-50 text-purple-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Application</span>";
+                                            } elseif ($cell == 'contact') {
+                                                $display = "<span class='px-3 py-1 bg-green-50 text-green-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Contact</span>";
+                                            } elseif (strpos($display, 'No photo') !== false || strpos($display, 'No file') !== false || strpos($display, 'Not sent') !== false) {
                                                 $display = "<span class='text-gray-300 italic text-[10px]'>Empty</span>";
                                             }
                                             echo "<td class='px-6 py-4 font-medium text-gray-700 whitespace-nowrap'>$display</td>";

@@ -34,15 +34,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Handle File Uploads (Convert to Base64)
     $upload_errors = [];
-    $photo_keys = ['photo1', 'photo2', 'photo3'];
     
-    foreach ($photo_keys as $key) {
-        if (isset($_FILES[$key])) {
-            $file = $_FILES[$key];
+    foreach ($_FILES as $key => $file) {
+        if (is_array($file['name'])) {
+            // Handle multiple file uploads array structure if needed
+            // Currently assuming single file per key or specific naming
+            foreach ($file['name'] as $idx => $name) {
+                if ($file['error'][$idx] === UPLOAD_ERR_OK) {
+                    $type = pathinfo($name, PATHINFO_EXTENSION);
+                    $img_data = file_get_contents($file['tmp_name'][$idx]);
+                    $base64 = 'data:' . $file['type'][$idx] . ';base64,' . base64_encode($img_data);
+                    $data[$key . '_' . $idx] = $base64;
+                }
+            }
+        } else {
             if ($file['error'] === UPLOAD_ERR_OK) {
                 $type = pathinfo($file['name'], PATHINFO_EXTENSION);
                 $img_data = file_get_contents($file['tmp_name']);
-                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($img_data);
+                $mime = isset($file['type']) && !empty($file['type']) ? $file['type'] : 'application/octet-stream';
+                $base64 = 'data:' . $mime . ';base64,' . base64_encode($img_data);
                 $data[$key] = $base64;
             } else {
                 switch ($file['error']) {
@@ -53,15 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     case UPLOAD_ERR_PARTIAL:
                         $err = "Upload was partial"; break;
                     case UPLOAD_ERR_NO_FILE:
-                        $err = "No photo selected"; break;
+                        $err = "No file selected"; break;
                     default:
                         $err = "Upload error (" . $file['error'] . ")";
                 }
                 $data[$key] = $err;
                 $upload_errors[] = "$key: $err";
             }
-        } else {
-            $data[$key] = "Not sent by browser";
         }
     }
 
@@ -72,8 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (is_array($value)) {
             $value = implode('; ', $value);
         }
-        // If it's a base64 image, don't strip commas/newlines as it breaks the encoding
-        if (strpos($value, 'data:image/') === 0) {
+        if (is_string($value) && strpos($value, 'data:') === 0 && strpos($value, ';base64,') !== false) {
             $row[] = $value;
         } else {
             $row[] = str_replace(["\r", "\n", ","], [" ", " ", ";"], $value);
@@ -106,8 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $admin_message .= "Time: $timestamp\n\n";
     $admin_message .= "Details:\n";
     foreach ($data as $key => $value) {
-        if (strpos($value, 'data:image/') === 0) {
-            $admin_message .= ucwords(str_replace('_', ' ', $key)) . ": [Image Stored in CSV]\n";
+        if (is_string($value) && strpos($value, 'data:') === 0 && strpos($value, ';base64,') !== false) {
+            $admin_message .= ucwords(str_replace('_', ' ', $key)) . ": [File/Image Stored in CSV]\n";
         } else {
             $admin_message .= ucwords(str_replace('_', ' ', $key)) . ": $value\n";
         }

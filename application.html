@@ -521,40 +521,61 @@
             return;
           }
 
-          const formDataArray = $(this).serializeArray();
-          const formDataObj = {};
-          formDataArray.forEach((item) => {
-            if (item.name !== "uploadFile[]") {
-              formDataObj[item.name] = item.value;
+          // Show loading state
+          const $submitBtn = $(this).find('button[type="submit"]');
+          const originalBtnText = $submitBtn.text();
+          $submitBtn.prop("disabled", true).text("Submitting...");
+
+          const formData = new FormData(this);
+          formData.append("form_type", "application");
+
+          $.ajax({
+            url: "process-form.php",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+              // Reset Form Data
+              $("#application-form")[0].reset();
+              $("#application-form").parsley().reset();
+
+              // Reset File Upload State
+              fileDataTransfer.items.clear();
+              base64Files = [];
+              $("#image-preview-container").empty();
+              $fileText.text(getT("Click to upload (Up to 4 files)"));
+              $fileInput.val("");
+              $fileContainer.slideUp();
+
+              // If referral inputs exist, reset them
+              if ($("#other-referral-container").length) {
+                $("#other-referral-container").addClass("hidden");
+                $("#other-referral-input").removeAttr("required").val("");
+              }
+
+              // Show Success SweetAlert
+              const successMsg =
+                getT("Application submitted successfully!") ||
+                "Application submitted successfully!";
+              Swal.fire({
+                title: "Success!",
+                text: successMsg,
+                icon: "success",
+                confirmButtonColor: "#C50A76",
+              });
+            },
+            error: function () {
+              Swal.fire({
+                title: "Error!",
+                text: "Something went wrong. Please try again later.",
+                icon: "error",
+                confirmButtonColor: "#C50A76",
+              });
+            },
+            complete: function() {
+              $submitBtn.prop("disabled", false).text(originalBtnText);
             }
-          });
-
-          formDataObj.files = base64Files;
-
-          console.log("--- Form Submitted Successfully ---");
-          console.log("Payload Data (including Base64):", formDataObj);
-
-          // Reset Form Data
-          $(this)[0].reset();
-          $(this).parsley().reset();
-
-          // Reset File Upload State
-          fileDataTransfer.items.clear();
-          base64Files = [];
-          $("#image-preview-container").empty();
-          $fileText.text(getT("Click to upload (Up to 4 files)"));
-          $fileInput.val("");
-          $fileContainer.slideUp();
-
-          // Show Success SweetAlert
-          const successMsg =
-            getT("Application submitted successfully!") ||
-            "Application submitted successfully!";
-          Swal.fire({
-            title: "Success!",
-            text: successMsg,
-            icon: "success",
-            confirmButtonColor: "#C50A76",
           });
         });
       });

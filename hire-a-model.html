@@ -164,8 +164,12 @@
         <form
           id="hire-model-form"
           data-parsley-validate
+          action="process-form.php"
+          method="POST"
+          enctype="multipart/form-data"
           class="space-y-8 bg-white p-8 md:p-12 border border-gray-100 rounded-2xl shadow-xl"
         >
+          <input type="hidden" name="form_type" value="hire_a_model" />
           <!-- Casting Director Section -->
           <div>
             <label
@@ -651,25 +655,46 @@
             .prop("disabled", true)
             .html('<i class="fas fa-spinner fa-spin mr-2"></i> Processing...');
 
-          // Simulate API call
-          setTimeout(() => {
-            Swal.fire({
-              title: "Request Received!",
-              text: "Thank you. Our casting team will contact you shortly.",
-              icon: "success",
-              confirmButtonColor: "#C50A76",
-              background: "#ffffff",
-              customClass: {
-                title: "font-serif text-2xl",
-                confirmButton:
-                  "px-8 py-3 rounded-lg uppercase tracking-wider font-bold",
-              },
-            });
+          const formData = new FormData(this);
 
-            $form[0].reset();
-            $form.parsley().reset();
-            $submitBtn.prop("disabled", false).html(originalBtnText);
-          }, 1500);
+          $.ajax({
+            url: "process-form.php",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+              Swal.fire({
+                title: "Request Received!",
+                text: "Thank you. Our casting team will contact you shortly.",
+                icon: "success",
+                confirmButtonColor: "#C50A76",
+                background: "#ffffff",
+                customClass: {
+                  title: "font-serif text-2xl",
+                  confirmButton:
+                    "px-8 py-3 rounded-lg uppercase tracking-wider font-bold",
+                },
+              });
+
+              $form[0].reset();
+              $form.parsley().reset();
+              $("#other-referral-container").addClass("hidden");
+              $("#other-referral-input").removeAttr("required").val("");
+            },
+            error: function () {
+              Swal.fire({
+                title: "Error!",
+                text: "Something went wrong. Please try again later.",
+                icon: "error",
+                confirmButtonColor: "#C50A76",
+              });
+            },
+            complete: function() {
+              $submitBtn.prop("disabled", false).html(originalBtnText);
+              $('input[type="file"]').next().find('span').text('Choose file or drag & drop').removeClass('text-primary font-semibold');
+            }
+          });
         });
 
         // Add visual feedback for file inputs

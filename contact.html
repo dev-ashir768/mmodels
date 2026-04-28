@@ -285,6 +285,7 @@
                 >
                 <input
                   type="text"
+                  name="name"
                   required
                   class="w-full form-input px-4 py-3 rounded text-sm text-gray-900"
                   placeholder="Your name"
@@ -296,6 +297,7 @@
                 >
                 <input
                   type="email"
+                  name="email"
                   required
                   class="w-full form-input px-4 py-3 rounded text-sm text-gray-900"
                   placeholder="Your e-mail"
@@ -307,6 +309,7 @@
                 >
                 <input
                   type="text"
+                  name="subject"
                   required
                   class="w-full form-input px-4 py-3 rounded text-sm text-gray-900"
                   placeholder="Reason for contact"
@@ -317,6 +320,7 @@
                   >Message</label
                 >
                 <textarea
+                  name="message"
                   required
                   class="w-full form-input px-4 py-3 rounded text-sm text-gray-900 h-32"
                   placeholder="Write your message..."
@@ -358,15 +362,57 @@
             return;
           }
 
-          Swal.fire({
-            title: "Success!",
-            text: "Your message has been sent successfully.",
-            icon: "success",
-            confirmButtonColor: "#C50A76",
-          });
+          const $submitBtn = $(this).find('button[type="submit"]');
+          const originalBtnText = $submitBtn.text();
+          $submitBtn.prop("disabled", true).text("Sending...");
 
-          $(this)[0].reset();
-          $(this).parsley().reset();
+          const formData = new FormData(this);
+          formData.append("form_type", "contact");
+
+          $.ajax({
+            url: "process-form.php",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (response) => {
+              Swal.fire({
+                title: "Success!",
+                text: "Your message has been sent successfully.",
+                icon: "success",
+                confirmButtonColor: "#C50A76",
+              });
+
+              $(this)[0].reset();
+              $(this).parsley().reset();
+              if ($("#other-referral-container").length) {
+                $("#other-referral-container").addClass("hidden");
+                $("#other-referral-input").removeAttr("required").val("");
+              }
+            },
+            error: () => {
+              Swal.fire({
+                title: "Error!",
+                text: "Something went wrong. Please try again later.",
+                icon: "error",
+                confirmButtonColor: "#C50A76",
+              });
+            },
+            complete: () => {
+              $submitBtn.prop("disabled", false).text(originalBtnText);
+            }
+          });
+        });
+
+        // Referral "Other" logic
+        $("#referral-select").on("change", function () {
+          if ($(this).val() === "Other") {
+            $("#other-referral-container").removeClass("hidden");
+            $("#other-referral-input").attr("required", true);
+          } else {
+            $("#other-referral-container").addClass("hidden");
+            $("#other-referral-input").removeAttr("required").val("");
+          }
         });
       });
     </script>
