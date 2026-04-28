@@ -19,7 +19,7 @@ require 'PHPMailer/PHPMailer.php';
 require 'PHPMailer/SMTP.php';
 
 // Helper function to send email via SMTP
-function sendEmail($to, $subject, $message, $from_name = 'M Models') {
+function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachments = []) {
     global $smtp_user, $smtp_pass;
     $mail = new PHPMailer(true);
     try {
@@ -35,9 +35,28 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models') {
         $mail->addAddress($to);
         $mail->addReplyTo('info@mmodels.com', 'M Models');
 
-        $mail->isHTML(false);
+        // Add attachments
+        if (!empty($attachments)) {
+            foreach ($attachments as $key => $file) {
+                if (is_array($file['name'])) {
+                    // Handle multiple file uploads array structure
+                    foreach ($file['name'] as $idx => $name) {
+                        if ($file['error'][$idx] === UPLOAD_ERR_OK) {
+                            $mail->addAttachment($file['tmp_name'][$idx], $name);
+                        }
+                    }
+                } else {
+                    if ($file['error'] === UPLOAD_ERR_OK) {
+                        $mail->addAttachment($file['tmp_name'], $file['name']);
+                    }
+                }
+            }
+        }
+
+        $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body    = $message;
+        $mail->AltBody = strip_tags(str_replace(['<br>', '<br/>', '</p>'], "\n", $message));
 
         $mail->send();
         return true;
@@ -152,32 +171,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 1. Admin Notification Email
     $admin_subject = "New Form Submission: " . ucwords(str_replace('_', ' ', $form_type));
-    $admin_message = "You have a new submission from your website.\n\n";
-    $admin_message .= "Form Type: $form_type\n";
-    $admin_message .= "Time: $timestamp\n\n";
-    $admin_message .= "Details:\n";
+    
+    // Build Details Table for Admin
+    $details_html = "";
     foreach ($data as $key => $value) {
+        $label = ucwords(str_replace('_', ' ', $key));
         if (is_string($value) && strpos($value, 'data:') === 0 && strpos($value, ';base64,') !== false) {
-            $admin_message .= ucwords(str_replace('_', ' ', $key)) . ": [File/Image Stored in CSV]\n";
-        } else {
-            $admin_message .= ucwords(str_replace('_', ' ', $key)) . ": $value\n";
+            $value = "<em>[File Attached]</em>";
         }
+        $details_html .= "<tr><td style='padding:10px; border-bottom:1px solid #eee; font-weight:bold; color:#666;'>$label</td><td style='padding:10px; border-bottom:1px solid #eee; color:#333;'>$value</td></tr>";
     }
 
-    sendEmail($admin_email, $admin_subject, $admin_message, 'M Models System');
+    $admin_email_content = "
+    <div style='font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden;'>
+        <div style='background: #000; padding: 20px; text-align: center;'>
+            <img src='https://mmodels.ca/assets/others/logo.png' alt='M Models' style='height: 40px;'>
+        </div>
+        <div style='padding: 30px;'>
+            <h2 style='color: #C50A76; margin-top: 0;'>New Submission Received</h2>
+            <p style='color: #666;'>You have a new submission from the <strong>" . ucwords(str_replace('_', ' ', $form_type)) . "</strong> form.</p>
+            <table style='width: 100%; border-collapse: collapse; margin-top: 20px;'>
+                $details_html
+            </table>
+            <div style='margin-top: 30px; font-size: 12px; color: #999; text-align: center;'>
+                Received at $timestamp
+            </div>
+        </div>
+    </div>";
+
+    sendEmail($admin_email, $admin_subject, $admin_email_content, 'M Models System', $_FILES);
 
     // 2. Applicant Greeting Email
     $applicant_email = $_POST['email'] ?? '';
     if (!empty($applicant_email)) {
+        $first_name = $_POST['first_name'] ?? 'there';
         $greet_subject = "Thank you for applying to M Models!";
-        $greet_message = "Hello " . ($_POST['first_name'] ?? 'there') . ",\n\n";
-        $greet_message .= "Thank you for submitting your application to M Models & Talent Agency. We have received your details and our team will review your profile shortly.\n\n";
-        $greet_message .= "If your look matches our current client requirements, we will contact you for an interview.\n\n";
-        $greet_message .= "Best regards,\n";
-        $greet_message .= "M Models Team\n";
-        $greet_message .= "www.mmodels.ca";
+        
+        $greet_email_content = "
+        <div style='font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden;'>
+            <div style='background: #000; padding: 20px; text-align: center;'>
+                <img src='https://mmodels.ca/assets/others/logo.png' alt='M Models' style='height: 40px;'>
+            </div>
+            <div style='padding: 30px; text-align: center;'>
+                <h2 style='color: #C50A76; margin-top: 0;'>Hello $first_name,</h2>
+                <p style='color: #333; line-height: 1.6;'>Thank you for submitting your application to <strong>M Models & Talent Agency</strong>. We have received your details and our team will review your profile shortly.</p>
+                <p style='color: #666; font-size: 14px;'>If your look matches our current client requirements, our casting team will contact you for an interview.</p>
+                <div style='margin: 30px 0;'>
+                    <a href='https://mmodels.ca' style='background: #C50A76; color: #fff; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold;'>Visit Website</a>
+                </div>
+                <hr style='border: 0; border-top: 1px solid #eee; margin: 30px 0;'>
+                <p style='color: #999; font-size: 12px;'>Best regards,<br>M Models Team<br><a href='https://mmodels.ca' style='color: #C50A76;'>www.mmodels.ca</a></p>
+            </div>
+        </div>";
 
-        sendEmail($applicant_email, $greet_subject, $greet_message);
+        sendEmail($applicant_email, $greet_subject, $greet_email_content);
     }
 
     // Return response for AJAX

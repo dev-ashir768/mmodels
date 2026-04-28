@@ -185,6 +185,8 @@ foreach ($forms as $key => $title) {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -268,12 +270,35 @@ foreach ($forms as $key => $title) {
             </div>
 
             <div class="flex items-center gap-3">
-                <a href="../data/submissions.csv" download
-                    class="flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-2xl text-sm font-semibold hover:bg-gray-50 transition shadow-sm">
-                    <i class="fas fa-download text-xs"></i> Export CSV
-                </a>
-                <div
-                    class="h-12 w-12 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#C50A76]/20">
+                <!-- Date Filter -->
+                <div class="relative hidden md:block">
+                    <input type="text" id="dateFilter" 
+                        class="bg-white border border-gray-200 text-gray-700 px-10 py-3 rounded-2xl text-sm font-semibold shadow-sm focus:ring-2 focus:ring-primary/20 outline-none w-64"
+                        placeholder="Filter by date range...">
+                    <i class="fas fa-calendar-alt absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+
+                <!-- Export Dropdown -->
+                <div class="relative group">
+                    <button class="flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-2xl text-sm font-semibold hover:bg-gray-50 transition shadow-sm">
+                        <i class="fas fa-download text-xs"></i> Export
+                        <i class="fas fa-chevron-down text-[10px] ml-1 opacity-50"></i>
+                    </button>
+                    <div class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] overflow-hidden">
+                        <div class="p-2">
+                            <div class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-400">Choose Form Type</div>
+                            <?php foreach ($all_data as $key => $dataset): ?>
+                            <a href="<?php echo $dataset['file']; ?>" download 
+                                class="flex items-center justify-between px-4 py-3 text-sm text-gray-600 hover:bg-primary/5 hover:text-primary rounded-xl transition">
+                                <span><?php echo $dataset['title']; ?></span>
+                                <i class="fas fa-file-csv opacity-30 text-xs"></i>
+                            </a>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="h-12 w-12 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#C50A76]/20">
                     <i class="fas fa-user"></i>
                 </div>
             </div>
@@ -410,6 +435,8 @@ foreach ($forms as $key => $title) {
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment/moment.min.js"></script>
     <script>
         function confirmDelete(formId) {
             Swal.fire({
@@ -441,13 +468,47 @@ foreach ($forms as $key => $title) {
         }
 
         $(document).ready(function () {
+            let tables = {};
+
+            // Custom DataTable filtering for Date Range
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var range = $('#dateFilter').val();
+                    if (!range || !range.includes(' to ')) return true;
+
+                    var dates = range.split(' to ');
+                    var min = moment(dates[0], 'Y-m-d');
+                    var max = moment(dates[1], 'Y-m-d');
+                    var dateStr = data[0].split(' ')[0]; // Assuming first column is "YYYY-MM-DD HH:MM:SS"
+                    var current = moment(dateStr, 'Y-m-d');
+
+                    if (
+                        (min === null || current.isSameOrAfter(min)) &&
+                        (max === null || current.isSameOrBefore(max))
+                    ) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
+
+            // Initialize Flatpickr
+            flatpickr("#dateFilter", {
+                mode: "range",
+                dateFormat: "Y-m-d",
+                onChange: function (selectedDates, dateStr, instance) {
+                    if (selectedDates.length === 2) {
+                        Object.values(tables).forEach(t => t.draw());
+                    }
+                }
+            });
+
             <?php foreach ($all_data as $key => $dataset): ?>
                 if ($('#submissionsTable_<?php echo $key; ?> tbody tr').length > 0) {
-                    $('#submissionsTable_<?php echo $key; ?>').DataTable({
+                    tables['<?php echo $key; ?>'] = $('#submissionsTable_<?php echo $key; ?>').DataTable({
                         order: [[0, 'desc']],
                         pageLength: 10,
-                        bAutoWidth: false, // Prevent width calculation issues
-                        // Disable column validation in case of mismatched CSV rows
+                        bAutoWidth: false,
                         columnDefs: [
                             { targets: '_all', defaultContent: '' }
                         ],
@@ -464,9 +525,8 @@ foreach ($forms as $key => $title) {
                 }
             <?php endforeach; ?>
 
-            // Open first tab by default
-            <?php $firstKey = array_keys($all_data)[0]; ?>
-                switchTab('<?php echo $firstKey; ?>');
+            // Open 'Become a Model' tab by default
+            switchTab('become_a_model');
         });
     </script>
 </body>
