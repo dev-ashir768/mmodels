@@ -234,7 +234,7 @@ foreach ($forms as $key => $title) {
             <img src="/assets/others/logo.png" alt="Logo" class="h-10 brightness-0 invert opacity-90">
         </div>
 
-        <nav class="flex-1 px-4 space-y-2 mt-4">
+        <nav class="flex-1 px-4 space-y-2 mt-4 overflow-y-auto">
             <div class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-500 opacity-50">Submissions</div>
             <?php foreach ($all_data as $key => $dataset): ?>
             <a href="javascript:void(0)" onclick="switchTab('<?php echo $key; ?>')" id="side_btn_<?php echo $key; ?>" 
@@ -333,7 +333,6 @@ foreach ($forms as $key => $title) {
             </div>
         </div>
 
-        <!-- Tabs -->
         <div class="flex gap-4 mb-6 border-b border-gray-200 overflow-x-auto pb-2 shrink-0">
             <?php foreach ($all_data as $key => $dataset): ?>
                 <button onclick="switchTab('<?php echo $key; ?>')" id="tab_btn_<?php echo $key; ?>" class="tab-btn px-6 py-3 font-semibold text-sm rounded-t-xl transition-all border-b-2 border-transparent text-gray-500 hover:text-primary whitespace-nowrap">
@@ -357,6 +356,9 @@ foreach ($forms as $key => $title) {
                                             $label = $header;
                                             if (strpos(strtolower($header), 'photo') !== false) {
                                                 $label = str_replace('photo', 'Image ', strtolower($header));
+                                            } else {
+                                                // Convert snake_case to Title Case
+                                                $label = ucwords(str_replace('_', ' ', $header));
                                             }
                                             echo "<th class='px-6 py-5 text-left'>$label</th>";
                                         }

@@ -756,7 +756,7 @@ $(document).ready(function () {
     const navLinks = [
       { name: "Home", url: "home.html" },
       { name: "Video", url: "video.html" },
-      { name: "Models", url: "models.html" },
+      { name: "Models", url: "models.php" },
       { name: "Our Clients", url: "clients.html" },
       { name: "Showcase", url: "our-works.html" },
       { name: "Become a Model", url: "become-a-model.html" },
