@@ -5,7 +5,7 @@
  */
 
 // Configuration
-$csv_file = 'data/submissions.csv';
+// We dynamically set the csv_file later based on form_type
 $admin_email = 'toolgram3@gmail.com'; // Admin notification email
 $smtp_user = 'toolgram3@gmail.com';
 $smtp_pass = 'fihwrjdzscwhx4xx';
@@ -86,6 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $row[] = str_replace(["\r", "\n", ","], [" ", " ", ";"], $value);
         }
     }
+
+    // Set dynamic CSV file based on form type
+    $csv_file = "data/submissions_" . preg_replace('/[^a-zA-Z0-9_]/', '', strtolower($form_type)) . ".csv";
 
     // Save to CSV
     $file_handle = fopen($csv_file, 'a');
