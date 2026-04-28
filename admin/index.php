@@ -29,6 +29,7 @@ if (!isset($_SESSION['loggedin'])) {
     ?>
     <!DOCTYPE html>
     <html lang="en">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,14 +37,18 @@ if (!isset($_SESSION['loggedin'])) {
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
         <style>
-            body { font-family: 'Inter', sans-serif; }
+            body {
+                font-family: 'Inter', sans-serif;
+            }
+
             .bg-mesh {
                 background-color: #ffffff;
-                background-image: radial-gradient(at 0% 0%, hsla(327,87%,53%,0.15) 0, transparent 50%), 
-                                  radial-gradient(at 50% 0%, hsla(225,39%,30%,0.05) 0, transparent 50%);
+                background-image: radial-gradient(at 0% 0%, hsla(327, 87%, 53%, 0.15) 0, transparent 50%),
+                    radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 0.05) 0, transparent 50%);
             }
         </style>
     </head>
+
     <body class="bg-mesh min-h-screen flex items-center justify-center p-6">
         <div class="w-full max-w-md">
             <div class="text-center mb-10">
@@ -51,33 +56,38 @@ if (!isset($_SESSION['loggedin'])) {
                 <h1 class="text-2xl font-bold text-gray-900">Agency Dashboard</h1>
                 <p class="text-gray-500 mt-2 text-sm">Secure access for authorized personnel only</p>
             </div>
-            
-            <div class="bg-white/80 backdrop-blur-xl p-10 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white">
-                <?php if (isset($error)) echo "<div class='bg-red-50 text-red-600 p-4 rounded-xl text-xs font-semibold mb-6 border border-red-100'>$error</div>"; ?>
-                
+
+            <div
+                class="bg-white/80 backdrop-blur-xl p-10 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white">
+                <?php if (isset($error))
+                    echo "<div class='bg-red-50 text-red-600 p-4 rounded-xl text-xs font-semibold mb-6 border border-red-100'>$error</div>"; ?>
+
                 <form method="POST" class="space-y-6">
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 ml-1">Password</label>
-                        <input type="password" name="password" 
-                               class="w-full bg-gray-50 border-0 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-[#C50A76]/20 transition-all text-sm" 
-                               placeholder="••••••••" required autofocus>
+                        <label
+                            class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 ml-1">Password</label>
+                        <input type="password" name="password"
+                            class="w-full bg-gray-50 border-0 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-[#C50A76]/20 transition-all text-sm"
+                            placeholder="••••••••" required autofocus>
                     </div>
-                    <button type="submit" 
-                            class="w-full bg-[#C50A76] text-white py-4 rounded-2xl font-bold uppercase tracking-widest text-xs hover:bg-black transition-all duration-300 shadow-lg shadow-[#C50A76]/20 transform hover:-translate-y-1">
+                    <button type="submit"
+                        class="w-full bg-[#C50A76] text-white py-4 rounded-2xl font-bold uppercase tracking-widest text-xs hover:bg-black transition-all duration-300 shadow-lg shadow-[#C50A76]/20 transform hover:-translate-y-1">
                         Authenticate
                     </button>
                 </form>
             </div>
-            <p class="text-center text-gray-400 text-[10px] mt-8 uppercase tracking-[0.2em]">© 2026 M Models & Talent Agency</p>
+            <p class="text-center text-gray-400 text-[10px] mt-8 uppercase tracking-[0.2em]">© 2026 M Models & Talent Agency
+            </p>
         </div>
     </body>
+
     </html>
     <?php
     exit;
 }
 
 if (isset($_GET['delete'])) {
-    $delete_idx = (int)$_GET['delete'];
+    $delete_idx = (int) $_GET['delete'];
     $all_data = [];
     if (file_exists($csv_file)) {
         if (($handle = fopen($csv_file, "r")) !== FALSE) {
@@ -86,7 +96,7 @@ if (isset($_GET['delete'])) {
             }
             fclose($handle);
         }
-        
+
         // Remove the entry (adjusted for newest-first display in UI vs file index)
         // Note: $data in UI is array_reverse of $all_data (minus headers)
         // File index = count(all_data) - 1 - ui_index (if headers exist)
@@ -108,7 +118,7 @@ if (isset($_POST['delete_timestamp'])) {
                 }
             }
             fclose($handle);
-            
+
             // Rewrite CSV
             $handle = fopen($csv_file, "w");
             foreach ($new_data as $row) {
@@ -133,7 +143,8 @@ if (file_exists($csv_file)) {
         while (($row = fgetcsv($handle, 10000, ",")) !== FALSE) {
             $data[] = $row;
             $total_submissions++;
-            if (strpos($row[0], $current_date) === 0) $today_submissions++;
+            if (strpos($row[0], $current_date) === 0)
+                $today_submissions++;
         }
         fclose($handle);
     }
@@ -142,6 +153,7 @@ if (file_exists($csv_file)) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -151,14 +163,22 @@ if (file_exists($csv_file)) {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
-        .sidebar { background-color: #0F172A; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC;
+        }
+
+        .sidebar {
+            background-color: #0F172A;
+        }
+
         .dataTables_wrapper .dataTables_paginate .paginate_button.current {
             background: #C50A76 !important;
             color: white !important;
             border-color: #C50A76 !important;
             border-radius: 12px;
         }
+
         .dataTables_wrapper .dataTables_filter input {
             border: 1px solid #E2E8F0;
             border-radius: 12px;
@@ -166,11 +186,21 @@ if (file_exists($csv_file)) {
             outline: none;
             margin-bottom: 20px;
         }
-        table.dataTable thead th { border-bottom: 1px solid #E2E8F0 !important; }
-        .text-primary { color: #C50A76; }
-        .bg-primary { background-color: #C50A76; }
+
+        table.dataTable thead th {
+            border-bottom: 1px solid #E2E8F0 !important;
+        }
+
+        .text-primary {
+            color: #C50A76;
+        }
+
+        .bg-primary {
+            background-color: #C50A76;
+        }
     </style>
 </head>
+
 <body class="flex min-h-screen">
 
     <!-- Sidebar -->
@@ -178,24 +208,27 @@ if (file_exists($csv_file)) {
         <div class="p-8">
             <img src="/assets/others/logo.png" alt="Logo" class="h-10 brightness-0 invert opacity-90">
         </div>
-        
+
         <nav class="flex-1 px-4 space-y-2 mt-4">
             <a href="#" class="flex items-center space-x-3 px-4 py-3 bg-white/10 text-white rounded-xl transition">
                 <i class="fas fa-th-large w-5"></i>
                 <span class="text-sm font-semibold">Submissions</span>
             </a>
-            <a href="#" class="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
+            <a href="#"
+                class="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
                 <i class="fas fa-users w-5"></i>
                 <span class="text-sm font-semibold">Models</span>
             </a>
-            <a href="#" class="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
+            <a href="#"
+                class="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
                 <i class="fas fa-cog w-5"></i>
                 <span class="text-sm font-semibold">Settings</span>
             </a>
         </nav>
 
         <div class="p-6 border-t border-white/10">
-            <a href="?logout=1" class="flex items-center space-x-3 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-xl transition">
+            <a href="?logout=1"
+                class="flex items-center space-x-3 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-xl transition">
                 <i class="fas fa-sign-out-alt w-5"></i>
                 <span class="text-sm font-semibold">Log Out</span>
             </a>
@@ -210,12 +243,14 @@ if (file_exists($csv_file)) {
                 <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Form Submissions</h1>
                 <p class="text-gray-500 text-sm mt-1">Review and manage your agency applications</p>
             </div>
-            
+
             <div class="flex items-center gap-3">
-                <a href="../data/submissions.csv" download class="flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-2xl text-sm font-semibold hover:bg-gray-50 transition shadow-sm">
+                <a href="../data/submissions.csv" download
+                    class="flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-2xl text-sm font-semibold hover:bg-gray-50 transition shadow-sm">
                     <i class="fas fa-download text-xs"></i> Export CSV
                 </a>
-                <div class="h-12 w-12 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#C50A76]/20">
+                <div
+                    class="h-12 w-12 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#C50A76]/20">
                     <i class="fas fa-user"></i>
                 </div>
             </div>
@@ -259,7 +294,7 @@ if (file_exists($csv_file)) {
                     <table id="submissionsTable" class="w-full text-sm min-w-[1500px]">
                         <thead class="text-gray-400 uppercase text-[10px] font-bold tracking-[0.2em] bg-gray-50/50">
                             <tr>
-                                <?php 
+                                <?php
                                 if (!empty($headers)) {
                                     foreach ($headers as $header) {
                                         $label = $header;
@@ -274,7 +309,7 @@ if (file_exists($csv_file)) {
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
-                            <?php 
+                            <?php
                             if (!empty($data)) {
                                 foreach ($data as $row) {
                                     $row_ts = $row[0]; // First col is timestamp
@@ -308,9 +343,9 @@ if (file_exists($csv_file)) {
                                     }
                                     // Add Actions Column
                                     echo "<td class='px-6 py-4 text-center'>
-                                            <form method='POST' onsubmit='return confirm(\"Permanently delete this entry?\");' class='inline-block'>
+                                            <form method='POST' id='deleteForm_$row_ts' class='inline-block'>
                                                 <input type='hidden' name='delete_timestamp' value='$row_ts'>
-                                                <button type='submit' class='w-8 h-8 flex items-center justify-center rounded-lg bg-red-50 text-red-400 hover:bg-red-500 hover:text-white transition-all shadow-sm'>
+                                                <button type='button' onclick='confirmDelete(\"deleteForm_$row_ts\")' class='w-8 h-8 flex items-center justify-center rounded-lg bg-red-50 text-red-400 hover:bg-red-500 hover:text-white transition-all shadow-sm'>
                                                     <i class='fas fa-trash-alt text-xs'></i>
                                                 </button>
                                             </form>
@@ -325,24 +360,48 @@ if (file_exists($csv_file)) {
             </div>
         </div>
     </main>
-
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        $(document).ready(function() {
-            $('#submissionsTable').DataTable({
-                order: [[0, 'desc']],
-                pageLength: 10,
-                dom: '<"flex flex-col md:flex-row justify-between mb-4"f>rt<"flex flex-col md:flex-row justify-between mt-6 items-center"ip>',
-                language: {
-                    search: "",
-                    searchPlaceholder: "Search submissions...",
-                    paginate: {
-                        next: '<i class="fas fa-chevron-right text-xs"></i>',
-                        previous: '<i class="fas fa-chevron-left text-xs"></i>'
-                    }
+        function confirmDelete(formId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById(formId).submit();
                 }
-            });
+            })
+        }
+
+        $(document).ready(function () {
+            // Only initialize DataTable if there is data
+            if ($('#submissionsTable tbody tr').length > 0) {
+                $('#submissionsTable').DataTable({
+                    order: [[0, 'desc']],
+                    pageLength: 10,
+                    bAutoWidth: false, // Prevent width calculation issues
+                    // Disable column validation in case of mismatched CSV rows
+                    columnDefs: [
+                        { targets: '_all', defaultContent: '' }
+                    ],
+                    dom: '<"flex flex-col md:flex-row justify-between mb-4"f>rt<"flex flex-col md:flex-row justify-between mt-6 items-center"ip>',
+                    language: {
+                        search: "",
+                        searchPlaceholder: "Search submissions...",
+                        paginate: {
+                            next: '<i class="fas fa-chevron-right text-xs"></i>',
+                            previous: '<i class="fas fa-chevron-left text-xs"></i>'
+                        }
+                    }
+                });
+            }
         });
     </script>
 </body>
