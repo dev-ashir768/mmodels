@@ -98,29 +98,41 @@
             .modal-img-container { width: 45%; height: 100%; }
         }
         .modal-body {
-            padding: 3rem;
+            padding: 2rem;
             flex: 1;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
         }
+        @media (min-width: 768px) {
+            .modal-body { padding: 3.5rem; }
+        }
         .close-modal {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            width: 3rem;
-            height: 3rem;
+            top: 1rem;
+            right: 1rem;
+            width: 2.5rem;
+            height: 2.5rem;
             background: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1rem;
             color: #1e293b;
             cursor: pointer;
             z-index: 10;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
+        }
+        @media (min-width: 768px) {
+            .close-modal {
+                top: 1.5rem;
+                right: 1.5rem;
+                width: 3rem;
+                height: 3rem;
+                font-size: 1.25rem;
+            }
         }
         .close-modal:hover { 
             background: #C50A76; 
@@ -131,8 +143,11 @@
         .measurement-grid {
             display: grid;
             grid-template-cols: repeat(2, 1fr);
-            gap: 2rem;
+            gap: 1.5rem;
             margin-top: 1rem;
+        }
+        @media (min-width: 768px) {
+            .measurement-grid { gap: 2.5rem; }
         }
         .m-item {
             position: relative;
@@ -212,13 +227,13 @@
     <header class="pt-40 pb-16 bg-white border-b border-gray-200">
       <div class="text-center container mx-auto px-4">
         <h1 class="text-primary font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-4">Portfolio</h1>
-        <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6 uppercase italic">Our Models</h2>
+        <h2 class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6 uppercase">Our Models</h2>
         <div class="h-1 w-24 bg-primary mx-auto mb-10"></div>
         <!-- Filter Category -->
-        <div class="flex justify-center space-x-8 text-sm font-bold uppercase tracking-widest" id="portfolio-filters">
-          <a href="#" data-target="women" class="text-primary border-b-2 border-primary pb-1 filter-btn">Women</a>
-          <a href="#" data-target="men" class="text-gray-400 hover:text-gray-900 transition pb-1 filter-btn">Men</a>
-          <a href="#" data-target="kids" class="text-gray-400 hover:text-gray-900 transition pb-1 filter-btn">Kids</a>
+        <div class="flex justify-center space-x-6 md:space-x-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]" id="portfolio-filters">
+          <a href="#" data-target="women" class="text-primary border-b-2 border-primary pb-2 filter-btn transition-all">Women</a>
+          <a href="#" data-target="men" class="text-gray-400 hover:text-gray-900 transition pb-2 filter-btn transition-all">Men</a>
+          <a href="#" data-target="kids" class="text-gray-400 hover:text-gray-900 transition pb-2 filter-btn transition-all">Kids</a>
         </div>
       </div>
     </header>
@@ -228,19 +243,16 @@
         <div class="modal-content">
             <span class="close-modal"><i class="fas fa-times"></i></span>
             <div class="modal-img-container">
-                <img src="" id="modalImg" class="w-full h-full object-cover">
+                <img src="" id="modalImg" class="w-full h-full object-cover object-top">
             </div>
             <div class="modal-body">
-                <div class="mb-10">
-                    <h2 id="modalName" class="font-serif text-5xl font-bold text-gray-900 mb-2 italic"></h2>
-                    <p id="modalCategory" class="text-primary font-bold uppercase tracking-[0.3em] text-[10px]"></p>
+                <div class="mb-8 md:mb-12">
+                    <h2 id="modalName" class="font-serif text-3xl md:text-5xl font-bold text-gray-900 mb-2"></h2>
+                    <p id="modalCategory" class="text-primary font-bold uppercase tracking-[0.3em] text-[9px] md:text-[10px]"></p>
                 </div>
 
                 <div class="measurement-grid flex-1" id="modalMeasurements"></div>
 
-                <div class="mt-12 pt-8 border-t border-gray-100">
-                    <a href="hire-a-model.html" class="bg-[#C50A76] text-white px-12 py-5 uppercase text-[11px] font-bold tracking-[0.2em] hover:bg-black transition-all duration-500 inline-block w-full text-center md:w-auto rounded-2xl shadow-xl shadow-primary/20 transform hover:-translate-y-1">Book This Model</a>
-                </div>
             </div>
         </div>
     </div>
@@ -250,77 +262,77 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div id="women" class="model-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           <div class="model-card">
-            <img src="/assets/women-models/0ceb7c32-2f7d-4e0e-ada01e0a9cb8fcf8_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/0ceb7c32-2f7d-4e0e-ada01e0a9cb8fcf8_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Model 1</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/women-models/56efdce7-6864-4a04-b145424880ba6a30_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/56efdce7-6864-4a04-b145424880ba6a30_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Model 2</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/women-models/797cd9ae-cf77-4f9e-8903f5659a049f57-1_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/797cd9ae-cf77-4f9e-8903f5659a049f57-1_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Model 3</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/women-models/7de55cbe-af56-42ef-83631c9821f1437f-1_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/7de55cbe-af56-42ef-83631c9821f1437f-1_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Model 4</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/women-models/b7649f5d-1ed5-4db9-9cd189b41b55d3fd-1_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/b7649f5d-1ed5-4db9-9cd189b41b55d3fd-1_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Model 5</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/women-models/dsc06336_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/dsc06336_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Model 6</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/women-models/fd57f522-bc8e-4807-9dadbfa16497860a_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/fd57f522-bc8e-4807-9dadbfa16497860a_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Model 7</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/women-models/img-20190916-134601-269_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/img-20190916-134601-269_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Model 8</h3></div>
           </div>
           <div class="model-card" onclick='viewSizing("Alisa Sukjarirn", "Female", {"Height":"162 cm / 5’4”", "Chest":"32”", "Waist":"25”", "Hips":"36”", "Shoe Size":"7.5 (EU 38)", "Hair Color":"Dark Brown", "Eye Color":"Dark Brown"}, this)'>
-            <img src="/assets/women-models/img-20191007-154216-415_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/img-20191007-154216-415_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Model 9</h3></div>
           </div>
           <div class="model-card" onclick='viewSizing("Chelsea Chun", "Female", {"Height":"173cm 5’8”", "Chest":"34", "Waist":"26", "Hips":"37", "Shoe Size":"8", "Hair Color":"Brown", "Eye Color":"Brown"}, this)'>
-            <img src="/assets/women-models/img-5398_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/img-5398_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Model 10</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/women-models/img-5867_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/img-5867_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Model 11</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/women-models/pic1_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/pic1_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Model 12</h3></div>
           </div>
           <div class="model-card" onclick='viewSizing("Raya Jafari", "Female", {"Height":"5’5", "Chest":"32C", "Waist":"25", "Hips":"30", "Shoe Size":"7", "Hair Color":"Black", "Eye Color":"Brown"}, this)'>
-            <img src="/assets/women-models/raya.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/raya.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Raya</h3></div>
           </div>
           <div class="model-card" onclick='viewSizing("Nadia Henry", "Female", {"Height":"5’3", "Chest":"34.5", "Waist":"26", "Hips":"36", "Shoe Size":"7.5 W", "Hair Color":"Dark Brown", "Eye Color":"Dark Brown"}, this)'>
-            <img src="/assets/women-models/nadia.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/nadia.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Nadia</h3></div>
           </div>
           <div class="model-card" onclick='viewSizing("Tetiana Svatok", "Female", {"Height":"5’7", "Chest":"31”", "Waist":"23”", "Hips":"35”", "Shoe Size":"7.5-8", "Hair Color":"blonde", "Eye Color":"blue"}, this)'>
-            <img src="/assets/women-models/tetiana.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/women-models/tetiana.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Tetiana</h3></div>
           </div>
@@ -328,87 +340,87 @@
 
         <div id="men" class="model-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 hidden">
           <div class="model-card">
-            <img src="/assets/men-models/2c0f3943-2f91-4610-8702-d2286703bb69-lighttable_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/2c0f3943-2f91-4610-8702-d2286703bb69-lighttable_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 1</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/men-models/340dbb33-949f-4508-8dda1ed52f54adc4_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/340dbb33-949f-4508-8dda1ed52f54adc4_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 2</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/men-models/5d3f3461-30d8-4302-810da2acfc6ba3e7-1_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/5d3f3461-30d8-4302-810da2acfc6ba3e7-1_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 3</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/men-models/5e7ad5cd-b732-4fe6-ba86d340d5b0d37a-1_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/5e7ad5cd-b732-4fe6-ba86d340d5b0d37a-1_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 4</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/men-models/824771ab-472f-4232-bbac38c9e1e06bb9_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/824771ab-472f-4232-bbac38c9e1e06bb9_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 5</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/men-models/8e46bdfd-401f-4b5e-b32bc02d349e162f_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/8e46bdfd-401f-4b5e-b32bc02d349e162f_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 6</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/men-models/965b6198-dded-4a15-81434bbd7e8baafd_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/965b6198-dded-4a15-81434bbd7e8baafd_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 7</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/men-models/cf1385f5-5a2e-4ca0-9f42816c4ae05851_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/cf1385f5-5a2e-4ca0-9f42816c4ae05851_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 8</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/men-models/e2700392-d214-462e-b1aff444f93d7121-1_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/e2700392-d214-462e-b1aff444f93d7121-1_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 9</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/men-models/fb0ee577-315c-4767-b3150d9508bc12fb-1_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/fb0ee577-315c-4767-b3150d9508bc12fb-1_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 10</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/men-models/fb7cb327-b17b-4d50-91a637b66da21355_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/fb7cb327-b17b-4d50-91a637b66da21355_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 11</h3></div>
           </div>
           <div class="model-card" onclick='viewSizing("Jamie Cabral", "Male", {"Height":"5’11", "Chest":"42", "Waist":"32", "Hips":"39", "Shoe Size":"11", "Hair Color":"brown", "Eye Color":"brown"}, this)'>
-            <img src="/assets/men-models/img-1128_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/img-1128_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 12</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/men-models/img-20190623-170829-730_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/img-20190623-170829-730_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 13</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/men-models/img-20190723-123808-232_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/img-20190723-123808-232_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 14</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/men-models/img-2309_orig.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/img-2309_orig.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Men 15</h3></div>
           </div>
           <div class="model-card" onclick='viewSizing("Lucas Findlay", "Male", {"Height":"6’2.5”", "Chest":"41”", "Waist":"32”", "Hips":"34”", "Shoe Size":"11", "Hair Color":"Black", "Eye Color":"Hazel"}, this)'>
-            <img src="/assets/men-models/ama.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/ama.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Ama</h3></div>
           </div>
           <div class="model-card" onclick='viewSizing("Julian Rabito", "Male", {"Height":"6’1", "Chest":"38 In", "Waist":"30 In", "Hips":"42 In", "Shoe Size":"12 US", "Hair Color":"Dark Brown", "Eye Color":"Green"}, this)'>
-            <img src="/assets/men-models/sumit.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/men-models/sumit.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Sumit</h3></div>
           </div>
@@ -416,47 +428,47 @@
 
         <div id="kids" class="model-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 hidden">
           <div class="model-card">
-            <img src="/assets/kids/kid-1.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/kids/kid-1.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Adelien</h3></div>
           </div>
           <div class="model-card" onclick='viewSizing("Eldina Hoxha", "Kids", {"Height":"4 ft 4 inch", "Tshirt size":"Medium 7/8"}, this)'>
-            <img src="/assets/kids/kid-2.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/kids/kid-2.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Edlina</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/kids/kid-3.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/kids/kid-3.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Edlina</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/kids/kid-4.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/kids/kid-4.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Jac</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/kids/kid-5.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/kids/kid-5.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Jack</h3></div>
           </div>
           <div class="model-card" onclick='viewSizing("Rebekah Alison-Wang", "Kids", {"Height":"40 inches", "Tshirt size":"4-5 years old"}, this)'>
-            <img src="/assets/kids/kid-6.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/kids/kid-6.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Rebekah</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/kids/kid-7.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/kids/kid-7.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Rebekah</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/kids/kid-8.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/kids/kid-8.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Zolton</h3></div>
           </div>
           <div class="model-card">
-            <img src="/assets/kids/kid-9.jpg" alt="Model" class="w-full h-full object-cover" />
+            <img src="/assets/kids/kid-9.jpg" alt="Model" class="w-full h-full object-cover object-top" />
             <div class="model-overlay"></div>
             <div class="model-info"><h3 class="font-serif text-2xl font-bold text-white mb-1">Zolton</h3></div>
           </div>
@@ -471,7 +483,6 @@
         <p class="text-gray-400 text-xs">© 2026 M Models Global. All rights reserved.</p>
       </div>
     </footer>
-    <script src="/assets/main.js"></script>
     <script>
       function viewSizing(name, cat, measurements, el) {
           const img = $(el).find('img').attr('src');
@@ -489,15 +500,27 @@
               `;
           }
           $("#modalMeasurements").html(html);
-          $("#modelModal").removeClass('hidden').addClass('flex');
-          $("body").css('overflow', 'hidden');
+          
+          // Show modal
+          $("#modelModal").css("display", "flex").hide().fadeIn(300);
+          $("body").css("overflow", "hidden");
+      }
+
+      function closeModel() {
+          $("#modelModal").fadeOut(200, function() {
+              $(this).css("display", "none");
+          });
+          $("body").css("overflow", "auto");
       }
 
       $(document).ready(function () {
-        $(".close-modal, #modelModal").click(function(e) {
-            if (e.target === this || $(e.target).closest('.close-modal').length) {
-                $("#modelModal").addClass('hidden').removeClass('flex');
-                $("body").css('overflow', 'auto');
+        $(".close-modal").click(function() {
+            closeModel();
+        });
+
+        $("#modelModal").click(function(e) {
+            if (e.target === this) {
+                closeModel();
             }
         });
 
@@ -516,6 +539,10 @@
           $("#" + target + " .model-card")
             .css({ opacity: 0, marginTop: "20px" })
             .animate({ opacity: 1, marginTop: "0px" }, 400);
+        });
+
+        $(document).keydown(function(e) {
+            if (e.keyCode === 27) closeModel();
         });
       });
     </script>
