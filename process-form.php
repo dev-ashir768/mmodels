@@ -179,25 +179,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (is_string($value) && strpos($value, 'data:') === 0 && strpos($value, ';base64,') !== false) {
             $value = "<em>[File Attached]</em>";
         }
-        $details_html .= "<tr><td style='padding:10px; border-bottom:1px solid #eee; font-weight:bold; color:#666;'>$label</td><td style='padding:10px; border-bottom:1px solid #eee; color:#333;'>$value</td></tr>";
+        $details_html .= "<tr>
+            <td style='padding: 12px 0; border-bottom: 1px solid #edf2f7; font-family: sans-serif; font-size: 13px; font-weight: 600; color: #4a5568; width: 40%;'>$label</td>
+            <td style='padding: 12px 0; border-bottom: 1px solid #edf2f7; font-family: sans-serif; font-size: 13px; color: #1a202c;'>$value</td>
+        </tr>";
     }
 
+    $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
+    $logo_url = $base_url . "/assets/others/logo.png";
+
     $admin_email_content = "
-    <div style='font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden;'>
-        <div style='background: #000; padding: 20px; text-align: center;'>
-            <img src='https://mmodels.ca/assets/others/logo.png' alt='M Models' style='height: 40px;'>
-        </div>
-        <div style='padding: 30px;'>
-            <h2 style='color: #C50A76; margin-top: 0;'>New Submission Received</h2>
-            <p style='color: #666;'>You have a new submission from the <strong>" . ucwords(str_replace('_', ' ', $form_type)) . "</strong> form.</p>
-            <table style='width: 100%; border-collapse: collapse; margin-top: 20px;'>
-                $details_html
-            </table>
-            <div style='margin-top: 30px; font-size: 12px; color: #999; text-align: center;'>
-                Received at $timestamp
-            </div>
-        </div>
-    </div>";
+    <body style='margin: 0; padding: 0; background-color: #f4f7f9;'>
+        <table width='100%' border='0' cellspacing='0' cellpadding='0' style='background-color: #f4f7f9; padding: 40px 20px;'>
+            <tr>
+                <td align='center'>
+                    <table width='600' border='0' cellspacing='0' cellpadding='0' style='background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);'>
+                        <tr>
+                            <td style='background-color: #000000; padding: 30px; text-align: center;'>
+                                <img src='$logo_url' alt='M Models' style='height: 45px; width: auto;'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style='padding: 40px 50px;'>
+                                <h1 style='font-family: sans-serif; font-size: 24px; font-weight: 700; color: #1a1a1a; margin: 0 0 10px 0;'>New Application Received</h1>
+                                <p style='font-family: sans-serif; font-size: 16px; color: #666666; margin: 0 0 30px 0;'>A new submission has been recorded for <strong>" . ucwords(str_replace('_', ' ', $form_type)) . "</strong>.</p>
+                                
+                                <div style='background-color: #f8fafc; border-radius: 12px; padding: 25px; border: 1px solid #e2e8f0;'>
+                                    <table width='100%' border='0' cellspacing='0' cellpadding='0'>
+                                        $details_html
+                                    </table>
+                                </div>
+
+                                <div style='margin-top: 40px; padding-top: 25px; border-top: 1px solid #eeeeee; text-align: center;'>
+                                    <p style='font-family: sans-serif; font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin: 0;'>Automated System Notification</p>
+                                    <p style='font-family: sans-serif; font-size: 12px; color: #94a3b8; margin: 5px 0 0 0;'>Time: $timestamp</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>";
 
     sendEmail($admin_email, $admin_subject, $admin_email_content, 'M Models System', $_FILES);
 
@@ -208,21 +231,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $greet_subject = "Thank you for applying to M Models!";
         
         $greet_email_content = "
-        <div style='font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 10px; overflow: hidden;'>
-            <div style='background: #000; padding: 20px; text-align: center;'>
-                <img src='https://mmodels.ca/assets/others/logo.png' alt='M Models' style='height: 40px;'>
-            </div>
-            <div style='padding: 30px; text-align: center;'>
-                <h2 style='color: #C50A76; margin-top: 0;'>Hello $first_name,</h2>
-                <p style='color: #333; line-height: 1.6;'>Thank you for submitting your application to <strong>M Models & Talent Agency</strong>. We have received your details and our team will review your profile shortly.</p>
-                <p style='color: #666; font-size: 14px;'>If your look matches our current client requirements, our casting team will contact you for an interview.</p>
-                <div style='margin: 30px 0;'>
-                    <a href='https://mmodels.ca' style='background: #C50A76; color: #fff; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold;'>Visit Website</a>
-                </div>
-                <hr style='border: 0; border-top: 1px solid #eee; margin: 30px 0;'>
-                <p style='color: #999; font-size: 12px;'>Best regards,<br>M Models Team<br><a href='https://mmodels.ca' style='color: #C50A76;'>www.mmodels.ca</a></p>
-            </div>
-        </div>";
+        <body style='margin: 0; padding: 0; background-color: #f4f7f9;'>
+            <table width='100%' border='0' cellspacing='0' cellpadding='0' style='background-color: #f4f7f9; padding: 40px 20px;'>
+                <tr>
+                    <td align='center'>
+                        <table width='600' border='0' cellspacing='0' cellpadding='0' style='background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05);'>
+                            <tr>
+                                <td style='background-color: #000000; padding: 40px; text-align: center;'>
+                                    <img src='$logo_url' alt='M Models' style='height: 50px; width: auto;'>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style='padding: 50px; text-align: center;'>
+                                    <h1 style='font-family: sans-serif; font-size: 28px; font-weight: 700; color: #C50A76; margin: 0 0 20px 0;'>Hello $first_name,</h1>
+                                    <p style='font-family: sans-serif; font-size: 16px; line-height: 1.6; color: #333333; margin: 0 0 25px 0;'>
+                                        Thank you for choosing <strong>M Models & Talent Agency</strong>. We’ve successfully received your application and our scouts are eager to review your profile.
+                                    </p>
+                                    <p style='font-family: sans-serif; font-size: 15px; color: #666666; margin: 0 0 35px 0;'>
+                                        If your look matches our current portfolio needs, one of our agents will reach out to you directly for a personal interview.
+                                    </p>
+                                    <a href='https://mmodels.ca' style='display: inline-block; background-color: #C50A76; color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(197, 10, 118, 0.2); transition: all 0.3s ease;'>Explore M Models</a>
+                                    
+                                    <div style='margin-top: 50px; padding-top: 30px; border-top: 1px solid #eeeeee;'>
+                                        <p style='font-family: sans-serif; font-size: 14px; color: #999999; margin: 0;'>
+                                            Best regards,<br>
+                                            <span style='color: #1a1a1a; font-weight: 600;'>The M Models Casting Team</span><br>
+                                            <a href='https://mmodels.ca' style='color: #C50A76; text-decoration: none;'>www.mmodels.ca</a>
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <p style='font-family: sans-serif; font-size: 11px; color: #a0aec0; text-align: center; margin-top: 20px;'>
+                            © 2026 M Models & Talent Agency. All rights reserved.
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </body>";
 
         sendEmail($applicant_email, $greet_subject, $greet_email_content);
     }

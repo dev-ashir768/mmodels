@@ -235,20 +235,18 @@ foreach ($forms as $key => $title) {
         </div>
 
         <nav class="flex-1 px-4 space-y-2 mt-4">
-            <a href="#" class="flex items-center space-x-3 px-4 py-3 bg-white/10 text-white rounded-xl transition">
-                <i class="fas fa-th-large w-5"></i>
-                <span class="text-sm font-semibold">Submissions</span>
+            <div class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-500 opacity-50">Submissions</div>
+            <?php foreach ($all_data as $key => $dataset): ?>
+            <a href="javascript:void(0)" onclick="switchTab('<?php echo $key; ?>')" id="side_btn_<?php echo $key; ?>" 
+                class="side-btn flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
+                <i class="fas <?php 
+                    echo ($key == 'become_a_model') ? 'fa-user-plus' : 
+                         (($key == 'hire_a_model') ? 'fa-user-tie' : 
+                         (($key == 'application') ? 'fa-file-invoice' : 'fa-envelope')); 
+                ?> w-5"></i>
+                <span class="text-sm font-semibold"><?php echo $dataset['title']; ?></span>
             </a>
-            <a href="#"
-                class="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
-                <i class="fas fa-users w-5"></i>
-                <span class="text-sm font-semibold">Models</span>
-            </a>
-            <a href="#"
-                class="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
-                <i class="fas fa-cog w-5"></i>
-                <span class="text-sm font-semibold">Settings</span>
-            </a>
+            <?php endforeach; ?>
         </nav>
 
         <div class="p-6 border-t border-white/10">
@@ -458,8 +456,13 @@ foreach ($forms as $key => $title) {
             $('.tab-content').addClass('hidden');
             $('#tab_content_' + tabId).removeClass('hidden');
 
+            // Update Tab Buttons
             $('.tab-btn').removeClass('text-primary border-primary bg-primary/5').addClass('text-gray-500 border-transparent');
             $('#tab_btn_' + tabId).removeClass('text-gray-500 border-transparent').addClass('text-primary border-primary bg-primary/5');
+
+            // Update Sidebar Buttons
+            $('.side-btn').removeClass('bg-white/10 text-white').addClass('text-gray-400 hover:text-white hover:bg-white/5');
+            $('#side_btn_' + tabId).addClass('bg-white/10 text-white').removeClass('text-gray-400 hover:text-white hover:bg-white/5');
 
             // Adjust datatables column width since they might be hidden initially
             setTimeout(function () {
