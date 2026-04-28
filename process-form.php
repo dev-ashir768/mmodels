@@ -8,7 +8,44 @@
 // We dynamically set the csv_file later based on form_type
 $admin_email = 'toolgram3@gmail.com'; // Admin notification email
 $smtp_user = 'toolgram3@gmail.com';
-$smtp_pass = 'fihwrjdzscwhx4xx';
+$smtp_pass = 'fihwrjdzscwhxixy';
+
+// PHPMailer configuration
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/Exception.php';
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
+
+// Helper function to send email via SMTP
+function sendEmail($to, $subject, $message, $from_name = 'M Models') {
+    global $smtp_user, $smtp_pass;
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = $smtp_user;
+        $mail->Password   = $smtp_pass;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = 587;
+
+        $mail->setFrom($smtp_user, $from_name);
+        $mail->addAddress($to);
+        $mail->addReplyTo('info@mmodels.com', 'M Models');
+
+        $mail->isHTML(false);
+        $mail->Subject = $subject;
+        $mail->Body    = $message;
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+        return false;
+    }
+}
 
 // Error Reporting for Debugging (Remove in production)
 ini_set('display_errors', 1);
@@ -27,14 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $form_type = $_POST['form_type'] ?? 'general';
     $timestamp = date('Y-m-d H:i:s');
-    
+
     // Collect all POST data
     $data = $_POST;
     unset($data['form_type']); // Remove helper fields
-    
+
     // Handle File Uploads (Convert to Base64)
     $upload_errors = [];
-    
+
     foreach ($_FILES as $key => $file) {
         if (is_array($file['name'])) {
             // Handle multiple file uploads array structure if needed
@@ -57,13 +94,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 switch ($file['error']) {
                     case UPLOAD_ERR_INI_SIZE:
-                        $err = "File exceeds server limit ($max_upload)"; break;
+                        $err = "File exceeds server limit ($max_upload)";
+                        break;
                     case UPLOAD_ERR_FORM_SIZE:
-                        $err = "File exceeds form limit"; break;
+                        $err = "File exceeds form limit";
+                        break;
                     case UPLOAD_ERR_PARTIAL:
-                        $err = "Upload was partial"; break;
+                        $err = "Upload was partial";
+                        break;
                     case UPLOAD_ERR_NO_FILE:
-                        $err = "No file selected"; break;
+                        $err = "No file selected";
+                        break;
                     default:
                         $err = "Upload error (" . $file['error'] . ")";
                 }
@@ -122,9 +163,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $admin_message .= ucwords(str_replace('_', ' ', $key)) . ": $value\n";
         }
     }
-    
-    $headers = "From: info@mmodels.com\r\n";
-    @mail($admin_email, $admin_subject, $admin_message, $headers);
+
+    sendEmail($admin_email, $admin_subject, $admin_message, 'M Models System');
 
     // 2. Applicant Greeting Email
     $applicant_email = $_POST['email'] ?? '';
@@ -136,14 +176,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $greet_message .= "Best regards,\n";
         $greet_message .= "M Models Team\n";
         $greet_message .= "www.mmodels.ca";
-        
-        @mail($applicant_email, $greet_subject, $greet_message, $headers);
+
+        sendEmail($applicant_email, $greet_subject, $greet_message);
     }
 
     // Return response for AJAX
     header('Content-Type: application/json');
     echo json_encode([
-        'status' => 'success', 
+        'status' => 'success',
         'message' => 'Application received!',
         'debug' => [
             'upload_errors' => $upload_errors,
