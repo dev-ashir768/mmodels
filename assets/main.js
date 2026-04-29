@@ -420,6 +420,97 @@ const i18nDict = {
     fr: "Voir tous les clients",
     ja: "すべてのクライアントを見る",
   },
+  "Privacy Policy": {
+    fr: "Politique de Confidentialité",
+    ja: "プライバシーポリシー",
+  },
+  "Sponsored By": {
+    fr: "Commandité par",
+    ja: "スポンサー",
+  },
+  "Welcome to M Models!": {
+    fr: "Bienvenue chez M Models !",
+    ja: "M Modelsへようこそ！",
+  },
+  "At M Models Inc., we respect your privacy and are committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and protect your data when you visit our website.":
+    {
+      fr: "Chez M Models Inc., nous respectons votre vie privée et nous nous engageons à protéger vos informations personnelles. Cette politique de confidentialité décrit comment nous collectons, utilisons et protégeons vos données.",
+      ja: "M Models Inc.では、お客様のプライバシーを尊重し、個人情報の保護に努めています。このプライバシーポリシーは、当社のウェブサイトを訪問した際に、当社がどのようにお客様のデータを収集、使用、および保護するかを概説するものです。",
+    },
+  "Who We Are": { fr: "Qui Nous Sommes", ja: "私たちについて" },
+  "Our website address is: https://mmodels.ca. We represent models, actors, and influencers and provide services within the modeling and talent industry.":
+    {
+      fr: "L'adresse de notre site Web est : https://mmodels.ca. Nous représentons des modèles, des acteurs et des influenceurs et fournissons des services au sein de l'industrie du mannequinat et du talent.",
+      ja: "当社のウェブサイトのアドレスは https://mmodels.ca です。私たちはモデル、俳優、インフルエンサーを代表し、モデルおよびタレント業界内でサービスを提供しています。",
+    },
+  "Information We Collect": {
+    fr: "Informations que Nous Collectons",
+    ja: "収集する情報",
+  },
+  "When you visit our website, we may collect the following information:": {
+    fr: "Lorsque vous visitez notre site Web, nous pouvons collecter les informations suivantes :",
+    ja: "当社のウェブサイトを訪問した際、以下の情報を収集する場合があります：",
+  },
+  "Personal details such as your name and email address.": {
+    fr: "Détails personnels tels que votre nom et votre adresse e-mail.",
+    ja: "氏名やメールアドレスなどの個人情報。",
+  },
+  "Payment information for processing bookings and services.": {
+    fr: "Informations de paiement pour le traitement des réservations et des services.",
+    ja: "予約およびサービスの処理のための支払い情報。",
+  },
+  "Data collected through cookies to improve site functionality and marketing efforts.":
+    {
+      fr: "Données collectées via des cookies pour améliorer la fonctionnalité du site et les efforts marketing.",
+      ja: "サイトの機能向上やマーケティング活動のためにクッキーを通じて収集されるデータ。",
+    },
+  "How We Use Your Information": {
+    fr: "Comment Nous Utilisons Vos Informations",
+    ja: "情報の利用方法",
+  },
+  "We use the information we collect to:": {
+    fr: "Nous utilisons les informations que nous collectons pour :",
+    ja: "収集した情報は以下の目的で使用されます：",
+  },
+  "Enhance your experience on our website.": {
+    fr: "Améliorer votre expérience sur notre site Web.",
+    ja: "ウェブサイトでの体験を向上させる。",
+  },
+  "Provide the services you request.": {
+    fr: "Fournir les services que vous demandez.",
+    ja: "リクエストされたサービスを提供する。",
+  },
+  "Communicate with you about our offerings and updates.": {
+    fr: "Communiquer avec vous au sujet de nos offres et mises à jour.",
+    ja: "当社の提供サービスやアップデートについてお客様に連絡する。",
+  },
+  "Third-Party Information": {
+    fr: "Informations de Tiers",
+    ja: "第三者情報",
+  },
+  "Links To Other Websites": {
+    fr: "Liens vers d'autres sites Web",
+    ja: "他サイトへのリンク",
+  },
+  Cookies: { fr: "Cookies", ja: "クッキー" },
+  Submissions: { fr: "Soumissions", ja: "提出物" },
+  "Legal Actions": { fr: "Actions Légales", ja: "法的措置" },
+  "No Warranties": { fr: "Aucune Garantie", ja: "無保証" },
+  "Limitation of Liability": {
+    fr: "Limitation de Responsabilité",
+    ja: "責任の制限",
+  },
+  Indemnity: { fr: "Indemnisation", ja: "免責" },
+  "Governing Law and Dispute Resolution": {
+    fr: "Loi Applicable et Règlement des Différends",
+    ja: "準拠法および紛争解決",
+  },
+  "Data Retention": { fr: "Rétention des Données", ja: "データ保持" },
+  "We retain your data only for as long as necessary to provide our services and comply with legal obligations.":
+    {
+      fr: "Nous conservons vos données uniquement le temps nécessaire pour fournir nos services et nous conformer aux obligations légales.",
+      ja: "当社は、サービスを提供し法的義務を遵守するために必要な期間のみ、お客様のデータを保持します。",
+    },
   Motion: { fr: "Motion", ja: "モーション" },
   "Video Portfolio": { fr: "Portfolio Vidéo", ja: "ビデオポートフォリオ" },
   "Here are a few commercials and music videos our models and talents were booked for. If you want to see more videos please visit our":
