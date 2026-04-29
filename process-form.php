@@ -17,6 +17,8 @@ use PHPMailer\PHPMailer\Exception;
 require 'PHPMailer/Exception.php';
 require 'PHPMailer/PHPMailer.php';
 require 'PHPMailer/SMTP.php';
+require 'includes/db.php';
+
 
 // Helper function to send email via SMTP
 function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachments = []) {
@@ -163,11 +165,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         fputcsv($file_handle, $row);
         fclose($file_handle);
-    } else {
-        header('Content-Type: application/json');
-        echo json_encode(['status' => 'error', 'message' => 'Cannot open CSV file. Check permissions.']);
-        exit;
     }
+
+    // Save to Database
+    try {
+        // Separate base64 files from text data for cleaner storage if needed, 
+        // but for now we'll store the full data object as JSON.
+        $stmt = $pdo->prepare("INSERT INTO submissions (form_type, form_data, timestamp) VALUES (?, ?, ?)");
+        $stmt->execute([
+            $form_type,
+            json_encode($data),
+            $timestamp
+        ]);
+    } catch (PDOException $e) {
+        error_log("Database Insert Failed: " . $e->getMessage());
+        // We don't exit here because CSV and Email might have succeeded
+    }
+
 
     // 1. Admin Notification Email
     $admin_subject = "New Form Submission: " . ucwords(str_replace('_', ' ', $form_type));

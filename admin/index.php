@@ -10,6 +10,9 @@ session_start();
 $admin_pass = 'mmodels2026';
 $csv_file = '../data/submissions.csv';
 
+require '../includes/db.php';
+
+
 if (isset($_GET['logout'])) {
     session_destroy();
     header('Location: index.php');
@@ -112,67 +115,70 @@ $forms = [
     'contact' => 'Contact Us',
 ];
 
-// Improved Deletion Logic using Timestamp and Form Type
-if (isset($_POST['delete_timestamp']) && isset($_POST['delete_form_type'])) {
-    $ts = $_POST['delete_timestamp'];
-    $ft = $_POST['delete_form_type'];
-    if (isset($forms[$ft])) {
-        $del_csv_file = "../data/submissions_{$ft}.csv";
-        $new_data = [];
-        if (file_exists($del_csv_file)) {
-            if (($handle = fopen($del_csv_file, "r")) !== FALSE) {
-                $header = fgetcsv($handle, 10000, ",");
-                $new_data[] = $header;
-                while (($row = fgetcsv($handle, 10000, ",")) !== FALSE) {
-                    if ($row[0] !== $ts) {
-                        $new_data[] = $row;
-                    }
-                }
-                fclose($handle);
-
-                // Rewrite CSV
-                $handle = fopen($del_csv_file, "w");
-                foreach ($new_data as $row) {
-                    fputcsv($handle, $row);
-                }
-                fclose($handle);
-            }
-        }
+// Improved Deletion Logic using Database ID
+if (isset($_POST['delete_id'])) {
+    $id = (int)$_POST['delete_id'];
+    try {
+        $stmt = $pdo->prepare("DELETE FROM submissions WHERE id = ?");
+        $stmt->execute([$id]);
+    } catch (PDOException $e) {
+        error_log("Delete Failed: " . $e->getMessage());
     }
     header('Location: index.php');
     exit;
 }
 
-// Data Processing
+
+// Data Processing - Fetch from Database
 $all_data = [];
 $total_submissions = 0;
 $today_submissions = 0;
 $current_date = date('Y-m-d');
 
-foreach ($forms as $key => $title) {
-    $csv_file = "../data/submissions_{$key}.csv";
-    $data = [];
-    $headers = [];
-    if (file_exists($csv_file)) {
-        if (($handle = fopen($csv_file, "r")) !== FALSE) {
-            $headers = fgetcsv($handle, 10000, ","); // Keep headers separate
-            while (($row = fgetcsv($handle, 10000, ",")) !== FALSE) {
-                $data[] = $row;
-                $total_submissions++;
-                if (strpos($row[0], $current_date) === 0)
-                    $today_submissions++;
+try {
+    // Get total and today's counts
+    $total_submissions = $pdo->query("SELECT COUNT(*) FROM submissions")->fetchColumn();
+    $today_submissions = $pdo->query("SELECT COUNT(*) FROM submissions WHERE DATE(timestamp) = '$current_date'")->fetchColumn();
+
+    foreach ($forms as $key => $title) {
+        $data = [];
+        $headers = ['Timestamp', 'Form Type']; // Default headers
+        
+        // Fetch submissions for this form type
+        $stmt = $pdo->prepare("SELECT * FROM submissions WHERE form_type = ? ORDER BY timestamp DESC");
+        $stmt->execute([$key]);
+        $rows = $stmt->fetchAll();
+
+        foreach ($rows as $row) {
+            $formData = json_decode($row['form_data'], true);
+            if (!$formData) continue;
+
+            // Collect unique headers from all rows for this form type
+            foreach ($formData as $k => $v) {
+                $header_label = ucwords(str_replace('_', ' ', $k));
+                if (!in_array($k, $headers)) {
+                    $headers[] = $k;
+                }
             }
-            fclose($handle);
+
+            // Construct the row for the UI
+            $ui_row = [$row['timestamp'], $row['form_type']];
+            // We need to match headers correctly. The UI iterates over headers to print cells.
+            // But headers are built dynamically. Let's store the raw data and build the row in the loop.
+            $data[] = $row; 
         }
-        $data = array_reverse($data); // Newest first
+
+        $all_data[$key] = [
+            'title' => $title,
+            'headers' => $headers,
+            'data' => $data,
+            'file' => "../data/submissions_{$key}.csv" // Keep for direct download if file exists
+        ];
     }
-    $all_data[$key] = [
-        'title' => $title,
-        'headers' => $headers,
-        'data' => $data,
-        'file' => $csv_file
-    ];
+} catch (PDOException $e) {
+    error_log("Admin Fetch Failed: " . $e->getMessage());
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -368,62 +374,81 @@ foreach ($forms as $key => $title) {
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
-                                <?php
-                                if (!empty($dataset['data'])) {
-                                    foreach ($dataset['data'] as $row) {
-                                        $row_ts = $row[0]; // First col is timestamp
-                                        echo "<tr class='hover:bg-gray-50/50 transition-colors'>";
-                                        foreach ($row as $cell) {
-                                            if (is_string($cell) && strpos($cell, 'data:') === 0 && strpos($cell, ';base64,') !== false) {
-                                                // Handle File Cell
-                                                $is_image = strpos($cell, 'data:image/') === 0;
-                                                $preview = $is_image
-                                                    ? "<img src='$cell' class='w-full h-full object-cover rounded-lg border border-gray-100 shadow-sm transition-all group-hover:ring-2 group-hover:ring-primary/30' alt='Photo'>"
-                                                    : "<div class='w-full h-full rounded-lg border border-gray-100 bg-gray-50 flex items-center justify-center text-gray-400 group-hover:ring-2 group-hover:ring-primary/30'><i class='fas fa-file-alt text-xl'></i></div>";
+                                 <?php
+                                 if (!empty($dataset['data'])) {
+                                     foreach ($dataset['data'] as $db_row) {
+                                         $row_ts = $db_row['timestamp'];
+                                         $formData = json_decode($db_row['form_data'], true);
+                                         
+                                         echo "<tr class='hover:bg-gray-50/50 transition-colors'>";
+                                         
+                                         // Iterate through headers to ensure data aligns with columns
+                                         foreach ($dataset['headers'] as $h_key) {
+                                             $cell = '';
+                                             if ($h_key === 'Timestamp') {
+                                                 $cell = $db_row['timestamp'];
+                                             } elseif ($h_key === 'Form Type') {
+                                                 $cell = $db_row['form_type'];
+                                             } else {
+                                                 $cell = $formData[$h_key] ?? '';
+                                             }
 
-                                                echo "<td class='px-6 py-4'>
-                                                        <div class='flex flex-col items-center gap-1 min-w-[70px]'>
-                                                            <a href='$cell' target='_blank' class='w-12 h-12 block group relative'>
-                                                                $preview
-                                                                <div class='absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center text-white text-[8px]'>
-                                                                    <i class='fas " . ($is_image ? "fa-eye" : "fa-download") . "'></i>
-                                                                </div>
-                                                            </a>
-                                                            <div class='flex gap-2 mt-1'>
-                                                                <a href='$cell' download='mmodels_file' class='text-[9px] text-gray-400 hover:text-green-500 font-bold tracking-tighter uppercase'>Save</a>
-                                                            </div>
-                                                        </div>
-                                                      </td>";
-                                            } else {
-                                                $display = htmlspecialchars($cell);
-                                                if ($cell == 'become_a_model') {
-                                                    $display = "<span class='px-3 py-1 bg-pink-50 text-[#C50A76] rounded-full text-[10px] font-bold uppercase tracking-tighter'>Model App</span>";
-                                                } elseif ($cell == 'hire_a_model') {
-                                                    $display = "<span class='px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Hire Model</span>";
-                                                } elseif ($cell == 'application') {
-                                                    $display = "<span class='px-3 py-1 bg-purple-50 text-purple-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Application</span>";
-                                                } elseif ($cell == 'contact') {
-                                                    $display = "<span class='px-3 py-1 bg-green-50 text-green-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Contact</span>";
-                                                } elseif (strpos($display, 'No photo') !== false || strpos($display, 'No file') !== false || strpos($display, 'Not sent') !== false) {
-                                                    $display = "<span class='text-gray-300 italic text-[10px]'>Empty</span>";
-                                                }
-                                                echo "<td class='px-6 py-4 font-medium text-gray-700 whitespace-nowrap'>$display</td>";
-                                            }
-                                        }
-                                        // Add Actions Column
-                                        echo "<td class='px-6 py-4 text-center'>
-                                                <form method='POST' id='deleteForm_{$key}_$row_ts' class='inline-block'>
-                                                    <input type='hidden' name='delete_timestamp' value='$row_ts'>
-                                                    <input type='hidden' name='delete_form_type' value='$key'>
-                                                    <button type='button' onclick='confirmDelete(\"deleteForm_{$key}_$row_ts\")' class='w-8 h-8 flex items-center justify-center rounded-lg bg-red-50 text-red-400 hover:bg-red-500 hover:text-white transition-all shadow-sm'>
-                                                        <i class='fas fa-trash-alt text-xs'></i>
-                                                    </button>
-                                                </form>
-                                              </td>";
-                                        echo "</tr>";
-                                    }
-                                }
-                                ?>
+                                             if (is_string($cell) && strpos($cell, 'data:') === 0 && strpos($cell, ';base64,') !== false) {
+                                                 // Handle File Cell
+                                                 $is_image = strpos($cell, 'data:image/') === 0;
+                                                 $preview = $is_image
+                                                     ? "<img src='$cell' class='w-full h-full object-cover rounded-lg border border-gray-100 shadow-sm transition-all group-hover:ring-2 group-hover:ring-primary/30' alt='Photo'>"
+                                                     : "<div class='w-full h-full rounded-lg border border-gray-100 bg-gray-50 flex items-center justify-center text-gray-400 group-hover:ring-2 group-hover:ring-primary/30'><i class='fas fa-file-alt text-xl'></i></div>";
+
+                                                 echo "<td class='px-6 py-4'>
+                                                         <div class='flex flex-col items-center gap-1 min-w-[70px]'>
+                                                             <a href='$cell' target='_blank' class='w-12 h-12 block group relative'>
+                                                                 $preview
+                                                                 <div class='absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center text-white text-[8px]'>
+                                                                     <i class='fas " . ($is_image ? "fa-eye" : "fa-download") . "'></i>
+                                                                 </div>
+                                                             </a>
+                                                             <div class='flex gap-2 mt-1'>
+                                                                 <a href='$cell' download='mmodels_file' class='text-[9px] text-gray-400 hover:text-green-500 font-bold tracking-tighter uppercase'>Save</a>
+                                                             </div>
+                                                         </div>
+                                                       </td>";
+                                             } else {
+                                                 // Handle arrays (e.g. multi-select)
+                                                 if (is_array($cell)) {
+                                                     $cell = implode('; ', $cell);
+                                                 }
+                                                 
+                                                 $display = htmlspecialchars($cell);
+                                                 if ($cell == 'become_a_model') {
+                                                     $display = "<span class='px-3 py-1 bg-pink-50 text-[#C50A76] rounded-full text-[10px] font-bold uppercase tracking-tighter'>Model App</span>";
+                                                 } elseif ($cell == 'hire_a_model') {
+                                                     $display = "<span class='px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Hire Model</span>";
+                                                 } elseif ($cell == 'application') {
+                                                     $display = "<span class='px-3 py-1 bg-purple-50 text-purple-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Application</span>";
+                                                 } elseif ($cell == 'contact') {
+                                                     $display = "<span class='px-3 py-1 bg-green-50 text-green-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Contact</span>";
+                                                 } elseif (empty($display) || strpos($display, 'No photo') !== false || strpos($display, 'No file') !== false || strpos($display, 'Not sent') !== false) {
+                                                     $display = "<span class='text-gray-300 italic text-[10px]'>Empty</span>";
+                                                 }
+                                                 echo "<td class='px-6 py-4 font-medium text-gray-700 whitespace-nowrap'>$display</td>";
+                                             }
+                                         }
+                                         // Add Actions Column
+                                         echo "<td class='px-6 py-4 text-center'>
+                                                 <form method='POST' id='deleteForm_{$key}_" . md5($row_ts) . "' class='inline-block'>
+                                                     <input type='hidden' name='delete_id' value='" . $db_row['id'] . "'>
+                                                     <input type='hidden' name='delete_form_type' value='$key'>
+                                                     <button type='button' onclick='confirmDelete(\"deleteForm_{$key}_" . md5($row_ts) . "\")' class='w-8 h-8 flex items-center justify-center rounded-lg bg-red-50 text-red-400 hover:bg-red-500 hover:text-white transition-all shadow-sm'>
+                                                         <i class='fas fa-trash-alt text-xs'></i>
+                                                     </button>
+                                                 </form>
+                                               </td>";
+                                         echo "</tr>";
+                                     }
+                                 }
+                                 ?>
+
                             </tbody>
                         </table>
                     </div>
