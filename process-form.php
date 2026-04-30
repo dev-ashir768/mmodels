@@ -6,7 +6,7 @@
 
 // Configuration
 // We dynamically set the csv_file later based on form_type
-$admin_email = 'toolgram3@gmail.com'; // Admin notification email
+$admin_email = 'toolgram3@gmail.com';
 $smtp_user = 'toolgram3@gmail.com';
 $smtp_pass = 'fihwrjdzscwhxixy';
 
