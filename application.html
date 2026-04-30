@@ -86,64 +86,30 @@
     <!-- Navigation -->
     <nav
       id="navbar"
-      class="fixed w-full z-50 glass-nav transition-all duration-300 shadow-md bg-white"
+      class="fixed w-full z-50 glass-nav transition-all duration-300"
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-24">
           <div class="flex-shrink-0 flex items-center">
-            <a href="index.html" class="block">
-              <img
+            <a href="index.html" class="block"
+              ><img
                 src="/assets/others/logo.png"
                 alt="M Models"
                 class="h-10 md:h-12 w-auto object-contain"
-              />
-            </a>
+            /></a>
           </div>
-
-          <!-- Desktop Menu -->
-                                        <div
+          <div
             class="hidden xl:flex items-center space-x-8 text-xs font-bold uppercase tracking-wider"
           >
-            <a href="home.html" class="menu-link {home_active}">Home</a>
+            <a href="home.html" class="menu-link text-gray-600">Home</a>
 
             <!-- Talent -->
             <div class="dropdown-wrapper group">
-              <span class="menu-link flex items-center {talent_active}">Talent <i class="fas fa-chevron-down nav-arrow"></i></span>
+              <span class="menu-link flex items-center text-gray-600">Talent <i class="fas fa-chevron-down nav-arrow"></i></span>
               <div class="dropdown-menu">
-                <a href="models.html" class="dropdown-item {models_active}">Models <i class="fas fa-arrow-right"></i></a>
-                <a href="influencers.html" class="dropdown-item {influencers_active}">Influencers <i class="fas fa-arrow-right"></i></a>
+                <a href="models.html" class="dropdown-item ">Models <i class="fas fa-arrow-right"></i></a>
+                <a href="influencers.html" class="dropdown-item ">Influencers <i class="fas fa-arrow-right"></i></a>
               </div>
-            </div>
-
-            <!-- Work -->
-            <div class="dropdown-wrapper group">
-              <span class="menu-link flex items-center {work_active}">Our Work <i class="fas fa-chevron-down nav-arrow"></i></span>
-              <div class="dropdown-menu">
-                <a href="our-works.html" class="dropdown-item {showcase_active}">Showcase <i class="fas fa-arrow-right"></i></a>
-                <a href="video.html" class="dropdown-item {video_active}">Video <i class="fas fa-arrow-right"></i></a>
-                <a href="clients.html" class="dropdown-item {clients_active}">Our Clients <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-
-            <!-- Join/Hire -->
-            <div class="dropdown-wrapper group">
-              <span class="menu-link flex items-center {join_active}">Join Us <i class="fas fa-chevron-down nav-arrow"></i></span>
-              <div class="dropdown-menu">
-                <a href="become-a-model.html" class="dropdown-item {become_active}">Become a Model <i class="fas fa-arrow-right"></i></a>
-                <a href="application.html" class="dropdown-item {apply_active}">General Apply <i class="fas fa-arrow-right"></i></a>
-                <a href="hire-a-model.html" class="dropdown-item {hire_active}">Hire a Model <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-
-            <!-- More -->
-            <div class="dropdown-wrapper group">
-              <span class="menu-link flex items-center {contact_active}">Contact <i class="fas fa-chevron-down nav-arrow"></i></span>
-              <div class="dropdown-menu">
-                <a href="faq.html" class="dropdown-item {faq_active}">FAQ's <i class="fas fa-arrow-right"></i></a>
-                <a href="contact.html" class="dropdown-item {contact_us_active}">Contact Us <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
             </div>
 
             <!-- Work -->
@@ -175,37 +141,6 @@
               </div>
             </div>
           </div>
-            </div>
-
-            <!-- Work -->
-            <div class="dropdown-wrapper group">
-              <span class="menu-link flex items-center text-gray-600">Our Work <i class="fas fa-chevron-down nav-arrow"></i></span>
-              <div class="dropdown-menu">
-                <a href="our-works.html" class="dropdown-item ">Showcase <i class="fas fa-arrow-right"></i></a>
-                <a href="video.html" class="dropdown-item ">Video <i class="fas fa-arrow-right"></i></a>
-                <a href="clients.html" class="dropdown-item ">Our Clients <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-
-            <!-- Join/Hire -->
-            <div class="dropdown-wrapper group">
-              <span class="menu-link flex items-center active text-primary">Join Us <i class="fas fa-chevron-down nav-arrow"></i></span>
-              <div class="dropdown-menu">
-                <a href="become-a-model.html" class="dropdown-item ">Become a Model <i class="fas fa-arrow-right"></i></a>
-                <a href="application.html" class="dropdown-item ">General Apply <i class="fas fa-arrow-right"></i></a>
-                <a href="hire-a-model.html" class="dropdown-item ">Hire a Model <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-
-            <!-- More -->
-            <div class="dropdown-wrapper group">
-              <span class="menu-link flex items-center text-gray-600">Contact <i class="fas fa-chevron-down nav-arrow"></i></span>
-              <div class="dropdown-menu">
-                <a href="faq.html" class="dropdown-item ">FAQ's <i class="fas fa-arrow-right"></i></a>
-                <a href="contact.html" class="dropdown-item ">Contact Us <i class="fas fa-arrow-right"></i></a>
-              </div>
-            </div>
-          </div>
           <div class="xl:hidden flex items-center">
             <button id="mobile-btn" class="text-gray-600 hover:text-primary">
               <i class="fas fa-bars text-2xl"></i>
@@ -217,25 +152,25 @@
         <div
           class="px-8 pt-4 pb-10 flex flex-col space-y-1 text-sm font-bold uppercase tracking-wider"
         >
-          <a href="home.html" class="mobile-link {m_home}">Home <i class="fas fa-chevron-right"></i></a>
+          <a href="home.html" class="mobile-link ">Home <i class="fas fa-chevron-right"></i></a>
           
           <div class="mobile-section-title">Talent</div>
-          <a href="models.html" class="mobile-link {m_models}">Models <i class="fas fa-chevron-right"></i></a>
-          <a href="influencers.html" class="mobile-link {m_influencers}">Influencers <i class="fas fa-chevron-right"></i></a>
+          <a href="models.html" class="mobile-link ">Models <i class="fas fa-chevron-right"></i></a>
+          <a href="influencers.html" class="mobile-link ">Influencers <i class="fas fa-chevron-right"></i></a>
           
           <div class="mobile-section-title">Our Work</div>
-          <a href="our-works.html" class="mobile-link {m_showcase}">Showcase <i class="fas fa-chevron-right"></i></a>
-          <a href="video.html" class="mobile-link {m_video}">Video <i class="fas fa-chevron-right"></i></a>
-          <a href="clients.html" class="mobile-link {m_clients}">Our Clients <i class="fas fa-chevron-right"></i></a>
+          <a href="our-works.html" class="mobile-link ">Showcase <i class="fas fa-chevron-right"></i></a>
+          <a href="video.html" class="mobile-link ">Video <i class="fas fa-chevron-right"></i></a>
+          <a href="clients.html" class="mobile-link ">Our Clients <i class="fas fa-chevron-right"></i></a>
           
           <div class="mobile-section-title">Join & Booking</div>
-          <a href="become-a-model.html" class="mobile-link {m_become}">Become a Model <i class="fas fa-chevron-right"></i></a>
-          <a href="application.html" class="mobile-link {m_apply}">Apply <i class="fas fa-chevron-right"></i></a>
-          <a href="hire-a-model.html" class="mobile-link {m_hire}">Hire a Model <i class="fas fa-chevron-right"></i></a>
+          <a href="become-a-model.html" class="mobile-link ">Become a Model <i class="fas fa-chevron-right"></i></a>
+          <a href="application.html" class="mobile-link active">Apply <i class="fas fa-chevron-right"></i></a>
+          <a href="hire-a-model.html" class="mobile-link ">Hire a Model <i class="fas fa-chevron-right"></i></a>
           
           <div class="mobile-section-title">Information</div>
-          <a href="faq.html" class="mobile-link {m_faq}">FAQ's <i class="fas fa-chevron-right"></i></a>
-          <a href="contact.html" class="mobile-link {m_contact}">Contact Us <i class="fas fa-chevron-right"></i></a>
+          <a href="faq.html" class="mobile-link ">FAQ's <i class="fas fa-chevron-right"></i></a>
+          <a href="contact.html" class="mobile-link ">Contact Us <i class="fas fa-chevron-right"></i></a>
         </div>
       </div>
     </nav>
