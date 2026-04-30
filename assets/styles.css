@@ -256,25 +256,31 @@ body { background-color: #f9fafb; color: #111827; }
     border-bottom-left-radius: 2.5rem;
     border-bottom-right-radius: 2.5rem;
     box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+    max-height: 85vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 .mobile-section-title {
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     font-weight: 900;
     color: #94a3b8;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    padding: 1.5rem 0 0.5rem 0;
-    margin-top: 0.5rem;
+    padding: 1.25rem 0 0.5rem 0;
+    margin-top: 0.25rem;
+    opacity: 0.7;
 }
 .mobile-link {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 0;
+    padding: 0.875rem 0;
     font-weight: 700;
+    font-size: 0.85rem;
     letter-spacing: 0.05em;
     transition: all 0.3s ease;
     border-bottom: 1px solid rgba(0,0,0,0.03);
+    color: #374151;
 }
 .mobile-link:last-child {
     border-bottom: none;
@@ -284,20 +290,16 @@ body { background-color: #f9fafb; color: #111827; }
     padding-left: 0.5rem;
 }
 .mobile-link i {
-    font-size: 0.7rem;
-    opacity: 0;
-    transform: translateX(-10px);
+    font-size: 0.65rem;
+    opacity: 0.3;
     transition: all 0.3s ease;
 }
 .mobile-link.active i {
     opacity: 1;
-    transform: translateX(0);
+    color: #C50A76;
 }
 .mobile-link:hover {
     color: #C50A76;
     padding-left: 0.5rem;
 }
-.mobile-link:hover i {
-    opacity: 0.5;
-    transform: translateX(0);
-}
+
