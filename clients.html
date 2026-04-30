@@ -48,30 +48,79 @@
                 class="h-10 md:h-12 w-auto object-contain"
             /></a>
           </div>
-          <div
-            class="hidden xl:flex items-center space-x-4 text-xs font-bold uppercase tracking-wider"
+                              <div
+            class="hidden xl:flex items-center space-x-8 text-xs font-bold uppercase tracking-wider"
           >
             <a href="home.html" class="menu-link text-gray-600">Home</a>
-            <a href="video.html" class="menu-link text-gray-600">Video</a>
-            <a href="models.html" class="menu-link text-gray-600">Models</a>
-            <a href="influencers.html" class="menu-link text-gray-600">Influencers</a>
-            <a href="clients.html" class="menu-link active text-primary"
-              >Our Clients</a
-            >
-            <a href="our-works.html" class="menu-link text-gray-600"
-              >Showcase</a
-            >
-            <a href="become-a-model.html" class="menu-link text-gray-600"
-              >Become a Model</a
-            >
-            <a href="hire-a-model.html" class="menu-link text-gray-600"
-              >Hire a Model</a
-            >
-            <a href="application.html" class="menu-link text-gray-600">Apply</a>
-            <a href="faq.html" class="menu-link text-gray-600">FAQ's</a>
-            <a href="contact.html" class="menu-link text-gray-600"
-              >Contact Us</a
-            >
+
+            <!-- Talent -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600">Talent <i class="fas fa-chevron-down nav-arrow"></i></span>
+              <div class="dropdown-menu">
+                <a href="models.html" class="dropdown-item ">Models <i class="fas fa-arrow-right"></i></a>
+                <a href="influencers.html" class="dropdown-item ">Influencers <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+
+            <!-- Work -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center active text-primary">Our Work <i class="fas fa-chevron-down nav-arrow"></i></span>
+              <div class="dropdown-menu">
+                <a href="our-works.html" class="dropdown-item ">Showcase <i class="fas fa-arrow-right"></i></a>
+                <a href="video.html" class="dropdown-item ">Video <i class="fas fa-arrow-right"></i></a>
+                <a href="clients.html" class="dropdown-item active">Our Clients <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+
+            <!-- Join/Hire -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600">Join Us <i class="fas fa-chevron-down nav-arrow"></i></span>
+              <div class="dropdown-menu">
+                <a href="become-a-model.html" class="dropdown-item ">Become a Model <i class="fas fa-arrow-right"></i></a>
+                <a href="application.html" class="dropdown-item ">General Apply <i class="fas fa-arrow-right"></i></a>
+                <a href="hire-a-model.html" class="dropdown-item ">Hire a Model <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+
+            <!-- More -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600">Contact <i class="fas fa-chevron-down nav-arrow"></i></span>
+              <div class="dropdown-menu">
+                <a href="faq.html" class="dropdown-item ">FAQ's <i class="fas fa-arrow-right"></i></a>
+                <a href="contact.html" class="dropdown-item ">Contact Us <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+            </div>
+
+            <!-- Work -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center active text-primary">Our Work <i class="fas fa-chevron-down nav-arrow"></i></span>
+              <div class="dropdown-menu">
+                <a href="our-works.html" class="dropdown-item ">Showcase <i class="fas fa-arrow-right"></i></a>
+                <a href="video.html" class="dropdown-item ">Video <i class="fas fa-arrow-right"></i></a>
+                <a href="clients.html" class="dropdown-item ">Our Clients <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+
+            <!-- Join/Hire -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600">Join Us <i class="fas fa-chevron-down nav-arrow"></i></span>
+              <div class="dropdown-menu">
+                <a href="become-a-model.html" class="dropdown-item ">Become a Model <i class="fas fa-arrow-right"></i></a>
+                <a href="application.html" class="dropdown-item ">General Apply <i class="fas fa-arrow-right"></i></a>
+                <a href="hire-a-model.html" class="dropdown-item ">Hire a Model <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+
+            <!-- More -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600">Contact <i class="fas fa-chevron-down nav-arrow"></i></span>
+              <div class="dropdown-menu">
+                <a href="faq.html" class="dropdown-item ">FAQ's <i class="fas fa-arrow-right"></i></a>
+                <a href="contact.html" class="dropdown-item ">Contact Us <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
           </div>
           <div class="xl:hidden flex items-center">
             <button id="mobile-btn" class="text-gray-600 hover:text-primary">
@@ -80,68 +129,29 @@
           </div>
         </div>
       </div>
-      <div
-        id="mobile-menu"
-        class="hidden xl:hidden bg-white border-t border-gray-100 shadow-xl pb-4"
-      >
+      <div id="mobile-menu" class="hidden xl:hidden bg-white border-t border-gray-100 shadow-xl pb-4">
         <div
-          class="px-6 pt-4 pb-6 flex flex-col space-y-4 text-sm font-bold uppercase tracking-wider"
+          class="px-6 pt-4 pb-6 flex flex-col space-y-1 text-sm font-bold uppercase tracking-wider"
         >
-          <a
-            href="home.html"
-            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
-            >Home</a
-          >
-          <a
-            href="video.html"
-            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
-            >Video</a
-          >
-          <a
-            href="models.html"
-            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
-            >Models</a
-          >
-          <a
-            href="influencers.html"
-            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
-            >Influencers</a
-          >
-          <a
-            href="clients.html"
-            class="text-primary border-b border-gray-50 pb-2 transition"
-            >Our Clients</a
-          >
-          <a
-            href="our-works.html"
-            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
-            >Showcase</a
-          >
-          <a
-            href="become-a-model.html"
-            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
-            >Become a Model</a
-          >
-          <a
-            href="hire-a-model.html"
-            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
-            >Hire a Model</a
-          >
-          <a
-            href="application.html"
-            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
-            >Apply</a
-          >
-          <a
-            href="faq.html"
-            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
-            >FAQ's</a
-          >
-          <a
-            href="contact.html"
-            class="text-gray-500 hover:text-primary border-b border-gray-50 pb-2 transition"
-            >Contact Us</a
-          >
+          <a href="home.html" class="text-gray-500 py-3 border-b border-gray-50">Home</a>
+          
+          <div class="pt-4 pb-2 text-[10px] text-gray-400 tracking-[0.2em]">Talent</div>
+          <a href="models.html" class="text-gray-500 hover:text-primary py-3 border-b border-gray-50 transition">Models</a>
+          <a href="influencers.html" class="text-gray-500 hover:text-primary py-3 border-b border-gray-50 transition">Influencers</a>
+          
+          <div class="pt-4 pb-2 text-[10px] text-gray-400 tracking-[0.2em]">Our Work</div>
+          <a href="our-works.html" class="text-gray-500 hover:text-primary py-3 border-b border-gray-50 transition">Showcase</a>
+          <a href="video.html" class="text-gray-500 hover:text-primary py-3 border-b border-gray-50 transition">Video</a>
+          <a href="clients.html" class="text-primary hover:text-primary py-3 border-b border-gray-50 transition">Our Clients</a>
+          
+          <div class="pt-4 pb-2 text-[10px] text-gray-400 tracking-[0.2em]">Join & Booking</div>
+          <a href="become-a-model.html" class="text-gray-500 hover:text-primary py-3 border-b border-gray-50 transition">Become a Model</a>
+          <a href="application.html" class="text-gray-500 hover:text-primary py-3 border-b border-gray-50 transition">Apply</a>
+          <a href="hire-a-model.html" class="text-gray-500 hover:text-primary py-3 border-b border-gray-50 transition">Hire a Model</a>
+          
+          <div class="pt-4 pb-2 text-[10px] text-gray-400 tracking-[0.2em]">Information</div>
+          <a href="faq.html" class="text-gray-500 hover:text-primary py-3 border-b border-gray-50 transition">FAQ's</a>
+          <a href="contact.html" class="text-gray-500 hover:text-primary py-3 border-b border-gray-50 transition">Contact Us</a>
         </div>
       </div>
     </nav>
