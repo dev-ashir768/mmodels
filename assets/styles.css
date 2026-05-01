@@ -303,3 +303,17 @@ body { background-color: #f9fafb; color: #111827; }
     padding-left: 0.5rem;
 }
 
+
+/* Navigation Active States */
+.dropdown-item.active {
+  color: #c50a76 !important;
+  font-weight: 700;
+  background: rgba(197, 10, 118, 0.05);
+}
+
+.mobile-link.active {
+  color: #c50a76 !important;
+  background: rgba(197, 10, 118, 0.05);
+  border-left: 3px solid #c50a76;
+  padding-left: 1.25rem !important;
+}
