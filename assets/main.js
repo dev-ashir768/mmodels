@@ -34,7 +34,12 @@ const i18nDict = {
   "Toronto": { fr: "Toronto", ja: "トロント" },
   "Vancouver": { fr: "Vancouver", ja: "バンクーバー" },
   "Calgary": { fr: "Calgary", ja: "カルガリー" },
-  "Japan": { fr: "Japon", ja: "日本" },
+  "© 2026 M Models Global. All rights reserved.": { fr: "© 2026 M Models Global. Tous droits réservés.", ja: "© 2026 M Models Global. 全著作権所有。" },
+  "Privacy Policy": { fr: "Politique de Confidentialité", ja: "個人情報保護方針" },
+  "© 2026 M Models Global. All rights reserved. •": { fr: "© 2026 M Models Global. Tous droits réservés. •", ja: "© 2026 M Models Global. 全著作権所有。 •" },
+  "Trusted By": { fr: "Approuvé par", ja: "信頼の実績" },
+  "Our Clients": { fr: "Nos Clients", ja: "取引先" },
+  "View All Clients": { fr: "Voir tous les clients", ja: "すべてのクライアントを見る" },
 
   // Index
   Toronto: { fr: "Toronto", ja: "トロント" },
