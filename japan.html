@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Japan | mmodels</title>
+    <link rel="icon" href="/assets/others/logo.png" type="image/png" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+            colors: {
+              primary: "#C50A76",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <!-- jQuery via CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- FontAwesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <!-- Swiper CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+  </head>
+  <body
+    class="antialiased overflow-x-hidden selection:bg-primary selection:text-white border-none m-0 p-0"
+  >
+    <!-- Navigation -->
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 glass-nav transition-all duration-300"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-24">
+          <div class="flex-shrink-0 flex items-center">
+            <a href="index.html" class="block"
+              ><img
+                src="/assets/others/logo.png"
+                alt="M Models"
+                class="h-10 md:h-12 w-auto object-contain"
+            /></a>
+          </div>
+          <div
+            class="hidden xl:flex items-center space-x-8 text-xs font-bold uppercase tracking-wider"
+          >
+            <a href="index.html" class="menu-link text-gray-600">Home</a>
+
+            <!-- Talent -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600">Talent <i class="fas fa-chevron-down nav-arrow"></i></span>
+              <div class="dropdown-menu">
+                <a href="models.html" class="dropdown-item ">Models <i class="fas fa-arrow-right"></i></a>
+                <a href="influencers.html" class="dropdown-item ">Influencers <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+
+            <!-- Work -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600">Our Work <i class="fas fa-chevron-down nav-arrow"></i></span>
+              <div class="dropdown-menu">
+                <a href="our-works.html" class="dropdown-item ">Showcase <i class="fas fa-arrow-right"></i></a>
+                <a href="video.html" class="dropdown-item ">Video <i class="fas fa-arrow-right"></i></a>
+                <a href="clients.html" class="dropdown-item ">Our Clients <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+
+            <!-- Join/Hire -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600">Join Us <i class="fas fa-chevron-down nav-arrow"></i></span>
+              <div class="dropdown-menu">
+                <a href="become-a-model.html" class="dropdown-item ">Become a Model <i class="fas fa-arrow-right"></i></a>
+                <a href="application.html" class="dropdown-item ">General Apply <i class="fas fa-arrow-right"></i></a>
+                <a href="hire-a-model.html" class="dropdown-item ">Hire a Model <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+
+            <!-- More -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600">Contact <i class="fas fa-chevron-down nav-arrow"></i></span>
+              <div class="dropdown-menu">
+                <a href="faq.html" class="dropdown-item ">FAQ's <i class="fas fa-arrow-right"></i></a>
+                <a href="contact.html" class="dropdown-item ">Contact Us <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="xl:hidden flex items-center">
+            <button id="mobile-btn" class="text-gray-600 hover:text-primary">
+              <i class="fas fa-bars text-2xl"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="mobile-menu" class="hidden xl:hidden bg-white border-t border-gray-100 shadow-xl pb-4">
+        <div
+          class="px-8 pt-2 pb-8 flex flex-col space-y-0.5 text-sm font-bold uppercase tracking-wider"
+        >
+          <a href="index.html" class="mobile-link">Home <i class="fas fa-chevron-right"></i></a>
+          
+          <div class="mobile-section-title">Talent</div>
+          <a href="models.html" class="mobile-link ">Models <i class="fas fa-chevron-right"></i></a>
+          <a href="influencers.html" class="mobile-link ">Influencers <i class="fas fa-chevron-right"></i></a>
+          
+          <div class="mobile-section-title">Our Work</div>
+          <a href="our-works.html" class="mobile-link ">Showcase <i class="fas fa-chevron-right"></i></a>
+          <a href="video.html" class="mobile-link ">Video <i class="fas fa-chevron-right"></i></a>
+          <a href="clients.html" class="mobile-link ">Our Clients <i class="fas fa-chevron-right"></i></a>
+          
+          <div class="mobile-section-title">Join & Booking</div>
+          <a href="become-a-model.html" class="mobile-link ">Become a Model <i class="fas fa-chevron-right"></i></a>
+          <a href="application.html" class="mobile-link ">Apply <i class="fas fa-chevron-right"></i></a>
+          <a href="hire-a-model.html" class="mobile-link ">Hire a Model <i class="fas fa-chevron-right"></i></a>
+          
+          <div class="mobile-section-title">Information</div>
+          <a href="faq.html" class="mobile-link ">FAQ's <i class="fas fa-chevron-right"></i></a>
+          <a href="contact.html" class="mobile-link ">Contact Us <i class="fas fa-chevron-right"></i></a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section: Works Slider -->
+    <div class="absolute top-32 left-1/2 -translate-x-1/2 z-30 bg-primary/90 text-white px-6 py-1 text-[10px] font-black uppercase tracking-[0.4em] rounded-full shadow-2xl">Japan</div>
+    <header
+      id="home"
+      class="relative w-full h-[90vh] md:h-screen overflow-hidden bg-black flex items-center pt-24"
+    >
+      <div class="swiper worksSwiper w-full h-full">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide !w-auto h-full px-1 md:px-2">
+            <img
+              src="assets/past-works/portraits/work-9.png"
+              alt="Recent Work"
+              class="h-full w-auto object-cover"
+            />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-1 md:px-2">
+            <img
+              src="assets/past-works/portraits/work-10.png"
+              alt="Recent Work"
+              class="h-full w-auto object-cover"
+            />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-1 md:px-2">
+            <img
+              src="assets/past-works/portraits/work-15.png"
+              alt="Recent Work"
+              class="h-full w-auto object-cover"
+            />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-1 md:px-2">
+            <img
+              src="assets/past-works/portraits/work-1.png"
+              alt="Recent Work"
+              class="h-full w-auto object-cover"
+            />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-1 md:px-2">
+            <img
+              src="assets/past-works/portraits/work-2.png"
+              alt="Recent Work"
+              class="h-full w-auto object-cover"
+            />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-1 md:px-2">
+            <img
+              src="assets/past-works/portraits/work-3.png"
+              alt="Recent Work"
+              class="h-full w-auto object-cover"
+            />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-1 md:px-2">
+            <img
+              src="assets/past-works/portraits/work-4.png"
+              alt="Recent Work"
+              class="h-full w-auto object-cover"
+            />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-1 md:px-2">
+            <img
+              src="assets/past-works/portraits/work-5.png"
+              alt="Recent Work"
+              class="h-full w-auto object-cover"
+            />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-1 md:px-2">
+            <img
+              src="assets/past-works/work-6.jpeg"
+              alt="Recent Work"
+              class="h-full w-auto object-cover"
+            />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-1 md:px-2">
+            <img
+              src="assets/past-works/portraits/work-7.png"
+              alt="Recent Work"
+              class="h-full w-auto object-cover"
+            />
+          </div>
+          <div class="swiper-slide !w-auto h-full px-1 md:px-2">
+            <img
+              src="assets/past-works/portraits/work-8.png"
+              alt="Recent Work"
+              class="h-full w-auto object-cover"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Overlay for Branding -->
+      <!-- <div
+        class="absolute inset-0 pointer-events-none z-20 flex flex-col items-center justify-center text-center px-6 bg-black/40"
+      >
+       
+      </div> -->
+    </header>
+
+    <!-- Center Explore Button -->
+    <div class="flex justify-center py-12 bg-white relative z-30">
+      <a
+        href="our-works.html"
+        class="inline-flex items-center gap-3 px-8 py-3 md:px-12 md:py-4 bg-primary text-white font-bold uppercase tracking-[0.2em] text-xs md:text-sm hover:bg-black hover:text-white transition-all duration-300 transform hover:scale-105 shadow-xl group rounded-sm"
+      >
+        Explore Portfolio
+        <i
+          class="fas fa-arrow-right transition-transform group-hover:translate-x-1"
+        ></i>
+      </a>
+    </div>
+
+    <!-- About Section -->
+    <section
+      class="py-32 bg-gray-50 relative z-10 border-t border-gray-100"
+      id="about"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div>
+            <h2
+              class="font-serif text-4xl md:text-5xl font-bold mb-4 text-gray-900"
+            >
+              About M Models & Talent Agency - Japan
+            </h2>
+            <div class="h-1 w-24 bg-primary mb-8"></div>
+
+            <div class="space-y-6 text-gray-700 leading-relaxed">
+              <p>
+                M Models and Talent is a premier Canadian agency with a
+                strategic presence in
+                <span class="text-[#C50A76]"
+                  >Toronto, Vancouver, and Calgary</span
+                >. Our expertise lies in commercial print, principal acting, and
+                high-caliber professional modeling. Led by a team of seasoned
+                agents with decades of collective industry experience, we pride
+                ourselves on a curated roster that reflects a vast range of
+                diverse looks, ensuring we meet the specific creative demands of
+                our global clientele.
+              </p>
+
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mt-8 mb-4">
+                Who We Represent
+              </h3>
+              <p>
+                We are dedicated to the strategic promotion of a wide
+                demographic, ranging from children to adults. M Models and
+                Talent Management Agency Inc. provides a bridge for our roster
+                to navigate both North American and International markets. To
+                better serve our global partners, we now operate a dedicated
+                office in
+                <span class="text-[#C50A76]">Japan</span>, further expanding our
+                reach into the international fashion and commercial sectors.
+              </p>
+
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mt-8 mb-4">
+                Our Mission
+              </h3>
+              <p>
+                Our mission is to provide an environment where talent can
+                flourish and secure high-value opportunities across television,
+                commercials, advertisements, fashion, and "real-people"
+                modeling. We believe an agency’s primary responsibility is to
+                invest in individuals based on their unique potential. By
+                fostering this growth, we maintain a roster of sophisticated
+                professionals capable of excelling within a highly competitive
+                and demanding industry.
+              </p>
+
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mt-8 mb-4">
+                Professional Development & Unique Investment
+              </h3>
+              <p>
+                M Models and Talent takes a distinct approach to talent
+                investment. *We are the only agency in Canada that covers the
+                costs associated with building and maintaining a professional
+                portfolio*, ensuring our talent is market-ready without the
+                traditional financial barriers. We are committed to the
+                long-term success of our roster, which includes covering the
+                costs of modeling courses for high-fashion talent in specific
+                cases. While acting training is typically managed independently,
+                the agency may facilitate professional coaching for Principal
+                actors on a case-by-case basis. These investments are made at
+                the agency's discretion to ensure our talent remains at the
+                forefront of the industry's standards.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex justify-center lg:justify-end sticky top-32">
+            <img
+              src="/assets/past-works/portraits/work-4.png"
+              alt="M Models Agency"
+              class="rounded-2xl shadow-2xl max-w-full h-auto object-cover border border-gray-100"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Showcase Grid Section -->
+    <section class="py-24 bg-gray-50 border-t border-gray-100 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-16">
+          <p
+            class="text-primary font-bold uppercase tracking-[0.4em] text-xs mb-4"
+          >
+            M Models
+          </p>
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <h2
+                class="font-serif text-4xl md:text-6xl font-bold text-gray-900 leading-tight"
+              >
+                Showcase <br/> <span class="text-primary italic">Campaign</span> Highlights
+              </h2>
+              <div class="h-1.5 w-24 bg-primary mt-6"></div>
+            </div>
+            <p class="text-gray-500 max-w-md text-sm md:text-base leading-relaxed">
+              A curated modeling portfolio showcasing global campaigns, editorial shoots, and brand collaborations.
+            </p>
+          </div>
+        </div>
+
+        <!-- Campaign Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Item 1: Prada -->
+          <div class="group relative aspect-[3/4] overflow-hidden bg-white shadow-2xl rounded-sm">
+            <img
+              src="/assets/past-works/portraits/work-1.png"
+              class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              alt="Prada"
+            />
+            <!-- Dynamic Overlay -->
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            ></div>
+            
+          </div>
+
+          <!-- Item 2: Zara -->
+          <div class="group relative aspect-[3/4] overflow-hidden bg-white shadow-2xl rounded-sm">
+            <img
+              src="/assets/past-works/work-2.jpeg"
+              class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              alt="Zara"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            ></div>
+          </div>
+
+          <!-- Item 3: Saint Laurent -->
+          <div class="group relative aspect-[3/4] overflow-hidden bg-white shadow-2xl rounded-sm">
+            <img
+              src="/assets/past-works/work-3.jpeg"
+              class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              alt="Saint Laurent"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            ></div>
+          </div>
+
+          <!-- Item 4: Tom Ford -->
+          <div class="group relative aspect-[3/4] overflow-hidden bg-white shadow-2xl rounded-sm">
+            <img
+              src="/assets/past-works/work-4.jpeg"
+              class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              alt="Tom Ford"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            ></div>
+          </div>
+
+          <!-- Item 5: Nike -->
+          <div class="group relative aspect-[3/4] overflow-hidden bg-white shadow-2xl rounded-sm">
+            <img
+              src="/assets/past-works/work-5.jpeg"
+              class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              alt="Nike"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            ></div>
+          </div>
+
+          <!-- Item 6: Michael Kors -->
+          <div class="group relative aspect-[3/4] overflow-hidden bg-white shadow-2xl rounded-sm">
+            <img
+              src="/assets/past-works/work-6.jpeg"
+              class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              alt="Michael Kors"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            ></div>
+          </div>
+        </div>
+
+        <!-- View More Button -->
+        <div class="mt-20 text-center">
+          <a
+            href="our-works.html"
+            class="inline-flex items-center gap-4 px-12 py-5 bg-white border border-gray-200 text-gray-900 font-bold uppercase tracking-[0.3em] text-xs hover:bg-primary hover:text-white hover:border-primary transition-all duration-500 group shadow-lg"
+          >
+            View All Campaigns
+            <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Instagram Section -->
+    <section class="py-24 bg-white border-t border-gray-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <p
+            class="text-primary font-bold uppercase tracking-[0.3em] text-sm mb-4"
+          >
+            Instagram
+          </p>
+          <h2
+            class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+          >
+            Latest Reels
+          </h2>
+          <div class="h-1 w-24 bg-primary mx-auto"></div>
+        </div>
+
+        <!-- Instagram Reels Grid -->
+        <div
+          class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4"
+        >
+          <a
+            href="https://www.instagram.com/reel/DUhL7zPjUhP/"
+            target="_blank"
+            class="group relative aspect-[3/4] overflow-hidden bg-gray-100 block"
+          >
+            <img
+              src="/assets/reel/reel-1.png"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              alt="Instagram Reel"
+            />
+            <!-- Hover Overlay -->
+            <div
+              class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+            >
+              <i class="fas fa-play text-white text-3xl opacity-80"></i>
+            </div>
+          </a>
+
+          <a
+            href="https://www.instagram.com/reels/DW-AN-4jdjH/"
+            target="_blank"
+            class="group relative aspect-[3/4] overflow-hidden bg-gray-100 block"
+          >
+            <img
+              src="/assets/reel/reel-2.png"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              alt="Instagram Reel"
+            />
+            <!-- Hover Overlay -->
+            <div
+              class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+            >
+              <i class="fas fa-play text-white text-3xl opacity-80"></i>
+            </div>
+          </a>
+
+          <a
+            href="https://www.instagram.com/reel/DXP6LGBEc6H/"
+            target="_blank"
+            class="group relative aspect-[3/4] overflow-hidden bg-gray-100 block"
+          >
+            <img
+              src="/assets/reel/reel-3.png"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              alt="Instagram Reel"
+            />
+            <!-- Hover Overlay -->
+            <div
+              class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+            >
+              <i class="fas fa-play text-white text-3xl opacity-80"></i>
+            </div>
+          </a>
+
+          <a
+            href="https://www.instagram.com/reel/DUUskrrDa6S/"
+            target="_blank"
+            class="group relative aspect-[3/4] overflow-hidden bg-gray-100 block"
+          >
+            <img
+              src="/assets/reel/reel-4.png"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              alt="Instagram Reel"
+            />
+            <!-- Hover Overlay -->
+            <div
+              class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+            >
+              <i class="fas fa-play text-white text-3xl opacity-80"></i>
+            </div>
+          </a>
+
+          <a
+            href="https://www.instagram.com/reel/C90n6REvjfM/"
+            target="_blank"
+            class="group relative aspect-[3/4] overflow-hidden bg-gray-100 block"
+          >
+            <img
+              src="/assets/reel/reel-5.png"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              alt="Instagram Reel"
+            />
+            <!-- Hover Overlay -->
+            <div
+              class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+            >
+              <i class="fas fa-play text-white text-3xl opacity-80"></i>
+            </div>
+          </a>
+
+          <a
+            href="https://www.instagram.com/reel/DTnl6sRDfbN/"
+            target="_blank"
+            class="group relative aspect-[3/4] overflow-hidden bg-gray-100 block"
+          >
+            <img
+              src="/assets/reel/reel-6.png"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              alt="Instagram Reel"
+            />
+            <!-- Hover Overlay -->
+            <div
+              class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+            >
+              <i class="fas fa-play text-white text-3xl opacity-80"></i>
+            </div>
+          </a>
+
+          <a
+            href="https://www.instagram.com/reel/DOEXfEgjZfr/"
+            target="_blank"
+            class="group relative aspect-[3/4] overflow-hidden bg-gray-100 block"
+          >
+            <img
+              src="/assets/reel/reel-7.png"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              alt="Instagram Reel"
+            />
+            <!-- Hover Overlay -->
+            <div
+              class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+            >
+              <i class="fas fa-play text-white text-3xl opacity-80"></i>
+            </div>
+          </a>
+
+          <a
+            href="https://www.instagram.com/reel/DLQUdH5Rpyu/"
+            target="_blank"
+            class="group relative aspect-[3/4] overflow-hidden bg-gray-100 block"
+          >
+            <img
+              src="/assets/reel/reel-8.png"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              alt="Instagram Reel"
+            />
+            <!-- Hover Overlay -->
+            <div
+              class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+            >
+              <i class="fas fa-play text-white text-3xl opacity-80"></i>
+            </div>
+          </a>
+        </div>
+
+        <!-- Follow Button -->
+        <div class="mt-20 text-center">
+          <a
+            href="https://www.instagram.com/mmodelsandtalentagency"
+            target="_blank"
+            class="inline-flex items-center gap-4 px-10 py-5 bg-primary text-white font-bold uppercase tracking-[0.2em] text-sm hover:bg-black transition-all duration-300 transform hover:scale-105 shadow-2xl rounded-full"
+          >
+            <i class="fab fa-instagram text-2xl"></i>
+            Follow on Instagram
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Clients Section -->
+    <section class="py-20 bg-white border-t border-gray-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p
+          class="text-primary font-bold uppercase tracking-[0.3em] text-sm mb-4"
+        >
+          Trusted By
+        </p>
+        <h2
+          class="font-serif text-3xl md:text-4xl font-bold mb-12 text-gray-900"
+        >
+          Our Clients
+        </h2>
+        <div
+          class="flex flex-wrap justify-center items-center gap-10 md:gap-16 opacity-60"
+        >
+          <img
+            src="/assets/our-clients/1200px-pc-financial-logo-svg_orig.png"
+            alt="PC Financial"
+            class="h-8 md:h-10 object-contain grayscale hover:grayscale-0 transition-all duration-300"
+          />
+          <img
+            src="/assets/our-clients/canada-post-logo_orig.png"
+            alt="Canada Post"
+            class="h-8 md:h-10 object-contain grayscale hover:grayscale-0 transition-all duration-300"
+          />
+          <img
+            src="/assets/our-clients/samsung-logo_orig.jpg"
+            alt="Samsung"
+            class="h-8 md:h-10 object-contain grayscale hover:grayscale-0 transition-all duration-300"
+          />
+          <img
+            src="/assets/our-clients/rogers_1_orig.jpg"
+            alt="Rogers"
+            class="h-8 md:h-10 object-contain grayscale hover:grayscale-0 transition-all duration-300"
+          />
+          <img
+            src="/assets/our-clients/cineplex_orig.png"
+            alt="Cineplex"
+            class="h-8 md:h-10 object-contain grayscale hover:grayscale-0 transition-all duration-300"
+          />
+          <img
+            src="/assets/our-clients/the-brick-logo_orig.gif"
+            alt="The Brick"
+            class="h-8 md:h-10 object-contain grayscale hover:grayscale-0 transition-all duration-300"
+          />
+        </div>
+        <div class="mt-12">
+          <a
+            href="clients.html"
+            class="inline-block text-sm font-bold uppercase tracking-widest text-primary border-b-2 border-primary pb-1 hover:text-black hover:border-black transition-colors"
+            >View All Clients</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12 border-t border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <a href="index.html" class="block mb-6"
+          ><img
+            src="/assets/others/logo.png"
+            alt="M Models"
+            class="max-h-16 w-auto object-contain mx-auto"
+        /></a>
+        <p class="text-gray-400 text-xs">
+          © 2026 M Models Global. All rights reserved. •
+          <a href="privacy-policy.html" class="hover:text-primary transition-colors"
+            >Privacy Policy</a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Global JavaScript -->
+    <script src="/assets/main.js"></script>
+  </body>
+</html>
