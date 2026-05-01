@@ -11,6 +11,7 @@ const i18nDict = {
   "Contact Us": { fr: "Contact", ja: "お問い合わせ" },
   Apply: { fr: "Postuler", ja: "応募する" },
   Kids: { fr: "Enfants", ja: "キッズ" },
+  Locations: { fr: "Emplacements", ja: "拠点一覧" },
   Talent: { fr: "Talent", ja: "タレント" },
   "Our Work": { fr: "Nos Travaux", ja: "実績" },
   "Join Us": { fr: "Rejoignez-nous", ja: "採用・予約" },
