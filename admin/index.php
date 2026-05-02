@@ -117,7 +117,7 @@ $forms = [
 
 // Improved Deletion Logic using Database ID
 if (isset($_POST['delete_id'])) {
-    $id = (int)$_POST['delete_id'];
+    $id = (int) $_POST['delete_id'];
     try {
         $stmt = $pdo->prepare("DELETE FROM submissions WHERE id = ?");
         $stmt->execute([$id]);
@@ -143,7 +143,7 @@ try {
     foreach ($forms as $key => $title) {
         $data = [];
         $headers = ['Timestamp', 'Form Type']; // Default headers
-        
+
         // Fetch submissions for this form type
         $stmt = $pdo->prepare("SELECT * FROM submissions WHERE form_type = ? ORDER BY timestamp DESC");
         $stmt->execute([$key]);
@@ -151,7 +151,8 @@ try {
 
         foreach ($rows as $row) {
             $formData = json_decode($row['form_data'], true);
-            if (!$formData) continue;
+            if (!$formData)
+                continue;
 
             // Collect unique headers from all rows for this form type
             foreach ($formData as $k => $v) {
@@ -165,7 +166,7 @@ try {
             $ui_row = [$row['timestamp'], $row['form_type']];
             // We need to match headers correctly. The UI iterates over headers to print cells.
             // But headers are built dynamically. Let's store the raw data and build the row in the loop.
-            $data[] = $row; 
+            $data[] = $row;
         }
 
         $all_data[$key] = [
@@ -241,17 +242,18 @@ try {
         </div>
 
         <nav class="flex-1 px-4 space-y-2 mt-4 overflow-y-auto">
-            <div class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-500 opacity-50">Submissions</div>
+            <div class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-500 opacity-50">Submissions
+            </div>
             <?php foreach ($all_data as $key => $dataset): ?>
-            <a href="javascript:void(0)" onclick="switchTab('<?php echo $key; ?>')" id="side_btn_<?php echo $key; ?>" 
-                class="side-btn flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
-                <i class="fas <?php 
-                    echo ($key == 'become_a_model') ? 'fa-user-plus' : 
-                         (($key == 'hire_a_model') ? 'fa-user-tie' : 
-                         (($key == 'application') ? 'fa-file-invoice' : 'fa-envelope')); 
-                ?> w-5"></i>
-                <span class="text-sm font-semibold"><?php echo $dataset['title']; ?></span>
-            </a>
+                <a href="javascript:void(0)" onclick="switchTab('<?php echo $key; ?>')" id="side_btn_<?php echo $key; ?>"
+                    class="side-btn flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
+                    <i class="fas <?php
+                    echo ($key == 'become_a_model') ? 'fa-user-plus' :
+                        (($key == 'hire_a_model') ? 'fa-user-tie' :
+                            (($key == 'application') ? 'fa-file-invoice' : 'fa-envelope'));
+                    ?> w-5"></i>
+                    <span class="text-sm font-semibold"><?php echo $dataset['title']; ?></span>
+                </a>
             <?php endforeach; ?>
         </nav>
 
@@ -276,7 +278,7 @@ try {
             <div class="flex items-center gap-3">
                 <!-- Date Filter -->
                 <div class="relative hidden md:block">
-                    <input type="text" id="dateFilter" 
+                    <input type="text" id="dateFilter"
                         class="bg-white border border-gray-200 text-gray-700 px-10 py-3 rounded-2xl text-sm font-semibold shadow-sm focus:ring-2 focus:ring-primary/20 outline-none w-64"
                         placeholder="Filter by date range...">
                     <i class="fas fa-calendar-alt absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
@@ -284,25 +286,29 @@ try {
 
                 <!-- Export Dropdown -->
                 <div class="relative group">
-                    <button class="flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-2xl text-sm font-semibold hover:bg-gray-50 transition shadow-sm">
+                    <button
+                        class="flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-2xl text-sm font-semibold hover:bg-gray-50 transition shadow-sm">
                         <i class="fas fa-download text-xs"></i> Export
                         <i class="fas fa-chevron-down text-[10px] ml-1 opacity-50"></i>
                     </button>
-                    <div class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] overflow-hidden">
+                    <div
+                        class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] overflow-hidden">
                         <div class="p-2">
-                            <div class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-400">Choose Form Type</div>
+                            <div class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-400">Choose
+                                Form Type</div>
                             <?php foreach ($all_data as $key => $dataset): ?>
-                            <a href="<?php echo $dataset['file']; ?>" download 
-                                class="flex items-center justify-between px-4 py-3 text-sm text-gray-600 hover:bg-primary/5 hover:text-primary rounded-xl transition">
-                                <span><?php echo $dataset['title']; ?></span>
-                                <i class="fas fa-file-csv opacity-30 text-xs"></i>
-                            </a>
+                                <a href="<?php echo $dataset['file']; ?>" download
+                                    class="flex items-center justify-between px-4 py-3 text-sm text-gray-600 hover:bg-primary/5 hover:text-primary rounded-xl transition">
+                                    <span><?php echo $dataset['title']; ?></span>
+                                    <i class="fas fa-file-csv opacity-30 text-xs"></i>
+                                </a>
                             <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
 
-                <div class="h-12 w-12 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#C50A76]/20">
+                <div
+                    class="h-12 w-12 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#C50A76]/20">
                     <i class="fas fa-user"></i>
                 </div>
             </div>
@@ -341,8 +347,10 @@ try {
 
         <div class="flex gap-4 mb-6 border-b border-gray-200 overflow-x-auto pb-2 shrink-0">
             <?php foreach ($all_data as $key => $dataset): ?>
-                <button onclick="switchTab('<?php echo $key; ?>')" id="tab_btn_<?php echo $key; ?>" class="tab-btn px-6 py-3 font-semibold text-sm rounded-t-xl transition-all border-b-2 border-transparent text-gray-500 hover:text-primary whitespace-nowrap">
-                    <?php echo $dataset['title']; ?> <span class="ml-2 px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full text-xs"><?php echo count($dataset['data']); ?></span>
+                <button onclick="switchTab('<?php echo $key; ?>')" id="tab_btn_<?php echo $key; ?>"
+                    class="tab-btn px-6 py-3 font-semibold text-sm rounded-t-xl transition-all border-b-2 border-transparent text-gray-500 hover:text-primary whitespace-nowrap">
+                    <?php echo $dataset['title']; ?> <span
+                        class="ml-2 px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full text-xs"><?php echo count($dataset['data']); ?></span>
                 </button>
             <?php endforeach; ?>
         </div>
@@ -351,56 +359,56 @@ try {
         <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex-1 min-h-0 flex flex-col">
             <div class="p-8 overflow-y-auto flex-1 relative">
                 <?php foreach ($all_data as $key => $dataset): ?>
-                <div id="tab_content_<?php echo $key; ?>" class="tab-content hidden h-full flex flex-col">
-                    <div class="overflow-x-auto">
-                        <table id="submissionsTable_<?php echo $key; ?>" class="w-full text-sm min-w-[1500px]">
-                            <thead class="text-gray-400 uppercase text-[10px] font-bold tracking-[0.2em] bg-gray-50/50">
-                                <tr>
-                                    <?php
-                                    if (!empty($dataset['headers'])) {
-                                        foreach ($dataset['headers'] as $header) {
-                                            $label = $header;
-                                            if (strpos(strtolower($header), 'photo') !== false) {
-                                                $label = str_replace('photo', 'Image ', strtolower($header));
-                                            } else {
-                                                // Convert snake_case to Title Case
-                                                $label = ucwords(str_replace('_', ' ', $header));
+                    <div id="tab_content_<?php echo $key; ?>" class="tab-content hidden h-full flex flex-col">
+                        <div class="overflow-x-auto">
+                            <table id="submissionsTable_<?php echo $key; ?>" class="w-full text-sm min-w-[1500px]">
+                                <thead class="text-gray-400 uppercase text-[10px] font-bold tracking-[0.2em] bg-gray-50/50">
+                                    <tr>
+                                        <?php
+                                        if (!empty($dataset['headers'])) {
+                                            foreach ($dataset['headers'] as $header) {
+                                                $label = $header;
+                                                if (strpos(strtolower($header), 'photo') !== false) {
+                                                    $label = str_replace('photo', 'Image ', strtolower($header));
+                                                } else {
+                                                    // Convert snake_case to Title Case
+                                                    $label = ucwords(str_replace('_', ' ', $header));
+                                                }
+                                                echo "<th class='px-6 py-5 text-left'>$label</th>";
                                             }
-                                            echo "<th class='px-6 py-5 text-left'>$label</th>";
+                                            echo "<th class='px-6 py-5 text-left'>Actions</th>";
                                         }
-                                        echo "<th class='px-6 py-5 text-left'>Actions</th>";
-                                    }
-                                    ?>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100">
-                                 <?php
-                                 if (!empty($dataset['data'])) {
-                                     foreach ($dataset['data'] as $db_row) {
-                                         $row_ts = $db_row['timestamp'];
-                                         $formData = json_decode($db_row['form_data'], true);
-                                         
-                                         echo "<tr class='hover:bg-gray-50/50 transition-colors'>";
-                                         
-                                         // Iterate through headers to ensure data aligns with columns
-                                         foreach ($dataset['headers'] as $h_key) {
-                                             $cell = '';
-                                             if ($h_key === 'Timestamp') {
-                                                 $cell = $db_row['timestamp'];
-                                             } elseif ($h_key === 'Form Type') {
-                                                 $cell = $db_row['form_type'];
-                                             } else {
-                                                 $cell = $formData[$h_key] ?? '';
-                                             }
+                                        ?>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    <?php
+                                    if (!empty($dataset['data'])) {
+                                        foreach ($dataset['data'] as $db_row) {
+                                            $row_ts = $db_row['timestamp'];
+                                            $formData = json_decode($db_row['form_data'], true);
 
-                                             if (is_string($cell) && strpos($cell, 'data:') === 0 && strpos($cell, ';base64,') !== false) {
-                                                 // Handle File Cell
-                                                 $is_image = strpos($cell, 'data:image/') === 0;
-                                                 $preview = $is_image
-                                                     ? "<img src='$cell' class='w-full h-full object-cover rounded-lg border border-gray-100 shadow-sm transition-all group-hover:ring-2 group-hover:ring-primary/30' alt='Photo'>"
-                                                     : "<div class='w-full h-full rounded-lg border border-gray-100 bg-gray-50 flex items-center justify-center text-gray-400 group-hover:ring-2 group-hover:ring-primary/30'><i class='fas fa-file-alt text-xl'></i></div>";
+                                            echo "<tr class='hover:bg-gray-50/50 transition-colors'>";
 
-                                                 echo "<td class='px-6 py-4'>
+                                            // Iterate through headers to ensure data aligns with columns
+                                            foreach ($dataset['headers'] as $h_key) {
+                                                $cell = '';
+                                                if ($h_key === 'Timestamp') {
+                                                    $cell = $db_row['timestamp'];
+                                                } elseif ($h_key === 'Form Type') {
+                                                    $cell = $db_row['form_type'];
+                                                } else {
+                                                    $cell = $formData[$h_key] ?? '';
+                                                }
+
+                                                if (is_string($cell) && strpos($cell, 'data:') === 0 && strpos($cell, ';base64,') !== false) {
+                                                    // Handle File Cell
+                                                    $is_image = strpos($cell, 'data:image/') === 0;
+                                                    $preview = $is_image
+                                                        ? "<img src='$cell' class='w-full h-full object-cover rounded-lg border border-gray-100 shadow-sm transition-all group-hover:ring-2 group-hover:ring-primary/30' alt='Photo'>"
+                                                        : "<div class='w-full h-full rounded-lg border border-gray-100 bg-gray-50 flex items-center justify-center text-gray-400 group-hover:ring-2 group-hover:ring-primary/30'><i class='fas fa-file-alt text-xl'></i></div>";
+
+                                                    echo "<td class='px-6 py-4'>
                                                          <div class='flex flex-col items-center gap-1 min-w-[70px]'>
                                                              <a href='$cell' target='_blank' class='w-12 h-12 block group relative'>
                                                                  $preview
@@ -413,29 +421,29 @@ try {
                                                              </div>
                                                          </div>
                                                        </td>";
-                                             } else {
-                                                 // Handle arrays (e.g. multi-select)
-                                                 if (is_array($cell)) {
-                                                     $cell = implode('; ', $cell);
-                                                 }
-                                                 
-                                                 $display = htmlspecialchars($cell);
-                                                 if ($cell == 'become_a_model') {
-                                                     $display = "<span class='px-3 py-1 bg-pink-50 text-[#C50A76] rounded-full text-[10px] font-bold uppercase tracking-tighter'>Model App</span>";
-                                                 } elseif ($cell == 'hire_a_model') {
-                                                     $display = "<span class='px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Hire Model</span>";
-                                                 } elseif ($cell == 'application') {
-                                                     $display = "<span class='px-3 py-1 bg-purple-50 text-purple-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Application</span>";
-                                                 } elseif ($cell == 'contact') {
-                                                     $display = "<span class='px-3 py-1 bg-green-50 text-green-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Contact</span>";
-                                                 } elseif (empty($display) || strpos($display, 'No photo') !== false || strpos($display, 'No file') !== false || strpos($display, 'Not sent') !== false) {
-                                                     $display = "<span class='text-gray-300 italic text-[10px]'>Empty</span>";
-                                                 }
-                                                 echo "<td class='px-6 py-4 font-medium text-gray-700 whitespace-nowrap'>$display</td>";
-                                             }
-                                         }
-                                         // Add Actions Column
-                                         echo "<td class='px-6 py-4 text-center'>
+                                                } else {
+                                                    // Handle arrays (e.g. multi-select)
+                                                    if (is_array($cell)) {
+                                                        $cell = implode('; ', $cell);
+                                                    }
+
+                                                    $display = htmlspecialchars($cell);
+                                                    if ($cell == 'become_a_model') {
+                                                        $display = "<span class='px-3 py-1 bg-pink-50 text-[#C50A76] rounded-full text-[10px] font-bold uppercase tracking-tighter'>Model App</span>";
+                                                    } elseif ($cell == 'hire_a_model') {
+                                                        $display = "<span class='px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Hire Model</span>";
+                                                    } elseif ($cell == 'application') {
+                                                        $display = "<span class='px-3 py-1 bg-purple-50 text-purple-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Application</span>";
+                                                    } elseif ($cell == 'contact') {
+                                                        $display = "<span class='px-3 py-1 bg-green-50 text-green-600 rounded-full text-[10px] font-bold uppercase tracking-tighter'>Contact</span>";
+                                                    } elseif (empty($display) || strpos($display, 'No photo') !== false || strpos($display, 'No file') !== false || strpos($display, 'Not sent') !== false) {
+                                                        $display = "<span class='text-gray-300 italic text-[10px]'>Empty</span>";
+                                                    }
+                                                    echo "<td class='px-6 py-4 font-medium text-gray-700 whitespace-nowrap'>$display</td>";
+                                                }
+                                            }
+                                            // Add Actions Column
+                                            echo "<td class='px-6 py-4 text-center'>
                                                  <form method='POST' id='deleteForm_{$key}_" . md5($row_ts) . "' class='inline-block'>
                                                      <input type='hidden' name='delete_id' value='" . $db_row['id'] . "'>
                                                      <input type='hidden' name='delete_form_type' value='$key'>
@@ -444,15 +452,15 @@ try {
                                                      </button>
                                                  </form>
                                                </td>";
-                                         echo "</tr>";
-                                     }
-                                 }
-                                 ?>
+                                            echo "</tr>";
+                                        }
+                                    }
+                                    ?>
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
                 <?php endforeach; ?>
             </div>
         </div>
