@@ -236,15 +236,42 @@ try {
         .bg-primary {
             background-color: #C50A76;
         }
+
+        /* Mobile Adjustments */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0 !important;
+            }
+        }
     </style>
 </head>
 
-<body class="flex min-h-screen">
+<body class="flex min-h-screen relative">
+
+    <!-- Mobile Menu Toggle -->
+    <button id="mobile-toggle" class="lg:hidden fixed bottom-6 right-6 z-[100] w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center text-xl">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-[40] hidden lg:hidden backdrop-blur-sm"></div>
 
     <!-- Sidebar -->
-    <aside class="sidebar w-64 fixed inset-y-0 left-0 z-50 hidden lg:flex flex-col">
-        <div class="p-8">
+    <aside id="sidebar" class="sidebar w-64 fixed inset-y-0 left-0 z-50 flex flex-col shadow-2xl lg:shadow-none">
+        <div class="p-8 flex items-center justify-between">
             <img src="/assets/others/logo.png" alt="Logo" class="h-10 brightness-0 invert opacity-90">
+            <button id="close-sidebar" class="lg:hidden text-white/50 hover:text-white">
+                <i class="fas fa-times text-xl"></i>
+            </button>
         </div>
 
         <nav class="flex-1 px-4 space-y-2 mt-4 overflow-y-auto">
@@ -602,6 +629,29 @@ try {
 
             // Open 'Become a Model' tab by default
             switchTab('become_a_model');
+
+            // Mobile Sidebar Toggle
+            const mobileToggle = $('#mobile-toggle');
+            const closeSidebar = $('#close-sidebar');
+            const sidebar = $('#sidebar');
+            const overlay = $('#sidebar-overlay');
+
+            function toggleMobileMenu() {
+                sidebar.toggleClass('active');
+                overlay.toggleClass('hidden');
+                mobileToggle.find('i').toggleClass('fa-bars fa-times');
+            }
+
+            mobileToggle.on('click', toggleMobileMenu);
+            closeSidebar.on('click', toggleMobileMenu);
+            overlay.on('click', toggleMobileMenu);
+
+            // Close sidebar on tab switch on mobile
+            $('.side-btn').on('click', function() {
+                if ($(window).width() < 1024) {
+                    toggleMobileMenu();
+                }
+            });
         });
     </script>
 </body>
