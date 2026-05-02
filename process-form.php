@@ -78,9 +78,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $max_upload = ini_get('upload_max_filesize');
     $max_post = ini_get('post_max_size');
 
-    // Ensure data directory exists
+    // Ensure data and upload directories exist
     if (!file_exists('data')) {
         mkdir('data', 0755, true);
+    }
+    $upload_dir = 'uploads/submissions/' . date('Y/m/');
+    if (!file_exists($upload_dir)) {
+        mkdir($upload_dir, 0755, true);
     }
 
     $form_type = $_POST['form_type'] ?? 'general';
@@ -93,41 +97,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle File Uploads (Convert to Base64)
     $upload_errors = [];
 
+    $attachment_paths = [];
     foreach ($_FILES as $key => $file) {
         if (is_array($file['name'])) {
-            // Handle multiple file uploads array structure if needed
-            // Currently assuming single file per key or specific naming
             foreach ($file['name'] as $idx => $name) {
                 if ($file['error'][$idx] === UPLOAD_ERR_OK) {
-                    $type = pathinfo($name, PATHINFO_EXTENSION);
-                    $img_data = file_get_contents($file['tmp_name'][$idx]);
-                    $base64 = 'data:' . $file['type'][$idx] . ';base64,' . base64_encode($img_data);
-                    $data[$key . '_' . $idx] = $base64;
+                    $ext = pathinfo($name, PATHINFO_EXTENSION);
+                    $filename = uniqid($key . '_') . '.' . $ext;
+                    $target_path = $upload_dir . $filename;
+                    
+                    if (move_uploaded_file($file['tmp_name'][$idx], $target_path)) {
+                        $attachment_paths[] = $target_path;
+                        $data[$key . '_' . $idx] = "[File: $filename]";
+                    }
                 }
             }
         } else {
             if ($file['error'] === UPLOAD_ERR_OK) {
-                $type = pathinfo($file['name'], PATHINFO_EXTENSION);
-                $img_data = file_get_contents($file['tmp_name']);
-                $mime = isset($file['type']) && !empty($file['type']) ? $file['type'] : 'application/octet-stream';
-                $base64 = 'data:' . $mime . ';base64,' . base64_encode($img_data);
-                $data[$key] = $base64;
-            } else {
+                $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+                $filename = uniqid($key . '_') . '.' . $ext;
+                $target_path = $upload_dir . $filename;
+
+                if (move_uploaded_file($file['tmp_name'], $target_path)) {
+                    $attachment_paths[] = $target_path;
+                    $data[$key] = "[File: $filename]";
+                }
+            } else if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
                 switch ($file['error']) {
-                    case UPLOAD_ERR_INI_SIZE:
-                        $err = "File exceeds server limit ($max_upload)";
-                        break;
-                    case UPLOAD_ERR_FORM_SIZE:
-                        $err = "File exceeds form limit";
-                        break;
-                    case UPLOAD_ERR_PARTIAL:
-                        $err = "Upload was partial";
-                        break;
-                    case UPLOAD_ERR_NO_FILE:
-                        $err = "No file selected";
-                        break;
-                    default:
-                        $err = "Upload error (" . $file['error'] . ")";
+                    case UPLOAD_ERR_INI_SIZE: $err = "File exceeds server limit ($max_upload)"; break;
+                    case UPLOAD_ERR_PARTIAL: $err = "Upload was partial"; break;
+                    default: $err = "Upload error (" . $file['error'] . ")";
                 }
                 $data[$key] = $err;
                 $upload_errors[] = "$key: $err";
@@ -169,17 +168,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Save to Database
     try {
-        // Separate base64 files from text data for cleaner storage if needed, 
-        // but for now we'll store the full data object as JSON.
-        $stmt = $pdo->prepare("INSERT INTO submissions (form_type, form_data, timestamp) VALUES (?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO submissions (form_type, form_data, attachments, timestamp) VALUES (?, ?, ?, ?)");
         $stmt->execute([
             $form_type,
             json_encode($data),
+            json_encode($attachment_paths),
             $timestamp
         ]);
     } catch (PDOException $e) {
         error_log("Database Insert Failed: " . $e->getMessage());
-        // We don't exit here because CSV and Email might have succeeded
     }
 
 

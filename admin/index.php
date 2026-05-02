@@ -164,8 +164,14 @@ try {
 
             // Construct the row for the UI
             $ui_row = [$row['timestamp'], $row['form_type']];
-            // We need to match headers correctly. The UI iterates over headers to print cells.
-            // But headers are built dynamically. Let's store the raw data and build the row in the loop.
+            
+            // Add a special header for attachments if they exist
+            if (!empty($row['attachments'])) {
+                if (!in_array('Attachments', $headers)) {
+                    $headers[] = 'Attachments';
+                }
+            }
+
             $data[] = $row;
         }
 
@@ -297,7 +303,7 @@ try {
                             <div class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-400">Choose
                                 Form Type</div>
                             <?php foreach ($all_data as $key => $dataset): ?>
-                                <a href="<?php echo $dataset['file']; ?>" download
+                                <a href="export.php?type=<?php echo $key; ?>" 
                                     class="flex items-center justify-between px-4 py-3 text-sm text-gray-600 hover:bg-primary/5 hover:text-primary rounded-xl transition">
                                     <span><?php echo $dataset['title']; ?></span>
                                     <i class="fas fa-file-csv opacity-30 text-xs"></i>
@@ -401,8 +407,39 @@ try {
                                                     $cell = $formData[$h_key] ?? '';
                                                 }
 
+                                                if ($h_key === 'Attachments') {
+                                                    $attachments = json_decode($db_row['attachments'], true);
+                                                    echo "<td class='px-6 py-4'>";
+                                                    if (!empty($attachments)) {
+                                                        echo "<div class='flex flex-wrap gap-2'>";
+                                                        foreach ($attachments as $idx => $path) {
+                                                            $filename = basename($path);
+                                                            $is_img = preg_match('/\.(jpg|jpeg|png|gif|webp)$/i', $path);
+                                                            $full_path = '/' . $path; // Web accessible path
+                                                            
+                                                            if ($is_img) {
+                                                                echo "<a href='$full_path' target='_blank' class='w-12 h-12 block group relative'>
+                                                                        <img src='$full_path' class='w-full h-full object-cover rounded-lg border border-gray-100 shadow-sm transition-all group-hover:ring-2 group-hover:ring-primary/30'>
+                                                                        <div class='absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center text-white text-[8px]'>
+                                                                            <i class='fas fa-eye'></i>
+                                                                        </div>
+                                                                    </a>";
+                                                            } else {
+                                                                echo "<a href='$full_path' target='_blank' class='w-12 h-12 rounded-lg border border-gray-100 bg-gray-50 flex items-center justify-center text-gray-400 hover:text-primary transition-all'>
+                                                                        <i class='fas fa-file-alt text-xl'></i>
+                                                                    </a>";
+                                                            }
+                                                        }
+                                                        echo "</div>";
+                                                    } else {
+                                                        echo "<span class='text-gray-300 italic text-[10px]'>None</span>";
+                                                    }
+                                                    echo "</td>";
+                                                    continue;
+                                                }
+
                                                 if (is_string($cell) && strpos($cell, 'data:') === 0 && strpos($cell, ';base64,') !== false) {
-                                                    // Handle File Cell
+                                                    // Handle Legacy Base64 File Cell
                                                     $is_image = strpos($cell, 'data:image/') === 0;
                                                     $preview = $is_image
                                                         ? "<img src='$cell' class='w-full h-full object-cover rounded-lg border border-gray-100 shadow-sm transition-all group-hover:ring-2 group-hover:ring-primary/30' alt='Photo'>"
