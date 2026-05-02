@@ -4,8 +4,8 @@
  */
 
 $db_host = 'localhost';
-$db_name = 'mmodels_db';
-$db_user = 'ashir';
+$db_name = 'u774534919_mmodels_db';
+$db_user = 'u774534919_admin';
 $db_pass = 'Ty=gj,ja4\'FF)8Z';
 
 try {
@@ -24,7 +24,7 @@ try {
         INDEX (form_type),
         INDEX (timestamp)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-    
+
     $pdo->exec($createTable);
 
 } catch (PDOException $e) {
