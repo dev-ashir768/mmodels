@@ -209,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <td align='center'>
                     <table width='600' border='0' cellspacing='0' cellpadding='0' style='background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);'>
                         <tr>
-                            <td style='background-color: #000000; padding: 30px; text-align: center;'>
+                            <td style='background-color: #fff; padding: 30px; text-align: center;'>
                                 <img src='$logo_url' alt='M Models' style='height: 45px; width: auto;'>
                             </td>
                         </tr>
@@ -251,7 +251,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td align='center'>
                         <table width='600' border='0' cellspacing='0' cellpadding='0' style='background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05);'>
                             <tr>
-                                <td style='background-color: #000000; padding: 40px; text-align: center;'>
+                                <td style='background-color: #fff; padding: 40px; text-align: center;'>
                                     <img src='$logo_url' alt='M Models' style='height: 50px; width: auto;'>
                                 </td>
                             </tr>
