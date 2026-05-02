@@ -3,7 +3,7 @@
  * M Models - Database Configuration
  */
 
-$db_host = 'localhost';
+$db_host = 'srv1466.hstgr.io';
 $db_name = 'u774534919_mmodels_db';
 $db_user = 'u774534919_admin';
 $db_pass = 'Ty=gj,ja4\'FF)8Z';
