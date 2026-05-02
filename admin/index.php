@@ -300,7 +300,7 @@ try {
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 min-w-0 lg:ml-64 p-6 md:p-10 flex flex-col h-screen overflow-y-auto">
+    <main class="main-content flex-1 min-w-0 lg:ml-64 p-4 md:p-10 flex flex-col min-h-screen">
         <!-- Top Header -->
         <header class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4 shrink-0">
             <div>
@@ -318,14 +318,14 @@ try {
                 </div>
 
                 <!-- Export Dropdown -->
-                <div class="relative group">
+                <div class="relative group z-[110]">
                     <button
                         class="flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-2xl text-sm font-semibold hover:bg-gray-50 transition shadow-sm">
                         <i class="fas fa-download text-xs"></i> Export
                         <i class="fas fa-chevron-down text-[10px] ml-1 opacity-50"></i>
                     </button>
                     <div
-                        class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] overflow-hidden">
+                        class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[120] overflow-hidden">
                         <div class="p-2">
                             <div class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-400">Choose
                                 Form Type</div>
@@ -389,8 +389,8 @@ try {
         </div>
 
         <!-- Table Card -->
-        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex-1 min-h-0 flex flex-col">
-            <div class="p-8 overflow-y-auto flex-1 relative">
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex-1 flex flex-col min-h-[500px]">
+            <div class="p-4 md:p-8 overflow-x-auto flex-1 relative">
                 <?php foreach ($all_data as $key => $dataset): ?>
                     <div id="tab_content_<?php echo $key; ?>" class="tab-content hidden h-full flex flex-col">
                         <div class="overflow-x-auto">
