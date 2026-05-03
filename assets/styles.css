@@ -304,6 +304,21 @@ body { background-color: #f9fafb; color: #111827; }
 }
 
 
+/* Video Section Styles */
+.video-trigger {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.video-trigger:hover {
+    transform: translateY(-5px);
+}
+#video-lightbox {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+#lightbox-container iframe {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
 /* Navigation Active States */
 .dropdown-item.active {
   color: #c50a76 !important;
