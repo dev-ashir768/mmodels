@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Talent Introduction | mmodels</title>
+    <link rel="icon" href="/assets/others/logo.png" type="image/png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+            colors: {
+              primary: "#C50A76",
+              dark: "#0a0a0a",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <style>
+      .video-card {
+        background: #fff;
+        border-radius: 2rem;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        position: relative;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      .video-card:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 30px 60px rgba(197, 10, 118, 0.12);
+        border-color: rgba(197, 10, 118, 0.2);
+      }
+      .video-container {
+        position: relative;
+        aspect-ratio: 9/16;
+        background: #000;
+        overflow: hidden;
+      }
+      .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+      }
+      .video-card:hover video {
+        transform: scale(1.05);
+      }
+      .video-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.6) 0%,
+          transparent 40%,
+          rgba(0, 0, 0, 0.2) 100%
+        );
+        opacity: 0.8;
+        transition: opacity 0.4s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+      }
+      .video-card:hover .video-overlay {
+        opacity: 0.4;
+      }
+      .play-btn {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.4s ease;
+        opacity: 1;
+        transform: scale(1);
+      }
+      .video-card:hover .play-btn {
+        transform: scale(1.2);
+        background: #c50a76;
+        border-color: #c50a76;
+      }
+
+      .talent-info {
+        padding: 2rem 1.5rem;
+        background: white;
+        position: relative;
+        z-index: 10;
+      }
+
+      .glass-header {
+        background: linear-gradient(135deg, #fff 0%, #f9fafb 100%);
+      }
+
+      .floating-label {
+        position: absolute;
+        top: 1.5rem;
+        left: 1.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 2rem;
+        color: white;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        z-index: 20;
+      }
+
+      /* Video Modal Styles */
+      #videoModal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(15px);
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+
+      .modal-container {
+        width: 100%;
+        max-width: 500px;
+        position: relative;
+        animation: modalScale 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+
+      @keyframes modalScale {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .modal-video-wrapper {
+        width: 100%;
+        aspect-ratio: 9/16;
+        background: #000;
+        border-radius: 1.5rem;
+        overflow: hidden;
+        box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
+      }
+
+      #modalVideo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: -1.5rem;
+        right: -1.5rem;
+        width: 3.5rem;
+        height: 3.5rem;
+        background: #c50a76;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1010;
+        box-shadow: 0 10px 30px rgba(197, 10, 118, 0.3);
+        transition: all 0.3s ease;
+        border: none;
+      }
+
+      .close-modal:hover {
+        transform: rotate(90deg) scale(1.1);
+        background: white;
+        color: #c50a76;
+      }
+
+      @media (max-width: 640px) {
+        #videoModal {
+          padding: 1rem;
+        }
+        .close-modal {
+          top: 1rem;
+          right: 1rem;
+          width: 3rem;
+          height: 3rem;
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="antialiased overflow-x-hidden selection:bg-primary selection:text-white bg-gray-50/50"
+  >
+    <!-- Navigation -->
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 glass-nav transition-all duration-300"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-24">
+          <div class="flex-shrink-0 flex items-center">
+            <a href="index.html" class="block"
+              ><img
+                src="/assets/others/logo.png"
+                alt="M Models"
+                class="h-10 md:h-12 w-auto object-contain"
+            /></a>
+          </div>
+          <div
+            class="hidden xl:flex items-center space-x-8 text-xs font-bold uppercase tracking-wider"
+          >
+            <a href="index.html" class="menu-link text-gray-600">Home</a>
+
+            <!-- Talent -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center active text-primary"
+                >Talent <i class="fas fa-chevron-down nav-arrow"></i
+              ></span>
+              <div class="dropdown-menu">
+                <a href="models.html" class="dropdown-item"
+                  >Models <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="influencers.html" class="dropdown-item"
+                  >Influencers <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="talent-introduction.html" class="dropdown-item active"
+                  >Introduction <i class="fas fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- Locations -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600"
+                >Locations <i class="fas fa-chevron-down nav-arrow"></i
+              ></span>
+              <div class="dropdown-menu">
+                <a href="toronto.html?lang=en" class="dropdown-item"
+                  >Toronto <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="vancouver.html?lang=en" class="dropdown-item"
+                  >Vancouver <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="calgary.html?lang=en" class="dropdown-item"
+                  >Calgary <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="japan.html?lang=ja" class="dropdown-item"
+                  >Japan <i class="fas fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- Work -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600"
+                >Our Work <i class="fas fa-chevron-down nav-arrow"></i
+              ></span>
+              <div class="dropdown-menu">
+                <a href="our-works.html" class="dropdown-item"
+                  >Showcase <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="video.html" class="dropdown-item"
+                  >Video <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="clients.html" class="dropdown-item"
+                  >Our Clients <i class="fas fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- Join/Hire -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600"
+                >Join Us <i class="fas fa-chevron-down nav-arrow"></i
+              ></span>
+              <div class="dropdown-menu">
+                <a href="become-a-model.html" class="dropdown-item"
+                  >Become a Model <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="application.html" class="dropdown-item"
+                  >General Apply <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="hire-a-model.html" class="dropdown-item"
+                  >Hire a Model <i class="fas fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- More -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600"
+                >Contact <i class="fas fa-chevron-down nav-arrow"></i
+              ></span>
+              <div class="dropdown-menu">
+                <a href="faq.html" class="dropdown-item"
+                  >FAQ's <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="contact.html" class="dropdown-item"
+                  >Contact Us <i class="fas fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div class="xl:hidden flex items-center">
+            <button id="mobile-btn" class="text-gray-600 hover:text-primary">
+              <i class="fas fa-bars text-2xl"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div
+        id="mobile-menu"
+        class="hidden xl:hidden bg-white border-t border-gray-100 shadow-xl pb-4"
+      >
+        <div
+          class="px-8 pt-2 pb-8 flex flex-col space-y-0.5 text-sm font-bold uppercase tracking-wider"
+        >
+          <a href="index.html" class="mobile-link"
+            >Home <i class="fas fa-chevron-right"></i
+          ></a>
+
+          <div class="mobile-section-title">Talent</div>
+          <a href="models.html" class="mobile-link"
+            >Models <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="influencers.html" class="mobile-link"
+            >Influencers <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="talent-introduction.html" class="mobile-link active"
+            >Introduction <i class="fas fa-chevron-right"></i
+          ></a>
+
+          <div class="mobile-section-title">Locations</div>
+          <a href="toronto.html?lang=en" class="mobile-link"
+            >Toronto <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="vancouver.html?lang=en" class="mobile-link"
+            >Vancouver <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="calgary.html?lang=en" class="mobile-link"
+            >Calgary <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="japan.html?lang=ja" class="mobile-link"
+            >Japan <i class="fas fa-chevron-right"></i
+          ></a>
+
+          <div class="mobile-section-title">Our Work</div>
+          <a href="our-works.html" class="mobile-link"
+            >Showcase <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="video.html" class="mobile-link"
+            >Video <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="clients.html" class="mobile-link"
+            >Our Clients <i class="fas fa-chevron-right"></i
+          ></a>
+
+          <div class="mobile-section-title">Join & Booking</div>
+          <a href="become-a-model.html" class="mobile-link"
+            >Become a Model <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="application.html" class="mobile-link"
+            >Apply <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="hire-a-model.html" class="mobile-link"
+            >Hire a Model <i class="fas fa-chevron-right"></i
+          ></a>
+
+          <div class="mobile-section-title">Information</div>
+          <a href="faq.html" class="mobile-link"
+            >FAQ's <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="contact.html" class="mobile-link"
+            >Contact Us <i class="fas fa-chevron-right"></i
+          ></a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="pt-32 pb-16 bg-gray-50 border-b border-gray-100 relative z-10">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1
+          class="font-serif text-4xl md:text-5xl font-bold mb-4 text-gray-900"
+        >
+          Talent Introduction
+        </h1>
+        <div class="h-1 w-24 bg-primary mx-auto mb-6"></div>
+        <p class="text-gray-600 text-lg md:text-xl font-light">
+          Experience the dynamic presence and unique personality of our talent
+          through our exclusive motion introduction series.
+        </p>
+      </div>
+    </div>
+
+    <!-- Video Grid -->
+    <section class="py-24 bg-white relative z-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10"
+        >
+          <!-- Serena Savoia -->
+          <div class="video-card group">
+            <div class="floating-label">Discovery</div>
+            <div class="video-container">
+              <video
+                class="talent-video"
+                playsinline
+                muted
+                loop
+                autoplay
+                preload="auto"
+                onclick="this.paused ? this.play() : this.pause()"
+              >
+                <source
+                  src="/assets/talent-introduction/serena-savoia.mov"
+                  type="video/mp4"
+                />
+                <source
+                  src="/assets/talent-introduction/serena-savoia.mov"
+                  type="video/quicktime"
+                />
+              </video>
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+            <div class="talent-info text-center">
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
+                Serena Savoia
+              </h3>
+              <p
+                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80"
+              >
+                Talent Introduction
+              </p>
+            </div>
+          </div>
+
+          <!-- Seriah -->
+          <div class="video-card group">
+            <div class="floating-label">New Face</div>
+            <div class="video-container">
+              <video
+                class="talent-video"
+                playsinline
+                muted
+                loop
+                autoplay
+                preload="auto"
+                onclick="this.paused ? this.play() : this.pause()"
+              >
+                <source
+                  src="/assets/talent-introduction/seriah.mov"
+                  type="video/mp4"
+                />
+                <source
+                  src="/assets/talent-introduction/seriah.mov"
+                  type="video/quicktime"
+                />
+              </video>
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+            <div class="talent-info text-center">
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
+                Seriah
+              </h3>
+              <p
+                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80"
+              >
+                Talent Introduction
+              </p>
+            </div>
+          </div>
+
+          <!--  Eyael Fikadu -->
+          <div class="video-card group">
+            <div class="floating-label">New Face</div>
+            <div class="video-container">
+              <video
+                class="talent-video"
+                playsinline
+                muted
+                loop
+                autoplay
+                preload="auto"
+                onclick="this.paused ? this.play() : this.pause()"
+              >
+                <source
+                  src="/assets/talent-introduction/eyael-fikadu.mp4"
+                  type="video/mp4"
+                />
+                <source
+                  src="/assets/talent-introduction/eyael-fikadu.mp4"
+                  type="video/quicktime"
+                />
+              </video>
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+            <div class="talent-info text-center">
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
+                Eyael Fikadu
+              </h3>
+              <p
+                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80"
+              >
+                Talent Introduction
+              </p>
+            </div>
+          </div>
+
+          <!--  Deborah -->
+          <div class="video-card group">
+            <div class="floating-label">New Face</div>
+            <div class="video-container">
+              <video
+                class="talent-video"
+                playsinline
+                muted
+                loop
+                autoplay
+                preload="auto"
+                onclick="this.paused ? this.play() : this.pause()"
+              >
+                <source
+                  src="/assets/talent-introduction/deborah.MOV"
+                  type="video/mp4"
+                />
+                <source
+                  src="/assets/talent-introduction/deborah.MOV"
+                  type="video/quicktime"
+                />
+              </video>
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+            <div class="talent-info text-center">
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
+                Deborah
+              </h3>
+              <p
+                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80"
+              >
+                Talent Introduction
+              </p>
+            </div>
+          </div>
+
+          <!--  James Dillon -->
+          <div class="video-card group">
+            <div class="floating-label">New Face</div>
+            <div class="video-container">
+              <video
+                class="talent-video"
+                playsinline
+                muted
+                loop
+                autoplay
+                preload="auto"
+                onclick="this.paused ? this.play() : this.pause()"
+              >
+                <source
+                  src="/assets/talent-introduction/james-dillon.mp4"
+                  type="video/mp4"
+                />
+                <source
+                  src="/assets/talent-introduction/james-dillon.mp4"
+                  type="video/quicktime"
+                />
+              </video>
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+            <div class="talent-info text-center">
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
+                James Dillon
+              </h3>
+              <p
+                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80"
+              >
+                Talent Introduction
+              </p>
+            </div>
+          </div>
+
+          <!--  Areeb ALI -->
+          <div class="video-card group">
+            <div class="floating-label">New Face</div>
+            <div class="video-container">
+              <video
+                class="talent-video"
+                playsinline
+                muted
+                loop
+                autoplay
+                preload="auto"
+                onclick="this.paused ? this.play() : this.pause()"
+              >
+                <source
+                  src="/assets/talent-introduction/areeb-ALI.mov"
+                  type="video/mp4"
+                />
+                <source
+                  src="/assets/talent-introduction/areeb-ALI.mov"
+                  type="video/quicktime"
+                />
+              </video>
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+            <div class="talent-info text-center">
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
+                Areeb Ali
+              </h3>
+              <p
+                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80"
+              >
+                Talent Introduction
+              </p>
+            </div>
+          </div>
+
+          <!--  Amira -->
+          <div class="video-card group">
+            <div class="floating-label">New Face</div>
+            <div class="video-container">
+              <video
+                class="talent-video"
+                playsinline
+                muted
+                loop
+                autoplay
+                preload="auto"
+                onclick="this.paused ? this.play() : this.pause()"
+              >
+                <source
+                  src="/assets/talent-introduction/amira.MOV"
+                  type="video/mp4"
+                />
+                <source
+                  src="/assets/talent-introduction/amira.MOV"
+                  type="video/quicktime"
+                />
+              </video>
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+            <div class="talent-info text-center">
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
+                Amira
+              </h3>
+              <p
+                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80"
+              >
+                Talent Introduction
+              </p>
+            </div>
+          </div>
+
+          <!--  Helen Li -->
+          <div class="video-card group">
+            <div class="floating-label">New Face</div>
+            <div class="video-container">
+              <video
+                class="talent-video"
+                playsinline
+                muted
+                loop
+                autoplay
+                preload="auto"
+                onclick="this.paused ? this.play() : this.pause()"
+              >
+                <source
+                  src="/assets/talent-introduction/heyhelenli.mov"
+                  type="video/mp4"
+                />
+                <source
+                  src="/assets/talent-introduction/heyhelenli.mov"
+                  type="video/quicktime"
+                />
+              </video>
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+            <div class="talent-info text-center">
+              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
+                Heyhelenli
+              </h3>
+              <p
+                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80"
+              >
+                Talent Introduction
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-24 bg-gray-50 border-t border-gray-100 relative z-10">
+      <div class="max-w-3xl mx-auto px-4 text-center">
+        <h2
+          class="font-serif text-4xl md:text-5xl font-bold mb-8 text-gray-900"
+        >
+          Ready to be our next <span class="text-primary italic">Face?</span>
+        </h2>
+        <p class="text-gray-600 mb-12 text-lg">
+          Join the world's most prestigious talent management agency and start
+          your journey today.
+        </p>
+        <a
+          href="become-a-model.html"
+          class="inline-block px-12 py-5 bg-primary text-white font-bold uppercase tracking-widest text-[10px] hover:bg-black transition-all duration-300 rounded-md shadow-lg"
+        >
+          Apply to M Models
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12 border-t border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <a href="index.html" class="block mb-6"
+          ><img
+            src="/assets/others/logo.png"
+            alt="M Models"
+            class="max-h-16 w-auto object-contain mx-auto"
+        /></a>
+        <p class="text-gray-400 text-xs">
+          © 2026 M Models Global. All rights reserved. •
+          <a
+            href="privacy-policy.html"
+            class="hover:text-primary transition-colors"
+            >Privacy Policy</a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div id="videoModal">
+      <div class="modal-container">
+        <button class="close-modal"><i class="fas fa-times"></i></button>
+        <div class="modal-video-wrapper">
+          <video id="modalVideo" controls playsinline>
+            <source src="" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 50) {
+          $("#navbar")
+            .addClass(
+              "py-4 shadow-lg bg-white/95 backdrop-blur-md border-b border-gray-100",
+            )
+            .removeClass("h-24");
+        } else {
+          $("#navbar")
+            .removeClass(
+              "py-4 shadow-lg bg-white/95 backdrop-blur-md border-b border-gray-100",
+            )
+            .addClass("h-24");
+        }
+      });
+
+      // Video Modal Logic
+      const $modal = $("#videoModal");
+      const $modalVideo = document.getElementById("modalVideo");
+
+      $(".video-card").on("click", function () {
+        const videoSrc = $(this).find("video source").first().attr("src");
+        if (videoSrc) {
+          $modalVideo.src = videoSrc;
+          $modal.css("display", "flex").hide().fadeIn(400);
+          $modalVideo.play();
+          $("body").addClass("overflow-hidden");
+        }
+      });
+
+      function closeModal() {
+        $modal.fadeOut(300, function () {
+          $(this).hide();
+          $modalVideo.pause();
+          $modalVideo.src = "";
+          $("body").removeClass("overflow-hidden");
+        });
+      }
+
+      $(".close-modal").on("click", closeModal);
+      $modal.on("click", function (e) {
+        if (e.target === this) closeModal();
+      });
+
+      // Simple video interaction for preview (keeping them muted)
+      document.querySelectorAll(".talent-video").forEach((video) => {
+        const card = video.closest(".video-card");
+        const playBtn = card.querySelector(".play-btn");
+
+        video.addEventListener("play", () => {
+          playBtn.style.opacity = "0";
+          playBtn.style.transform = "scale(0.5)";
+        });
+
+        video.addEventListener("pause", () => {
+          playBtn.style.opacity = "1";
+          playBtn.style.transform = "scale(1)";
+        });
+      });
+
+      // Mobile menu toggle
+      $("#mobile-btn").on("click", function () {
+        $("#mobile-menu").slideToggle(300);
+      });
+    </script>
+  </body>
+</html>
