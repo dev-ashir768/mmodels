@@ -104,10 +104,25 @@
       }
 
       .talent-info {
-        padding: 2rem 1.5rem;
+        padding: 1.5rem 1.25rem;
         background: white;
         position: relative;
         z-index: 10;
+      }
+
+      @media (max-width: 768px) {
+        .talent-info {
+          padding: 1rem 0.75rem;
+        }
+        .talent-info h3 {
+          font-size: 1.1rem;
+          margin-bottom: 0.25rem;
+        }
+        .play-btn {
+          width: 45px;
+          height: 45px;
+          font-size: 0.9rem;
+        }
       }
 
       .glass-header {
@@ -146,9 +161,12 @@
 
       .modal-container {
         width: 100%;
-        max-width: 500px;
+        max-width: 420px;
+        max-height: 85vh;
         position: relative;
         animation: modalScale 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        display: flex;
+        flex-direction: column;
       }
 
       @keyframes modalScale {
@@ -164,6 +182,7 @@
 
       .modal-video-wrapper {
         width: 100%;
+        height: 100%;
         aspect-ratio: 9/16;
         background: #000;
         border-radius: 1.5rem;
@@ -179,10 +198,10 @@
 
       .close-modal {
         position: absolute;
-        top: -1.5rem;
-        right: -1.5rem;
-        width: 3.5rem;
-        height: 3.5rem;
+        top: -1.25rem;
+        right: -1.25rem;
+        width: 3rem;
+        height: 3rem;
         background: #c50a76;
         color: white;
         border-radius: 50%;
@@ -196,21 +215,20 @@
         border: none;
       }
 
-      .close-modal:hover {
-        transform: rotate(90deg) scale(1.1);
-        background: white;
-        color: #c50a76;
-      }
-
       @media (max-width: 640px) {
         #videoModal {
-          padding: 1rem;
+          padding: 1.5rem;
+        }
+        .modal-container {
+          max-width: 100%;
         }
         .close-modal {
-          top: 1rem;
-          right: 1rem;
-          width: 3rem;
-          height: 3rem;
+          top: 0.75rem;
+          right: 0.75rem;
+          width: 2.5rem;
+          height: 2.5rem;
+          background: rgba(0, 0, 0, 0.5);
+          backdrop-filter: blur(10px);
         }
       }
     </style>
@@ -425,7 +443,7 @@
     <section class="py-24 bg-white relative z-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10"
+          class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-10"
         >
           <!-- Serena Savoia -->
           <div class="video-card group">
@@ -438,7 +456,6 @@
                 loop
                 autoplay
                 preload="auto"
-                onclick="this.paused ? this.play() : this.pause()"
               >
                 <source
                   src="/assets/talent-introduction/serena-savoia.mov"
@@ -478,7 +495,6 @@
                 loop
                 autoplay
                 preload="auto"
-                onclick="this.paused ? this.play() : this.pause()"
               >
                 <source
                   src="/assets/talent-introduction/seriah.mov"
@@ -518,7 +534,6 @@
                 loop
                 autoplay
                 preload="auto"
-                onclick="this.paused ? this.play() : this.pause()"
               >
                 <source
                   src="/assets/talent-introduction/eyael-fikadu.mp4"
@@ -558,7 +573,6 @@
                 loop
                 autoplay
                 preload="auto"
-                onclick="this.paused ? this.play() : this.pause()"
               >
                 <source
                   src="/assets/talent-introduction/deborah.MOV"
@@ -598,7 +612,6 @@
                 loop
                 autoplay
                 preload="auto"
-                onclick="this.paused ? this.play() : this.pause()"
               >
                 <source
                   src="/assets/talent-introduction/james-dillon.mp4"
@@ -638,7 +651,6 @@
                 loop
                 autoplay
                 preload="auto"
-                onclick="this.paused ? this.play() : this.pause()"
               >
                 <source
                   src="/assets/talent-introduction/areeb-ALI.mov"
@@ -678,7 +690,6 @@
                 loop
                 autoplay
                 preload="auto"
-                onclick="this.paused ? this.play() : this.pause()"
               >
                 <source
                   src="/assets/talent-introduction/amira.MOV"
@@ -718,7 +729,6 @@
                 loop
                 autoplay
                 preload="auto"
-                onclick="this.paused ? this.play() : this.pause()"
               >
                 <source
                   src="/assets/talent-introduction/heyhelenli.mov"
