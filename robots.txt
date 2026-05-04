@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /data/
+Disallow: /includes/
+Disallow: /PHPMailer/
+Disallow: /process-form.php
+
+Sitemap: https://mmodels.ca/sitemap.xml

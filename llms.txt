@@ -1,0 +1,29 @@
+# M Models & Talent Agency
+
+> A Global Platform for Emerging Models & Creative Talent
+
+M Models & Talent is a premier modeling agency connecting Canadian talent to the global fashion industry. We operate across Toronto, Vancouver, Calgary, and Japan, focusing on scouting, career development, and editorial placement.
+
+## Core Services
+- **Talent Management**: Representing professional models and creative influencers.
+- **Scouting**: Discovering new faces through our "Become a Model" program.
+- **Client Services**: Providing high-end talent for editorial, runway, and commercial projects.
+
+## Key Pages
+- [Home](https://mmodels.ca/index.html): Regional overview and agency mission.
+- [Models](https://mmodels.ca/models.html): Our primary portfolio of fashion models.
+- [Influencers](https://mmodels.ca/influencers.html): Creative talent and digital personalities.
+- [Talent Introduction](https://mmodels.ca/talent-introduction.html): Motion portfolios and new face introductions.
+- [Become a Model](https://mmodels.ca/become-a-model.html): Application portal for aspiring talent.
+- [Hire a Model](https://mmodels.ca/hire-a-model.html): Booking portal for clients.
+
+## Regional Hubs
+- [Toronto](https://mmodels.ca/toronto.html)
+- [Vancouver](https://mmodels.ca/vancouver.html)
+- [Calgary](https://mmodels.ca/calgary.html)
+- [Japan](https://mmodels.ca/japan.html)
+
+## Contact & Support
+- [Contact Us](https://mmodels.ca/contact.html)
+- [FAQ](https://mmodels.ca/faq.html)
+- [Privacy Policy](https://mmodels.ca/privacy-policy.html)
