@@ -256,10 +256,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <td style='padding: 50px; text-align: center;'>
                                     <h1 style='font-family: sans-serif; font-size: 28px; font-weight: 700; color: #C50A76; margin: 0 0 20px 0;'>Hello $first_name,</h1>
                                     <p style='font-family: sans-serif; font-size: 16px; line-height: 1.6; color: #333333; margin: 0 0 25px 0;'>
-                                        Thank you for choosing <strong>M Models & Talent Agency</strong>. We’ve successfully received your application and our scouts are eager to review your profile.
+                                        " . ($form_type === 'Influencer Registration' 
+                                            ? "Thank you for applying to join the <strong>M Models Influencer Network</strong>. We’ve received your portfolio and social analytics, and our creative team is excited to review your content style."
+                                            : "Thank you for choosing <strong>M Models & Talent Agency</strong>. We’ve successfully received your application and our scouts are eager to review your profile.") . "
                                     </p>
                                     <p style='font-family: sans-serif; font-size: 15px; color: #666666; margin: 0 0 35px 0;'>
-                                        If your look matches our current portfolio needs, one of our agents will reach out to you directly for a personal interview.
+                                        " . ($form_type === 'Influencer Registration'
+                                            ? "If your profile aligns with our upcoming brand campaigns, one of our talent managers will contact you to discuss representation and partnership opportunities."
+                                            : "If your look matches our current portfolio needs, one of our agents will reach out to you directly for a personal interview.") . "
                                     </p>
                                     <a href='https://mmodels.ca' style='display: inline-block; background-color: #C50A76; color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(197, 10, 118, 0.2); transition: all 0.3s ease;'>Explore M Models</a>
                                     

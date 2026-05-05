@@ -109,6 +109,7 @@ if (isset($_GET['delete'])) {
 
 // Forms configuration
 $forms = [
+    'Influencer Registration' => 'Influencers',
     'become_a_model' => 'Become a Model',
     'hire_a_model' => 'Hire a Model',
     'application' => 'Applications',
@@ -281,9 +282,10 @@ try {
                 <a href="javascript:void(0)" onclick="switchTab('<?php echo $key; ?>')" id="side_btn_<?php echo $key; ?>"
                     class="side-btn flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
                     <i class="fas <?php
-                    echo ($key == 'become_a_model') ? 'fa-user-plus' :
-                        (($key == 'hire_a_model') ? 'fa-user-tie' :
-                            (($key == 'application') ? 'fa-file-invoice' : 'fa-envelope'));
+                    echo ($key == 'Influencer Registration') ? 'fa-star' :
+                        (($key == 'become_a_model') ? 'fa-user-plus' :
+                            (($key == 'hire_a_model') ? 'fa-user-tie' :
+                                (($key == 'application') ? 'fa-file-invoice' : 'fa-envelope')));
                     ?> w-5"></i>
                     <span class="text-sm font-semibold"><?php echo $dataset['title']; ?></span>
                 </a>
@@ -627,8 +629,8 @@ try {
                 }
             <?php endforeach; ?>
 
-            // Open 'Become a Model' tab by default
-            switchTab('become_a_model');
+            // Open 'Influencer Registration' tab by default
+            switchTab('Influencer Registration');
 
             // Mobile Sidebar Toggle
             const mobileToggle = $('#mobile-toggle');

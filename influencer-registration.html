@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Influencer Registration | mmodels</title>
+    <link rel="icon" href="/assets/others/logo.png" type="image/png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+            colors: {
+              primary: "#C50A76",
+              secondary: "#2D3436",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <style>
+      .glass-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+      }
+      .input-field {
+        @apply w-full px-5 py-4 rounded-xl bg-gray-50 border border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none text-gray-700;
+      }
+      .label-text {
+        @apply block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 ml-1;
+      }
+      .file-upload-zone {
+        @apply relative border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center hover:border-primary/50 transition-colors cursor-pointer bg-gray-50/50;
+      }
+      .step-dot {
+        @apply w-2.5 h-2.5 rounded-full bg-gray-200 transition-all duration-500;
+      }
+      .step-dot.active {
+        @apply bg-primary scale-125 shadow-[0_0_15px_rgba(197,10,118,0.5)];
+      }
+      .gradient-btn {
+        background: linear-gradient(135deg, #C50A76 0%, #ff1e8e 100%);
+        box-shadow: 0 10px 20px -5px rgba(197, 10, 118, 0.4);
+      }
+      .gradient-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px -5px rgba(197, 10, 118, 0.5);
+      }
+      
+      #progress-line {
+        transition: width 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+      }
+    </style>
+  </head>
+  <body class="antialiased bg-[#fafafa] text-gray-900">
+    
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20 md:h-24">
+          <a href="index.html" class="block">
+            <img src="/assets/others/logo.png" alt="M Models" class="h-10 md:h-12 w-auto object-contain" />
+          </a>
+          <a href="influencers.html" class="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-primary transition-colors">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Influencers
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-4">
+      <div class="max-w-4xl mx-auto">
+        
+        <div class="text-center mb-16">
+          <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary text-[10px] font-extrabold uppercase tracking-[0.2em] rounded-full mb-6">Join Our Roster</span>
+          <h1 class="font-serif text-4xl md:text-6xl font-bold text-gray-900 mb-6">Influencer Registration</h1>
+          <p class="text-gray-500 text-lg max-w-2xl mx-auto">Scale your influence with M Models. We connect world-class talent with premier brands globally.</p>
+        </div>
+
+        <div class="mb-12 relative px-4">
+          <div class="flex justify-between mb-4 relative z-10">
+            <div class="flex flex-col items-center">
+              <div class="step-dot active" id="dot-1"></div>
+              <span class="text-[10px] font-bold uppercase tracking-tighter mt-2 text-primary">Personal</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="step-dot" id="dot-2"></div>
+              <span class="text-[10px] font-bold uppercase tracking-tighter mt-2 text-gray-400">Socials</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="step-dot" id="dot-3"></div>
+              <span class="text-[10px] font-bold uppercase tracking-tighter mt-2 text-gray-400">Portfolio</span>
+            </div>
+          </div>
+          <div class="absolute top-1.5 left-8 right-8 h-[2px] bg-gray-100 -z-0">
+             <div id="progress-line" class="h-full bg-primary w-0"></div>
+          </div>
+        </div>
+
+        <form id="influencerForm" class="glass-card rounded-[2.5rem] p-8 md:p-12" enctype="multipart/form-data">
+          <input type="hidden" name="form_type" value="Influencer Registration">
+          
+          <div id="step-1-content" class="form-step">
+            <h3 class="text-2xl font-serif font-bold mb-8 flex items-center">
+              <span class="w-8 h-8 rounded-full bg-primary text-white text-sm flex items-center justify-center mr-3 font-sans">1</span>
+              Personal Information
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div>
+                <label class="label-text">First Name</label>
+                <input type="text" name="first_name" required placeholder="Enter first name" class="input-field">
+              </div>
+              <div>
+                <label class="label-text">Last Name</label>
+                <input type="text" name="last_name" required placeholder="Enter last name" class="input-field">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div>
+                <label class="label-text">Email Address</label>
+                <input type="email" name="email" required placeholder="your@email.com" class="input-field">
+              </div>
+              <div>
+                <label class="label-text">Phone Number</label>
+                <input type="tel" name="phone" required placeholder="+1 (000) 000-0000" class="input-field">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div>
+                <label class="label-text">Age</label>
+                <input type="number" name="age" required placeholder="Age" class="input-field">
+              </div>
+              <div>
+                <label class="label-text">Gender</label>
+                <select name="gender" class="input-field appearance-none" required>
+                  <option value="">Select</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Non-binary">Non-binary</option>
+                  <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+              </div>
+              <div>
+                <label class="label-text">City</label>
+                <input type="text" name="city" required placeholder="City" class="input-field">
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button type="button" onclick="nextStep(2)" class="gradient-btn px-10 py-4 text-white font-bold rounded-xl flex items-center group transition-all">
+                Next Details <i class="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
+              </button>
+            </div>
+          </div>
+
+          <div id="step-2-content" class="form-step hidden">
+            <h3 class="text-2xl font-serif font-bold mb-8 flex items-center">
+              <span class="w-8 h-8 rounded-full bg-primary text-white text-sm flex items-center justify-center mr-3 font-sans">2</span>
+              Socials & Analytics
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div class="relative">
+                <label class="label-text">Instagram Handle</label>
+                <span class="absolute left-5 top-[3.25rem] text-gray-400">@</span>
+                <input type="text" name="instagram" placeholder="username" class="input-field pl-10">
+              </div>
+              <div>
+                <label class="label-text">Instagram Followers</label>
+                <input type="text" name="ig_followers" placeholder="e.g. 50k" class="input-field">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div class="relative">
+                <label class="label-text">TikTok Handle</label>
+                <span class="absolute left-5 top-[3.25rem] text-gray-400">@</span>
+                <input type="text" name="tiktok" placeholder="username" class="input-field pl-10">
+              </div>
+              <div>
+                <label class="label-text">TikTok Followers</label>
+                <input type="text" name="tt_followers" placeholder="e.g. 100k" class="input-field">
+              </div>
+            </div>
+
+            <div class="mb-8">
+              <label class="label-text">Primary Niche / Category</label>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <label class="cursor-pointer">
+                  <input type="checkbox" name="niche[]" value="Fashion" class="hidden peer">
+                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Fashion</div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="checkbox" name="niche[]" value="Beauty" class="hidden peer">
+                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Beauty</div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="checkbox" name="niche[]" value="Travel" class="hidden peer">
+                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Travel</div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="checkbox" name="niche[]" value="Lifestyle" class="hidden peer">
+                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Lifestyle</div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="checkbox" name="niche[]" value="Fitness" class="hidden peer">
+                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Fitness</div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="checkbox" name="niche[]" value="Tech" class="hidden peer">
+                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Tech</div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="checkbox" name="niche[]" value="Food" class="hidden peer">
+                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Food</div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="checkbox" name="niche[]" value="Luxury" class="hidden peer">
+                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Luxury</div>
+                </label>
+              </div>
+            </div>
+
+            <div class="flex justify-between">
+              <button type="button" onclick="nextStep(1)" class="px-8 py-4 text-gray-400 font-bold text-sm uppercase tracking-widest hover:text-gray-600 transition-colors">
+                <i class="fas fa-chevron-left mr-2"></i> Back
+              </button>
+              <button type="button" onclick="nextStep(3)" class="gradient-btn px-10 py-4 text-white font-bold rounded-xl flex items-center group transition-all">
+                Next step <i class="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
+              </button>
+            </div>
+          </div>
+
+          <div id="step-3-content" class="form-step hidden">
+            <h3 class="text-2xl font-serif font-bold mb-8 flex items-center">
+              <span class="w-8 h-8 rounded-full bg-primary text-white text-sm flex items-center justify-center mr-3 font-sans">3</span>
+              Portfolio & Creative
+            </h3>
+
+            <div class="mb-8">
+              <label class="label-text">Brief Bio</label>
+              <textarea name="bio" rows="4" placeholder="Tell us about yourself and your content style..." class="input-field resize-none"></textarea>
+            </div>
+
+            <div class="mb-10">
+              <label class="label-text">Upload Portfolio (Min 3 Photos)</label>
+              <div class="file-upload-zone" id="dropzone">
+                <input type="file" name="portfolio[]" id="fileInput" multiple accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
+                <div id="upload-placeholder">
+                  <i class="fas fa-cloud-upload-alt text-4xl text-primary/30 mb-4"></i>
+                  <p class="text-gray-900 font-bold mb-1">Click or Drag images here</p>
+                  <p class="text-gray-400 text-xs uppercase tracking-widest">High quality JPG or PNG (Max 5MB each)</p>
+                </div>
+                <div id="file-preview" class="grid grid-cols-3 md:grid-cols-6 gap-4 hidden mt-4"></div>
+              </div>
+            </div>
+
+            <div class="flex items-start mb-10">
+              <input type="checkbox" id="terms" required class="mt-1.5 rounded text-primary focus:ring-primary">
+              <label for="terms" class="ml-3 text-sm text-gray-500 leading-relaxed">
+                I agree to the <a href="privacy-policy.html" target="_blank" class="text-primary font-bold">Terms of Service</a> and allow M Models to process my data for recruitment purposes.
+              </label>
+            </div>
+
+            <div class="flex justify-between">
+              <button type="button" onclick="nextStep(2)" class="px-8 py-4 text-gray-400 font-bold text-sm uppercase tracking-widest hover:text-gray-600 transition-colors">
+                <i class="fas fa-chevron-left mr-2"></i> Back
+              </button>
+              <button type="submit" id="submitBtn" class="gradient-btn px-12 py-5 text-white font-bold rounded-2xl flex items-center group transition-all">
+                Complete Registration <i class="fas fa-check-circle ml-3"></i>
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+        <div id="success-msg" class="hidden glass-card rounded-[2.5rem] p-12 text-center">
+          <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-8">
+            <i class="fas fa-check text-4xl"></i>
+          </div>
+          <h2 class="font-serif text-4xl font-bold text-gray-900 mb-4">Application Sent!</h2>
+          <p class="text-gray-500 text-lg mb-10">Thank you for applying. We've sent a confirmation email to <span id="confirm-email" class="font-bold text-primary"></span>. Our team will review your profile shortly.</p>
+          <a href="index.html" class="inline-block px-10 py-4 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-all">Return Home</a>
+        </div>
+
+      </div>
+    </main>
+
+    <footer class="bg-white py-12 border-t border-gray-100">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">© 2026 M Models Global • Premium Influencer Network</p>
+      </div>
+    </footer>
+
+    <script>
+      let currentStep = 1;
+
+      function nextStep(step) {
+        if (step > currentStep) {
+          const currentContent = $(`#step-${currentStep}-content`);
+          const inputs = currentContent.find('input[required], select[required]');
+          let valid = true;
+          
+          inputs.each(function() {
+            if (!$(this).val()) {
+              $(this).addClass('border-red-300 bg-red-50');
+              valid = false;
+            } else {
+              $(this).removeClass('border-red-300 bg-red-50');
+            }
+          });
+
+          if (!valid) {
+            alert('Please fill in all required fields.');
+            return;
+          }
+        }
+
+        $(`.form-step`).addClass('hidden');
+        $(`#step-${step}-content`).removeClass('hidden');
+        
+        $(`.step-dot`).removeClass('active');
+        for(let i=1; i<=step; i++) {
+          $(`#dot-${i}`).addClass('active');
+        }
+
+        const progress = ((step - 1) / 2) * 100;
+        $('#progress-line').css('width', `${progress}%`);
+        
+        currentStep = step;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      $('#fileInput').on('change', function(e) {
+        const files = e.target.files;
+        const preview = $('#file-preview');
+        const placeholder = $('#upload-placeholder');
+        
+        preview.empty().removeClass('hidden');
+        placeholder.addClass('opacity-30');
+
+        for (let i = 0; i < files.length; i++) {
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            const img = `<div class="aspect-square rounded-lg overflow-hidden border border-gray-200 bg-white">
+              <img src="${event.target.result}" class="w-full h-full object-cover">
+            </div>`;
+            preview.append(img);
+          };
+          reader.readAsDataURL(files[i]);
+        }
+      });
+
+      $('#influencerForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        if (!$('#terms').is(':checked')) {
+          alert('Please agree to the terms.');
+          return;
+        }
+
+        const btn = $('#submitBtn');
+        const originalText = btn.html();
+        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-2"></i> Processing...');
+
+        const formData = new FormData(this);
+        const email = $('input[name="email"]').val();
+
+        $.ajax({
+          url: 'process-form.php',
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            if (response.status === 'success') {
+              $('#influencerForm').fadeOut(400, function() {
+                $('#confirm-email').text(email);
+                $('#success-msg').removeClass('hidden').fadeIn();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              });
+            } else {
+              alert('Error: ' + response.message);
+              btn.prop('disabled', false).html(originalText);
+            }
+          },
+          error: function() {
+            alert('Something went wrong. Please try again.');
+            btn.prop('disabled', false).html(originalText);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
