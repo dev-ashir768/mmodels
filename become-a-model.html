@@ -38,6 +38,75 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="stylesheet" href="/assets/styles.css" />
+    <style>
+      .hero-video-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        min-height: 600px;
+        overflow: hidden;
+      }
+      .hero-video-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+      }
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.4) 0%,
+          rgba(0, 0, 0, 0.7) 100%
+        );
+        z-index: 1;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white;
+        padding: 0 1.5rem;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in-up {
+        animation: fadeInUp 1s ease-out forwards;
+        opacity: 0;
+      }
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+    </style>
   </head>
   <body
     class="antialiased overflow-x-hidden selection:bg-primary selection:text-white"
@@ -132,7 +201,7 @@
                   >General Apply <i class="fas fa-arrow-right"></i
                 ></a> -->
                 <a href="influencer-registration.html" class="dropdown-item"
-                  >Influencer Registeration <i class="fas fa-arrow-right"></i
+                  >Influencer Registration <i class="fas fa-arrow-right"></i
                 ></a>
                 <a href="hire-a-model.html" class="dropdown-item"
                   >Hire a Model <i class="fas fa-arrow-right"></i
@@ -217,7 +286,7 @@
             >Apply <i class="fas fa-chevron-right"></i
           ></a> -->
           <a href="influencer-registration.html" class="mobile-link"
-            >Influencer Registeration <i class="fas fa-chevron-right"></i
+            >Influencer Registration <i class="fas fa-chevron-right"></i
           ></a>
           <a href="hire-a-model.html" class="mobile-link"
             >Hire a Model <i class="fas fa-chevron-right"></i
@@ -234,25 +303,50 @@
       </div>
     </nav>
 
+    <!-- Hero Section -->
+    <section id="home" class="hero-video-container mt-0">
+      <div class="hero-overlay"></div>
+      <video
+        class="hero-video-bg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+      >
+        <source src="/assets/yt-videos/Drake-Energy.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-content" id="hero-content"></div>
+    </section>
+
     <!-- Page Header -->
-    <header class="pt-40 pb-16 bg-white border-b border-gray-200 relative z-10">
-      <div class="text-center container mx-auto px-4">
+    <div class="pt-24 pb-16 bg-white border-b border-gray-100 relative z-10">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1
-          class="text-primary font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-4"
+          class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs mb-4"
         >
-          Application
+          Start Your Journey
         </h1>
         <h2
-          class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+          class="font-serif text-3xl md:text-5xl font-bold mb-6 text-gray-900 uppercase tracking-tight"
         >
-          Model & Talent Application
+          Become a <span class="text-primary italic">Model</span>
         </h2>
-        <div class="h-1 w-24 bg-primary mx-auto mb-6"></div>
-        <p class="text-gray-500 font-medium text-sm">
-          <span class="required">*</span> Indicates required field
+        <div class="h-1 w-24 bg-primary mx-auto mb-8"></div>
+        <p
+          class="text-gray-600 text-base md:text-lg font-light max-w-2xl mx-auto leading-relaxed"
+        >
+          We are scouting new faces for fashion, editorial, and commercial
+          modeling. Unleash your potential with M Models global agency.
         </p>
+        <div class="mt-10 pt-10 border-t border-gray-50">
+          <p class="text-gray-400 font-medium text-xs">
+            <span class="required">*</span> Indicates required field for
+            application
+          </p>
+        </div>
       </div>
-    </header>
+    </div>
 
     <!-- Form Section -->
     <section class="py-16 bg-gray-50 relative z-10" id="apply">
