@@ -10,6 +10,13 @@ $admin_email = 'toolgram3@gmail.com';
 $smtp_user = 'toolgram3@gmail.com';
 $smtp_pass = 'fihwrjdzscwhxixy';
 
+// Debug Logger
+function debugLog($msg) {
+    $log_file = __DIR__ . '/data/form_debug.log';
+    $timestamp = date('Y-m-d H:i:s');
+    file_put_contents($log_file, "[$timestamp] $msg\n", FILE_APPEND);
+}
+
 // PHPMailer configuration
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -89,14 +96,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $form_type = $_POST['form_type'] ?? 'general';
     $timestamp = date('Y-m-d H:i:s');
-
-    // Collect all POST data
     $data = $_POST;
-    unset($data['form_type']); // Remove helper fields
+    unset($data['form_type']);
 
-    // Handle File Uploads (Convert to Base64)
+    debugLog("New Submission: $form_type from " . ($data['email'] ?? 'unknown'));
+
+    // --- IMMEDIATE CSV WRITE (Before any other processing) ---
+    $sanitized_type = preg_replace('/[^a-zA-Z0-9_]/', '', strtolower($form_type));
+    if ($form_type === 'Influencer Registration') $sanitized_type = 'influencer_talent';
+    
+    $csv_file = __DIR__ . "/data/submissions_" . $sanitized_type . ".csv";
+    $is_new_file = !file_exists($csv_file);
+    $file_handle = fopen($csv_file, 'a');
+    
+    if ($file_handle) {
+        if ($is_new_file) {
+            $headers = ['Timestamp', 'Form Type'];
+            foreach ($data as $key => $value) {
+                $headers[] = ucwords(str_replace('_', ' ', $key));
+            }
+            fputcsv($file_handle, $headers);
+        }
+        
+        $row = [$timestamp, $form_type];
+        foreach ($data as $key => $value) {
+            $row[] = is_array($value) ? implode(', ', $value) : (string)$value;
+        }
+        
+        fputcsv($file_handle, $row);
+        fflush($file_handle);
+        fclose($file_handle);
+        chmod($csv_file, 0644);
+        debugLog("CSV Write Success: $csv_file");
+    } else {
+        debugLog("CSV Write FAILED: Could not open $csv_file");
+    }
+
+    // --- Continue with File Uploads ---
     $upload_errors = [];
-
     $attachment_paths = [];
     foreach ($_FILES as $key => $file) {
         if (is_array($file['name'])) {
@@ -247,15 +284,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </body>";
 
     // 1. Admin Notification Email
-    $admin_subject = "New " . ucwords($form_type) . " Application: " . ($data['first_name'] ?? 'Talent');
+    $admin_subject = "!! NEW TALENT: " . ($data['first_name'] ?? 'Inquiry') . " (" . $form_type . ")";
     
-    // We send to admin_email. If it fails, it might be due to attachment size.
-    $email_sent = sendEmail($admin_email, $admin_subject, $admin_email_content, 'M Models System', $_FILES);
+    debugLog("Attempting Admin Email to $admin_email");
+    $email_sent = sendEmail($admin_email, $admin_subject, $admin_email_content, 'M Models Scout', $_FILES);
     
     if (!$email_sent) {
-        // Retry without attachments if it failed (likely size issue)
-        sendEmail($admin_email, "[SIZE LIMIT] " . $admin_subject, $admin_email_content . "<p><strong>Note:</strong> Attachments were too large to email. Please check the admin panel.</p>", 'M Models System');
+        debugLog("Admin Email with attachments FAILED. Retrying without attachments...");
+        $email_sent = sendEmail($admin_email, "LOW-RES: " . $admin_subject, $admin_email_content . "<p>Check admin panel for HD photos.</p>", 'M Models Scout');
     }
+    
+    debugLog("Admin Email Final Status: " . ($email_sent ? "SUCCESS" : "FAILED"));
 
     // 2. Applicant Greeting Email
     $applicant_email = $_POST['email'] ?? '';
