@@ -171,6 +171,10 @@ const i18nDict = {
     ja: "ルックブックをアップロード *",
   },
   Apply: { fr: "Postuler", ja: "応募する" },
+  "Influencer Registration": {
+    fr: "Inscription Influenceur",
+    ja: "インフルエンサー登録",
+  },
   "files selected": {
     fr: "fichiers sélectionnés",
     ja: "個のファイルが選択されました",
