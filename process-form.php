@@ -47,17 +47,22 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
         // Add attachments
         if (!empty($attachments)) {
             foreach ($attachments as $key => $file) {
-                if (is_array($file['name'])) {
-                    // Handle multiple file uploads array structure
+                // Check if it's a direct path string
+                if (is_string($file)) {
+                    if (file_exists($file)) {
+                        $mail->addAttachment($file);
+                    }
+                } 
+                // Check if it's a standard PHP upload array
+                else if (isset($file['name']) && is_array($file['name'])) {
                     foreach ($file['name'] as $idx => $name) {
-                        if ($file['error'][$idx] === UPLOAD_ERR_OK) {
+                        if (isset($file['tmp_name'][$idx]) && file_exists($file['tmp_name'][$idx])) {
                             $mail->addAttachment($file['tmp_name'][$idx], $name);
                         }
                     }
-                } else {
-                    if ($file['error'] === UPLOAD_ERR_OK) {
-                        $mail->addAttachment($file['tmp_name'], $file['name']);
-                    }
+                } 
+                else if (isset($file['tmp_name']) && file_exists($file['tmp_name'])) {
+                    $mail->addAttachment($file['tmp_name'], $file['name']);
                 }
             }
         }
@@ -287,7 +292,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $admin_subject = "!! NEW TALENT: " . ($data['first_name'] ?? 'Inquiry') . " (" . $form_type . ")";
     
     debugLog("Attempting Admin Email to $admin_email");
-    $email_sent = sendEmail($admin_email, $admin_subject, $admin_email_content, 'M Models Scout', $_FILES);
+    // Use moved file paths ($attachment_paths) for attachments instead of $_FILES 
+    // because files were moved from temp location already.
+    $email_sent = sendEmail($admin_email, $admin_subject, $admin_email_content, 'M Models Scout', $attachment_paths);
     
     if (!$email_sent) {
         debugLog("Admin Email with attachments FAILED. Retrying without attachments...");
