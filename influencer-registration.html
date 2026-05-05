@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Influencer Registration | mmodels</title>
+    <title>Influencer Registration | M Models</title>
     <link rel="icon" href="/assets/others/logo.png" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -16,69 +16,138 @@
             },
             colors: {
               primary: "#C50A76",
-              secondary: "#2D3436",
             },
           },
         },
       };
     </script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
       rel="stylesheet"
     />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="stylesheet" href="/assets/styles.css" />
     <style>
-      .glass-card {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+      /* Custom Stepper Styling to match site theme */
+      .step-item {
+        position: relative;
+        flex: 1;
+        text-align: center;
       }
-      .input-field {
-        @apply w-full px-5 py-4 rounded-xl bg-gray-50 border border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none text-gray-700;
+      .step-circle {
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+        background: #f3f4f6;
+        border: 2px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-weight: 800;
+        color: #9ca3af;
+        transition: all 0.4s ease;
+        position: relative;
+        z-index: 2;
       }
-      .label-text {
-        @apply block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 ml-1;
+      .step-item.active .step-circle {
+        background: #c50a76;
+        border-color: #c50a76;
+        color: white;
+        box-shadow: 0 10px 20px rgba(197, 10, 118, 0.2);
       }
-      .file-upload-zone {
-        @apply relative border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center hover:border-primary/50 transition-colors cursor-pointer bg-gray-50/50;
+      .step-item.completed .step-circle {
+        background: #10b981;
+        border-color: #10b981;
+        color: white;
       }
-      .step-dot {
-        @apply w-2.5 h-2.5 rounded-full bg-gray-200 transition-all duration-500;
+      .step-label {
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #9ca3af;
+        transition: all 0.3s ease;
       }
-      .step-dot.active {
-        @apply bg-primary scale-125 shadow-[0_0_15px_rgba(197,10,118,0.5)];
+      .step-item.active .step-label {
+        color: #c50a76;
       }
-      .gradient-btn {
-        background: linear-gradient(135deg, #C50A76 0%, #ff1e8e 100%);
-        box-shadow: 0 10px 20px -5px rgba(197, 10, 118, 0.4);
+
+      .step-connector {
+        position: absolute;
+        top: 1.75rem;
+        left: calc(50% + 1.75rem);
+        right: calc(-50% + 1.75rem);
+        height: 2px;
+        background: #e5e7eb;
+        z-index: 1;
       }
-      .gradient-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 15px 30px -5px rgba(197, 10, 118, 0.5);
+      .step-connector-fill {
+        height: 100%;
+        width: 0;
+        background: #c50a76;
+        transition: width 0.5s ease;
       }
-      
-      #progress-line {
-        transition: width 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+      .step-item.completed .step-connector-fill {
+        width: 100%;
+        background: #10b981;
+      }
+
+      /* File Upload Preview */
+      .preview-box {
+        aspect-ratio: 1;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+      }
+
+      /* Parsley Overrides for this page */
+      .parsley-errors-list {
+        color: #ef4444;
+        font-size: 0.7rem;
+        font-weight: 600;
+        margin-top: 4px;
+      }
+      .form-input.parsley-error {
+        border-color: #ef4444 !important;
+        background-color: #fffafb;
+      }
+
+      .niche-chip {
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid #e5e7eb;
+        background: #f9fafb;
+      }
+      .niche-input:checked + .niche-chip {
+        border-color: #c50a76;
+        background: rgba(197, 10, 118, 0.05);
+        color: #c50a76;
       }
     </style>
   </head>
-  <body class="antialiased bg-[#fafafa] text-gray-900">
-    
-    <!-- Navbar -->
+  <body class="antialiased bg-gray-50">
+    <!-- Navigation -->
     <nav class="fixed w-full z-50 glass-nav">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20 md:h-24">
           <a href="index.html" class="block">
-            <img src="/assets/others/logo.png" alt="M Models" class="h-10 md:h-12 w-auto object-contain" />
+            <img
+              src="/assets/others/logo.png"
+              alt="M Models"
+              class="h-10 md:h-12 w-auto object-contain"
+            />
           </a>
-          <a href="influencers.html" class="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-primary transition-colors">
-            <i class="fas fa-arrow-left mr-2"></i> Back to Influencers
+          <a
+            href="influencers.html"
+            class="text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-primary transition-colors"
+          >
+            <i class="fas fa-chevron-left mr-2"></i> Back to Agency
           </a>
         </div>
       </div>
@@ -86,328 +155,605 @@
 
     <main class="pt-32 pb-24 px-4">
       <div class="max-w-4xl mx-auto">
-        
+        <!-- Page Header -->
         <div class="text-center mb-16">
-          <span class="inline-block px-4 py-1.5 bg-primary/10 text-primary text-[10px] font-extrabold uppercase tracking-[0.2em] rounded-full mb-6">Join Our Roster</span>
-          <h1 class="font-serif text-4xl md:text-6xl font-bold text-gray-900 mb-6">Influencer Registration</h1>
-          <p class="text-gray-500 text-lg max-w-2xl mx-auto">Scale your influence with M Models. We connect world-class talent with premier brands globally.</p>
+          <h1
+            class="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-4"
+          >
+            Join Our Influencer Network
+          </h1>
+          <h2
+            class="font-serif text-4xl md:text-6xl font-bold text-gray-900 mb-6 uppercase"
+          >
+            Influencer Registration
+          </h2>
+          <div class="h-1.5 w-24 bg-primary mx-auto"></div>
         </div>
 
-        <div class="mb-12 relative px-4">
-          <div class="flex justify-between mb-4 relative z-10">
-            <div class="flex flex-col items-center">
-              <div class="step-dot active" id="dot-1"></div>
-              <span class="text-[10px] font-bold uppercase tracking-tighter mt-2 text-primary">Personal</span>
-            </div>
-            <div class="flex flex-col items-center">
-              <div class="step-dot" id="dot-2"></div>
-              <span class="text-[10px] font-bold uppercase tracking-tighter mt-2 text-gray-400">Socials</span>
-            </div>
-            <div class="flex flex-col items-center">
-              <div class="step-dot" id="dot-3"></div>
-              <span class="text-[10px] font-bold uppercase tracking-tighter mt-2 text-gray-400">Portfolio</span>
+        <!-- Progress Stepper -->
+        <div class="flex justify-between items-center mb-16 px-2 md:px-10">
+          <div class="step-item active" id="step-1-indicator">
+            <div class="step-circle flex items-center justify-center">1</div>
+            <div class="step-label">Personal</div>
+            <div class="step-connector">
+              <div class="step-connector-fill"></div>
             </div>
           </div>
-          <div class="absolute top-1.5 left-8 right-8 h-[2px] bg-gray-100 -z-0">
-             <div id="progress-line" class="h-full bg-primary w-0"></div>
+          <div class="step-item" id="step-2-indicator">
+            <div class="step-circle flex items-center justify-center">2</div>
+            <div class="step-label">Socials</div>
+            <div class="step-connector">
+              <div class="step-connector-fill"></div>
+            </div>
+          </div>
+          <div class="step-item" id="step-3-indicator">
+            <div class="step-circle flex items-center justify-center">3</div>
+            <div class="step-label">Portfolio</div>
           </div>
         </div>
 
-        <form id="influencerForm" class="glass-card rounded-[2.5rem] p-8 md:p-12" enctype="multipart/form-data">
-          <input type="hidden" name="form_type" value="Influencer Registration">
-          
-          <div id="step-1-content" class="form-step">
-            <h3 class="text-2xl font-serif font-bold mb-8 flex items-center">
-              <span class="w-8 h-8 rounded-full bg-primary text-white text-sm flex items-center justify-center mr-3 font-sans">1</span>
-              Personal Information
-            </h3>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div>
-                <label class="label-text">First Name</label>
-                <input type="text" name="first_name" required placeholder="Enter first name" class="input-field">
-              </div>
-              <div>
-                <label class="label-text">Last Name</label>
-                <input type="text" name="last_name" required placeholder="Enter last name" class="input-field">
-              </div>
-            </div>
+        <!-- Form Card -->
+        <div class="form-card p-8 md:p-12 rounded-3xl overflow-hidden relative">
+          <form
+            id="influencerForm"
+            data-parsley-validate
+            action="process-form.php"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <input
+              type="hidden"
+              name="form_type"
+              value="Influencer Registration"
+            />
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div>
-                <label class="label-text">Email Address</label>
-                <input type="email" name="email" required placeholder="your@email.com" class="input-field">
-              </div>
-              <div>
-                <label class="label-text">Phone Number</label>
-                <input type="tel" name="phone" required placeholder="+1 (000) 000-0000" class="input-field">
-              </div>
-            </div>
+            <!-- Step 1: Personal -->
+            <div id="step-1-content" class="form-step">
+              <h3
+                class="font-serif text-2xl md:text-3xl font-bold text-gray-900 mb-8 pb-4 border-b"
+              >
+                01. Personal Essence
+              </h3>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div>
-                <label class="label-text">Age</label>
-                <input type="number" name="age" required placeholder="Age" class="input-field">
-              </div>
-              <div>
-                <label class="label-text">Gender</label>
-                <select name="gender" class="input-field appearance-none" required>
-                  <option value="">Select</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Non-binary">Non-binary</option>
-                  <option value="Prefer not to say">Prefer not to say</option>
-                </select>
-              </div>
-              <div>
-                <label class="label-text">City</label>
-                <input type="text" name="city" required placeholder="City" class="input-field">
-              </div>
-            </div>
-
-            <div class="flex justify-end">
-              <button type="button" onclick="nextStep(2)" class="gradient-btn px-10 py-4 text-white font-bold rounded-xl flex items-center group transition-all">
-                Next Details <i class="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
-              </button>
-            </div>
-          </div>
-
-          <div id="step-2-content" class="form-step hidden">
-            <h3 class="text-2xl font-serif font-bold mb-8 flex items-center">
-              <span class="w-8 h-8 rounded-full bg-primary text-white text-sm flex items-center justify-center mr-3 font-sans">2</span>
-              Socials & Analytics
-            </h3>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div class="relative">
-                <label class="label-text">Instagram Handle</label>
-                <span class="absolute left-5 top-[3.25rem] text-gray-400">@</span>
-                <input type="text" name="instagram" placeholder="username" class="input-field pl-10">
-              </div>
-              <div>
-                <label class="label-text">Instagram Followers</label>
-                <input type="text" name="ig_followers" placeholder="e.g. 50k" class="input-field">
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div class="relative">
-                <label class="label-text">TikTok Handle</label>
-                <span class="absolute left-5 top-[3.25rem] text-gray-400">@</span>
-                <input type="text" name="tiktok" placeholder="username" class="input-field pl-10">
-              </div>
-              <div>
-                <label class="label-text">TikTok Followers</label>
-                <input type="text" name="tt_followers" placeholder="e.g. 100k" class="input-field">
-              </div>
-            </div>
-
-            <div class="mb-8">
-              <label class="label-text">Primary Niche / Category</label>
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <label class="cursor-pointer">
-                  <input type="checkbox" name="niche[]" value="Fashion" class="hidden peer">
-                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Fashion</div>
-                </label>
-                <label class="cursor-pointer">
-                  <input type="checkbox" name="niche[]" value="Beauty" class="hidden peer">
-                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Beauty</div>
-                </label>
-                <label class="cursor-pointer">
-                  <input type="checkbox" name="niche[]" value="Travel" class="hidden peer">
-                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Travel</div>
-                </label>
-                <label class="cursor-pointer">
-                  <input type="checkbox" name="niche[]" value="Lifestyle" class="hidden peer">
-                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Lifestyle</div>
-                </label>
-                <label class="cursor-pointer">
-                  <input type="checkbox" name="niche[]" value="Fitness" class="hidden peer">
-                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Fitness</div>
-                </label>
-                <label class="cursor-pointer">
-                  <input type="checkbox" name="niche[]" value="Tech" class="hidden peer">
-                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Tech</div>
-                </label>
-                <label class="cursor-pointer">
-                  <input type="checkbox" name="niche[]" value="Food" class="hidden peer">
-                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Food</div>
-                </label>
-                <label class="cursor-pointer">
-                  <input type="checkbox" name="niche[]" value="Luxury" class="hidden peer">
-                  <div class="px-4 py-3 rounded-lg border border-gray-200 text-center text-xs font-bold peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary transition-all">Luxury</div>
-                </label>
-              </div>
-            </div>
-
-            <div class="flex justify-between">
-              <button type="button" onclick="nextStep(1)" class="px-8 py-4 text-gray-400 font-bold text-sm uppercase tracking-widest hover:text-gray-600 transition-colors">
-                <i class="fas fa-chevron-left mr-2"></i> Back
-              </button>
-              <button type="button" onclick="nextStep(3)" class="gradient-btn px-10 py-4 text-white font-bold rounded-xl flex items-center group transition-all">
-                Next step <i class="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
-              </button>
-            </div>
-          </div>
-
-          <div id="step-3-content" class="form-step hidden">
-            <h3 class="text-2xl font-serif font-bold mb-8 flex items-center">
-              <span class="w-8 h-8 rounded-full bg-primary text-white text-sm flex items-center justify-center mr-3 font-sans">3</span>
-              Portfolio & Creative
-            </h3>
-
-            <div class="mb-8">
-              <label class="label-text">Brief Bio</label>
-              <textarea name="bio" rows="4" placeholder="Tell us about yourself and your content style..." class="input-field resize-none"></textarea>
-            </div>
-
-            <div class="mb-10">
-              <label class="label-text">Upload Portfolio (Min 3 Photos)</label>
-              <div class="file-upload-zone" id="dropzone">
-                <input type="file" name="portfolio[]" id="fileInput" multiple accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
-                <div id="upload-placeholder">
-                  <i class="fas fa-cloud-upload-alt text-4xl text-primary/30 mb-4"></i>
-                  <p class="text-gray-900 font-bold mb-1">Click or Drag images here</p>
-                  <p class="text-gray-400 text-xs uppercase tracking-widest">High quality JPG or PNG (Max 5MB each)</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label class="form-label"
+                    >First Name <span class="required">*</span></label
+                  >
+                  <input
+                    type="text"
+                    name="first_name"
+                    required
+                    data-parsley-group="step1"
+                    data-parsley-trigger="change"
+                    class="w-full form-input px-4 py-3.5 rounded-xl text-sm"
+                    placeholder="Enter first name"
+                  />
                 </div>
-                <div id="file-preview" class="grid grid-cols-3 md:grid-cols-6 gap-4 hidden mt-4"></div>
+                <div>
+                  <label class="form-label"
+                    >Last Name <span class="required">*</span></label
+                  >
+                  <input
+                    type="text"
+                    name="last_name"
+                    required
+                    data-parsley-group="step1"
+                    data-parsley-trigger="change"
+                    class="w-full form-input px-4 py-3.5 rounded-xl text-sm"
+                    placeholder="Enter last name"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label class="form-label"
+                    >Email Address <span class="required">*</span></label
+                  >
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    data-parsley-group="step1"
+                    data-parsley-trigger="change"
+                    class="w-full form-input px-4 py-3.5 rounded-xl text-sm"
+                    placeholder="your@email.com"
+                  />
+                </div>
+                <div>
+                  <label class="form-label"
+                    >Phone Number <span class="required">*</span></label
+                  >
+                  <input
+                    type="tel"
+                    name="phone"
+                    required
+                    data-parsley-group="step1"
+                    data-parsley-trigger="change"
+                    class="w-full form-input px-4 py-3.5 rounded-xl text-sm"
+                    placeholder="+1 (000) 000-0000"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div>
+                  <label class="form-label"
+                    >Age <span class="required">*</span></label
+                  >
+                  <input
+                    type="number"
+                    name="age"
+                    required
+                    min="12"
+                    data-parsley-group="step1"
+                    data-parsley-trigger="change"
+                    class="w-full form-input px-4 py-3.5 rounded-xl text-sm"
+                    placeholder="Years"
+                  />
+                </div>
+                <div>
+                  <label class="form-label"
+                    >Gender <span class="required">*</span></label
+                  >
+                  <select
+                    name="gender"
+                    required
+                    data-parsley-group="step1"
+                    class="w-full form-input px-4 py-3.5 rounded-xl text-sm bg-gray-50"
+                  >
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label"
+                    >City <span class="required">*</span></label
+                  >
+                  <input
+                    type="text"
+                    name="city"
+                    required
+                    data-parsley-group="step1"
+                    data-parsley-trigger="change"
+                    class="w-full form-input px-4 py-3.5 rounded-xl text-sm"
+                    placeholder="e.g. Toronto"
+                  />
+                </div>
+              </div>
+
+              <div class="flex justify-end pt-6 border-t border-gray-100">
+                <button
+                  type="button"
+                  onclick="validateAndNext(2)"
+                  class="px-10 py-4 bg-primary text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-black transition-all shadow-lg shadow-primary/20"
+                >
+                  Next Step <i class="fas fa-arrow-right ml-2"></i>
+                </button>
               </div>
             </div>
 
-            <div class="flex items-start mb-10">
-              <input type="checkbox" id="terms" required class="mt-1.5 rounded text-primary focus:ring-primary">
-              <label for="terms" class="ml-3 text-sm text-gray-500 leading-relaxed">
-                I agree to the <a href="privacy-policy.html" target="_blank" class="text-primary font-bold">Terms of Service</a> and allow M Models to process my data for recruitment purposes.
-              </label>
+            <!-- Step 2: Socials -->
+            <div id="step-2-content" class="form-step hidden">
+              <h3
+                class="font-serif text-2xl md:text-3xl font-bold text-gray-900 mb-8 pb-4 border-b"
+              >
+                02. Digital Footprint
+              </h3>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label class="form-label">Instagram Handle</label>
+                  <div class="relative">
+                    <span
+                      class="absolute left-4 top-1/2 -translate-y-1/2 text-primary font-bold"
+                      >@</span
+                    >
+                    <input
+                      type="text"
+                      name="instagram"
+                      data-parsley-trigger="change"
+                      class="w-full form-input pl-10 pr-4 py-3.5 rounded-xl text-sm"
+                      placeholder="username"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label class="form-label">IG Followers</label>
+                  <input
+                    type="text"
+                    name="ig_followers"
+                    class="w-full form-input px-4 py-3.5 rounded-xl text-sm"
+                    placeholder="e.g. 10.5K"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div>
+                  <label class="form-label">TikTok Handle</label>
+                  <div class="relative">
+                    <span
+                      class="absolute left-4 top-1/2 -translate-y-1/2 text-primary font-bold"
+                      >@</span
+                    >
+                    <input
+                      type="text"
+                      name="tiktok"
+                      data-parsley-trigger="change"
+                      class="w-full form-input pl-10 pr-4 py-3.5 rounded-xl text-sm"
+                      placeholder="username"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label class="form-label">TikTok Followers</label>
+                  <input
+                    type="text"
+                    name="tt_followers"
+                    class="w-full form-input px-4 py-3.5 rounded-xl text-sm"
+                    placeholder="e.g. 50K"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-10">
+                <label class="form-label mb-4"
+                  >Creative Categories <span class="required">*</span></label
+                >
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Fashion" class="niche-input hidden" required data-parsley-group="step2" data-parsley-mincheck="1" data-parsley-errors-container="#niche-errors">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Fashion</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Beauty" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Beauty</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Travel" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Travel</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Lifestyle" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Lifestyle</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Fitness" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Fitness</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Tech" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Tech</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Food" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Food</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Luxury" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Luxury</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Art" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Art</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Gaming" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Gaming</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Wellness" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Wellness</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Comedy" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Comedy</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Parenting" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Parenting</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Music" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Music</div>
+                  </label>
+                  <label class="cursor-pointer">
+                    <input type="checkbox" name="niche[]" value="Decor" class="niche-input hidden">
+                    <div class="niche-chip px-4 py-3.5 rounded-xl text-center text-[10px] font-black uppercase tracking-widest">Home Decor</div>
+                  </label>
+                </div>
+                <div id="niche-errors"></div>
+              </div>
+
+              <div class="flex justify-between pt-6 border-t border-gray-100">
+                <button
+                  type="button"
+                  onclick="nextStep(1)"
+                  class="px-8 py-4 text-gray-400 font-bold uppercase tracking-widest text-xs hover:text-gray-900 transition-colors"
+                >
+                  <i class="fas fa-chevron-left mr-2"></i> Previous
+                </button>
+                <button
+                  type="button"
+                  onclick="validateAndNext(3)"
+                  class="px-10 py-4 bg-primary text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-black transition-all shadow-lg shadow-primary/20"
+                >
+                  Next Step <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+              </div>
             </div>
 
-            <div class="flex justify-between">
-              <button type="button" onclick="nextStep(2)" class="px-8 py-4 text-gray-400 font-bold text-sm uppercase tracking-widest hover:text-gray-600 transition-colors">
-                <i class="fas fa-chevron-left mr-2"></i> Back
-              </button>
-              <button type="submit" id="submitBtn" class="gradient-btn px-12 py-5 text-white font-bold rounded-2xl flex items-center group transition-all">
-                Complete Registration <i class="fas fa-check-circle ml-3"></i>
-              </button>
+            <!-- Step 3: Portfolio -->
+            <div id="step-3-content" class="form-step hidden">
+              <h3
+                class="font-serif text-2xl md:text-3xl font-bold text-gray-900 mb-8 pb-4 border-b"
+              >
+                03. Creative Narrative
+              </h3>
+
+              <div class="mb-8">
+                <label class="form-label">Brief Bio / Style Description</label>
+                <textarea
+                  name="bio"
+                  rows="4"
+                  class="w-full form-input px-4 py-3.5 rounded-xl text-sm resize-none"
+                  placeholder="Tell us about your content journey..."
+                ></textarea>
+              </div>
+
+              <div class="mb-10">
+                <label class="form-label mb-4"
+                  >Portfolio Upload (Min 3 Photos)
+                  <span class="required">*</span></label
+                >
+                <div
+                  class="p-8 md:p-12 border-2 border-dashed border-gray-200 rounded-3xl bg-gray-50/50 text-center relative group"
+                >
+                  <input
+                    type="file"
+                    name="portfolio[]"
+                    id="fileInput"
+                    multiple
+                    accept="image/*"
+                    required
+                    data-parsley-group="step3"
+                    data-parsley-minfiles="3"
+                    data-parsley-errors-container="#file-errors"
+                    class="absolute inset-0 opacity-0 cursor-pointer z-10"
+                  />
+                  <div id="upload-placeholder">
+                    <div
+                      class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm border border-gray-100 group-hover:scale-110 transition-transform"
+                    >
+                      <i
+                        class="fas fa-cloud-upload-alt text-primary text-xl"
+                      ></i>
+                    </div>
+                    <p class="text-gray-900 font-bold mb-1">
+                      Drop your portfolio here
+                    </p>
+                    <p
+                      class="text-gray-400 text-[10px] uppercase tracking-widest"
+                    >
+                      JPG or PNG • Min 3 photos • (Hold Ctrl/Cmd to select multiple)
+                    </p>
+                  </div>
+                  <div
+                    id="file-preview"
+                    class="grid grid-cols-3 md:grid-cols-5 gap-3 hidden mt-10 relative z-20"
+                  ></div>
+                </div>
+                <div id="file-errors" class="mt-4"></div>
+              </div>
+
+              <div
+                class="flex items-start mb-10 p-5 bg-gray-50 rounded-2xl border border-gray-100"
+              >
+                <input
+                  type="checkbox"
+                  id="terms"
+                  required
+                  data-parsley-group="step3"
+                  class="mt-1.5 w-5 h-5 rounded text-primary focus:ring-primary border-gray-300 cursor-pointer"
+                />
+                <label
+                  for="terms"
+                  class="ml-4 text-xs text-gray-500 leading-relaxed cursor-pointer select-none"
+                >
+                  I agree to the
+                  <a
+                    href="privacy-policy.html"
+                    target="_blank"
+                    class="text-primary font-bold hover:underline"
+                    >Representational Terms</a
+                  >
+                  and allow M Models to process my application for scouting
+                  purposes.
+                </label>
+              </div>
+
+              <div class="flex justify-between pt-6 border-t border-gray-100">
+                <button
+                  type="button"
+                  onclick="nextStep(2)"
+                  class="px-8 py-4 text-gray-400 font-bold uppercase tracking-widest text-xs hover:text-gray-900 transition-colors"
+                >
+                  <i class="fas fa-chevron-left mr-2"></i> Previous
+                </button>
+                <button
+                  type="submit"
+                  id="submitBtn"
+                  class="px-12 py-4 bg-primary text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-black transition-all shadow-lg shadow-primary/20"
+                >
+                  Complete Registration <i class="fas fa-check-double ml-2"></i>
+                </button>
+              </div>
             </div>
-          </div>
+          </form>
 
-        </form>
-
-        <div id="success-msg" class="hidden glass-card rounded-[2.5rem] p-12 text-center">
-          <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-8">
-            <i class="fas fa-check text-4xl"></i>
+          <!-- Success Overlay -->
+          <div
+            id="success-msg"
+            class="hidden absolute inset-0 bg-white z-50 flex flex-col items-center justify-center text-center p-10"
+          >
+            <div
+              class="w-24 h-24 bg-green-100 text-green-500 rounded-full flex items-center justify-center mb-8 animate-bounce"
+            >
+              <i class="fas fa-check text-4xl"></i>
+            </div>
+            <h2
+              class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6 uppercase tracking-tight"
+            >
+              Success!
+            </h2>
+            <p
+              class="text-gray-500 text-lg mb-10 max-w-md font-medium leading-relaxed"
+            >
+              Your application has been received. Our scouts will review your
+              profile shortly. Check your email
+              <span id="confirm-email" class="text-primary font-bold"></span>
+              for confirmation.
+            </p>
+            <a
+              href="index.html"
+              class="px-10 py-4 bg-gray-900 text-white font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-black transition-all shadow-xl"
+            >
+              Back to Home
+            </a>
           </div>
-          <h2 class="font-serif text-4xl font-bold text-gray-900 mb-4">Application Sent!</h2>
-          <p class="text-gray-500 text-lg mb-10">Thank you for applying. We've sent a confirmation email to <span id="confirm-email" class="font-bold text-primary"></span>. Our team will review your profile shortly.</p>
-          <a href="index.html" class="inline-block px-10 py-4 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-all">Return Home</a>
         </div>
 
+        <div class="mt-12 text-center">
+          <p
+            class="text-[9px] font-black uppercase tracking-[0.4em] text-gray-300"
+          >
+            © 2026 M Models Global • Established 2026 • Premium Talent
+          </p>
+        </div>
       </div>
     </main>
 
-    <footer class="bg-white py-12 border-t border-gray-100">
-      <div class="max-w-7xl mx-auto px-4 text-center">
-        <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em]">© 2026 M Models Global • Premium Influencer Network</p>
-      </div>
-    </footer>
-
     <script>
       let currentStep = 1;
+      const $form = $("#influencerForm");
 
-      function nextStep(step) {
-        if (step > currentStep) {
-          const currentContent = $(`#step-${currentStep}-content`);
-          const inputs = currentContent.find('input[required], select[required]');
-          let valid = true;
-          
-          inputs.each(function() {
-            if (!$(this).val()) {
-              $(this).addClass('border-red-300 bg-red-50');
-              valid = false;
-            } else {
-              $(this).removeClass('border-red-300 bg-red-50');
-            }
-          });
+      // Initialize Parsley with global config
+      $form.parsley();
 
-          if (!valid) {
-            alert('Please fill in all required fields.');
-            return;
-          }
+      // Custom Parsley Validator for File Count
+      window.Parsley.addValidator("minfiles", {
+        validateString: function (value, requirement) {
+          const files = document.getElementById("fileInput").files;
+          return files && files.length >= parseInt(requirement);
+        },
+        messages: {
+          en: "Please select at least %s photos.",
+        },
+      });
+
+      function validateAndNext(step) {
+        // Use Parsley group validation
+        if ($form.parsley().validate({ group: "step" + currentStep })) {
+          nextStep(step);
         }
-
-        $(`.form-step`).addClass('hidden');
-        $(`#step-${step}-content`).removeClass('hidden');
-        
-        $(`.step-dot`).removeClass('active');
-        for(let i=1; i<=step; i++) {
-          $(`#dot-${i}`).addClass('active');
-        }
-
-        const progress = ((step - 1) / 2) * 100;
-        $('#progress-line').css('width', `${progress}%`);
-        
-        currentStep = step;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      $('#fileInput').on('change', function(e) {
+      function nextStep(step) {
+        // UI Indicator Update
+        if (step > currentStep) {
+          $(`#step-${currentStep}-indicator`)
+            .addClass("completed")
+            .removeClass("active");
+        } else {
+          $(`#step-${step}-indicator`)
+            .removeClass("completed")
+            .addClass("active");
+          $(`#step-${currentStep}-indicator`).removeClass("active");
+        }
+        $(`#step-${step}-indicator`).addClass("active");
+
+        // Page Switch
+        $(`.form-step`).addClass("hidden");
+        $(`#step-${step}-content`).removeClass("hidden");
+
+        currentStep = step;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // Preview logic
+      $("#fileInput").on("change", function (e) {
         const files = e.target.files;
-        const preview = $('#file-preview');
-        const placeholder = $('#upload-placeholder');
+        const preview = $("#file-preview");
+        const placeholder = $("#upload-placeholder");
+
+        preview.empty();
         
-        preview.empty().removeClass('hidden');
-        placeholder.addClass('opacity-30');
+        if (files.length > 0) {
+          preview.removeClass("hidden");
+          placeholder.addClass("hidden"); // Fully hide placeholder when images exist
+        } else {
+          preview.addClass("hidden");
+          placeholder.removeClass("hidden");
+        }
 
         for (let i = 0; i < files.length; i++) {
           const reader = new FileReader();
-          reader.onload = function(event) {
-            const img = `<div class="aspect-square rounded-lg overflow-hidden border border-gray-200 bg-white">
+          reader.onload = function (event) {
+            const img = `<div class="aspect-square rounded-2xl overflow-hidden border-2 border-white shadow-md relative group">
               <img src="${event.target.result}" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>`;
             preview.append(img);
           };
           reader.readAsDataURL(files[i]);
         }
+        
+        // Re-validate field on change
+        $(this).parsley().validate();
       });
 
-      $('#influencerForm').on('submit', function(e) {
+      // Handle Ajax Submit
+      $form.on("submit", function (e) {
         e.preventDefault();
-        
-        if (!$('#terms').is(':checked')) {
-          alert('Please agree to the terms.');
-          return;
+
+        if ($form.parsley().isValid()) {
+          const btn = $("#submitBtn");
+          const originalText = btn.html();
+          btn
+            .prop("disabled", true)
+            .html(
+              '<i class="fas fa-circle-notch fa-spin mr-3"></i> Syncing...',
+            );
+
+          const formData = new FormData(this);
+          const email = $('input[name="email"]').val();
+
+          $.ajax({
+            url: "process-form.php",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+              if (response.status === "success") {
+                $("#confirm-email").text(email);
+                $("#success-msg").removeClass("hidden").fadeIn();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              } else {
+                alert("System Error: " + response.message);
+                btn.prop("disabled", false).html(originalText);
+              }
+            },
+            error: function () {
+              alert("Connection failed. Please try again.");
+              btn.prop("disabled", false).html(originalText);
+            },
+          });
         }
-
-        const btn = $('#submitBtn');
-        const originalText = btn.html();
-        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-2"></i> Processing...');
-
-        const formData = new FormData(this);
-        const email = $('input[name="email"]').val();
-
-        $.ajax({
-          url: 'process-form.php',
-          type: 'POST',
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function(response) {
-            if (response.status === 'success') {
-              $('#influencerForm').fadeOut(400, function() {
-                $('#confirm-email').text(email);
-                $('#success-msg').removeClass('hidden').fadeIn();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              });
-            } else {
-              alert('Error: ' + response.message);
-              btn.prop('disabled', false).html(originalText);
-            }
-          },
-          error: function() {
-            alert('Something went wrong. Please try again.');
-            btn.prop('disabled', false).html(originalText);
-          }
-        });
       });
     </script>
   </body>

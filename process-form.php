@@ -137,14 +137,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Add metadata
     $row = [$timestamp, $form_type];
     foreach ($data as $key => $value) {
-        // Handle arrays (e.g., multi-select or checkboxes)
         if (is_array($value)) {
-            $value = implode('; ', $value);
-        }
-        if (is_string($value) && strpos($value, 'data:') === 0 && strpos($value, ';base64,') !== false) {
-            $row[] = $value;
+            $row[] = implode(', ', $value);
+        } elseif (is_string($value) && strpos($value, 'data:') === 0 && strpos($value, ';base64,') !== false) {
+            $row[] = "[Base64 Image]";
         } else {
-            $row[] = str_replace(["\r", "\n", ","], [" ", " ", ";"], $value);
+            $row[] = str_replace(["\r", "\n", ","], [" ", " ", ";"], (string)$value);
         }
     }
 
@@ -187,7 +185,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $details_html = "";
     foreach ($data as $key => $value) {
         $label = ucwords(str_replace('_', ' ', $key));
-        if (is_string($value) && strpos($value, 'data:') === 0 && strpos($value, ';base64,') !== false) {
+        if (is_array($value)) {
+            $value = implode(', ', $value);
+        } elseif (is_string($value) && strpos($value, 'data:') === 0 && strpos($value, ';base64,') !== false) {
             $value = "<em>[File Attached]</em>";
         }
         $details_html .= "<tr>

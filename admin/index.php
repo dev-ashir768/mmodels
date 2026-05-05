@@ -142,10 +142,11 @@ try {
     $today_submissions = $pdo->query("SELECT COUNT(*) FROM submissions WHERE DATE(timestamp) = '$current_date'")->fetchColumn();
 
     foreach ($forms as $key => $title) {
+        $headers = ['Timestamp', 'Form Type'];
         $data = [];
-        $headers = ['Timestamp', 'Form Type']; // Default headers
 
-        // Fetch submissions for this form type
+        $tabId = preg_replace('/[^a-zA-Z0-9]/', '_', $key); // Sanitize ID for JS/HTML
+
         $stmt = $pdo->prepare("SELECT * FROM submissions WHERE form_type = ? ORDER BY timestamp DESC");
         $stmt->execute([$key]);
         $rows = $stmt->fetchAll();
@@ -165,7 +166,7 @@ try {
 
             // Construct the row for the UI
             $ui_row = [$row['timestamp'], $row['form_type']];
-            
+
             // Add a special header for attachments if they exist
             if (!empty($row['attachments'])) {
                 if (!in_array('Attachments', $headers)) {
@@ -177,6 +178,7 @@ try {
         }
 
         $all_data[$key] = [
+            'tabId' => $tabId,
             'title' => $title,
             'headers' => $headers,
             'data' => $data,
@@ -259,7 +261,8 @@ try {
 <body class="flex min-h-screen relative">
 
     <!-- Mobile Menu Toggle -->
-    <button id="mobile-toggle" class="lg:hidden fixed bottom-6 right-6 z-[100] w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center text-xl">
+    <button id="mobile-toggle"
+        class="lg:hidden fixed bottom-6 right-6 z-[100] w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center text-xl">
         <i class="fas fa-bars"></i>
     </button>
 
@@ -332,7 +335,7 @@ try {
                             <div class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-400">Choose
                                 Form Type</div>
                             <?php foreach ($all_data as $key => $dataset): ?>
-                                <a href="export.php?type=<?php echo $key; ?>" 
+                                <a href="export.php?type=<?php echo $key; ?>"
                                     class="flex items-center justify-between px-4 py-3 text-sm text-gray-600 hover:bg-primary/5 hover:text-primary rounded-xl transition">
                                     <span><?php echo $dataset['title']; ?></span>
                                     <i class="fas fa-file-csv opacity-30 text-xs"></i>
@@ -382,7 +385,8 @@ try {
 
         <div class="flex gap-4 mb-6 border-b border-gray-200 overflow-x-auto pb-2 shrink-0">
             <?php foreach ($all_data as $key => $dataset): ?>
-                <button onclick="switchTab('<?php echo $key; ?>')" id="tab_btn_<?php echo $key; ?>"
+                <button onclick="switchTab('<?php echo $dataset['tabId']; ?>')"
+                    id="tab_btn_<?php echo $dataset['tabId']; ?>"
                     class="tab-btn px-6 py-3 font-semibold text-sm rounded-t-xl transition-all border-b-2 border-transparent text-gray-500 hover:text-primary whitespace-nowrap">
                     <?php echo $dataset['title']; ?> <span
                         class="ml-2 px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full text-xs"><?php echo count($dataset['data']); ?></span>
@@ -391,12 +395,14 @@ try {
         </div>
 
         <!-- Table Card -->
-        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex-1 flex flex-col min-h-[500px]">
+        <div
+            class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex-1 flex flex-col min-h-[500px]">
             <div class="p-4 md:p-8 overflow-x-auto flex-1 relative">
                 <?php foreach ($all_data as $key => $dataset): ?>
-                    <div id="tab_content_<?php echo $key; ?>" class="tab-content hidden h-full flex flex-col">
+                    <div id="tab_content_<?php echo $dataset['tabId']; ?>" class="tab-content hidden h-full flex flex-col">
                         <div class="overflow-x-auto">
-                            <table id="submissionsTable_<?php echo $key; ?>" class="w-full text-sm min-w-[1500px]">
+                            <table id="submissionsTable_<?php echo $dataset['tabId']; ?>"
+                                class="w-full text-sm min-w-[1500px]">
                                 <thead class="text-gray-400 uppercase text-[10px] font-bold tracking-[0.2em] bg-gray-50/50">
                                     <tr>
                                         <?php
@@ -445,7 +451,7 @@ try {
                                                             $filename = basename($path);
                                                             $is_img = preg_match('/\.(jpg|jpeg|png|gif|webp)$/i', $path);
                                                             $full_path = '/' . $path; // Web accessible path
-                                                            
+                                
                                                             if ($is_img) {
                                                                 echo "<a href='$full_path' target='_blank' class='w-12 h-12 block group relative'>
                                                                         <img src='$full_path' class='w-full h-full object-cover rounded-lg border border-gray-100 shadow-sm transition-all group-hover:ring-2 group-hover:ring-primary/30'>
@@ -608,8 +614,8 @@ try {
             });
 
             <?php foreach ($all_data as $key => $dataset): ?>
-                if ($('#submissionsTable_<?php echo $key; ?> tbody tr').length > 0) {
-                    tables['<?php echo $key; ?>'] = $('#submissionsTable_<?php echo $key; ?>').DataTable({
+                if ($('#submissionsTable_<?php echo $dataset['tabId']; ?> tbody tr').length > 0) {
+                    tables['<?php echo $dataset['tabId']; ?>'] = $('#submissionsTable_<?php echo $dataset['tabId']; ?>').DataTable({
                         order: [[0, 'desc']],
                         pageLength: 10,
                         bAutoWidth: false,
@@ -630,7 +636,7 @@ try {
             <?php endforeach; ?>
 
             // Open 'Influencer Registration' tab by default
-            switchTab('Influencer Registration');
+            switchTab('Influencer_Registration');
 
             // Mobile Sidebar Toggle
             const mobileToggle = $('#mobile-toggle');
@@ -649,7 +655,7 @@ try {
             overlay.on('click', toggleMobileMenu);
 
             // Close sidebar on tab switch on mobile
-            $('.side-btn').on('click', function() {
+            $('.side-btn').on('click', function () {
                 if ($(window).width() < 1024) {
                     toggleMobileMenu();
                 }
