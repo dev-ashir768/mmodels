@@ -647,8 +647,7 @@
       // Custom Parsley Validator for File Count
       window.Parsley.addValidator("minfiles", {
         validateString: function (value, requirement) {
-          const files = document.getElementById("fileInput").files;
-          return files && files.length >= parseInt(requirement);
+          return selectedFiles.length >= parseInt(requirement);
         },
         messages: {
           en: "Please select at least %s photos.",
@@ -684,37 +683,63 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
-      // Preview logic
+      // Incremental Portfolio Upload Logic
+      let selectedFiles = [];
+
       $("#fileInput").on("change", function (e) {
-        const files = e.target.files;
+        const files = Array.from(e.target.files);
         const preview = $("#file-preview");
         const placeholder = $("#upload-placeholder");
 
+        // Add new files to the array
+        files.forEach((file) => {
+          // Prevent duplicates by name and size
+          if (!selectedFiles.some((f) => f.name === file.name && f.size === file.size)) {
+            selectedFiles.push(file);
+          }
+        });
+
+        renderPreviews();
+        
+        // Re-validate field
+        $("#fileInput").parsley().validate();
+      });
+
+      function renderPreviews() {
+        const preview = $("#file-preview");
+        const placeholder = $("#upload-placeholder");
+        
         preview.empty();
         
-        if (files.length > 0) {
+        if (selectedFiles.length > 0) {
           preview.removeClass("hidden");
-          placeholder.addClass("hidden"); // Fully hide placeholder when images exist
+          placeholder.addClass("hidden");
         } else {
           preview.addClass("hidden");
           placeholder.removeClass("hidden");
         }
 
-        for (let i = 0; i < files.length; i++) {
+        selectedFiles.forEach((file, index) => {
           const reader = new FileReader();
           reader.onload = function (event) {
-            const img = `<div class="aspect-square rounded-2xl overflow-hidden border-2 border-white shadow-md relative group">
-              <img src="${event.target.result}" class="w-full h-full object-cover">
-              <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            </div>`;
-            preview.append(img);
+            const imgHtml = `
+              <div class="aspect-square rounded-2xl overflow-hidden border-2 border-white shadow-md relative group">
+                <img src="${event.target.result}" class="w-full h-full object-cover">
+                <button type="button" onclick="removeFile(${index})" class="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <i class="fas fa-times text-[10px]"></i>
+                </button>
+              </div>`;
+            preview.append(imgHtml);
           };
-          reader.readAsDataURL(files[i]);
-        }
-        
-        // Re-validate field on change
-        $(this).parsley().validate();
-      });
+          reader.readAsDataURL(file);
+        });
+      }
+
+      window.removeFile = function(index) {
+        selectedFiles.splice(index, 1);
+        renderPreviews();
+        $("#fileInput").parsley().validate();
+      };
 
       // Handle Ajax Submit
       $form.on("submit", function (e) {
@@ -731,6 +756,12 @@
 
           const formData = new FormData(this);
           const email = $('input[name="email"]').val();
+
+          // Important: Remove original portfolio field and add our incremental files
+          formData.delete('portfolio[]');
+          selectedFiles.forEach((file) => {
+            formData.append('portfolio[]', file);
+          });
 
           $.ajax({
             url: "process-form.php",

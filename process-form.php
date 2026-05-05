@@ -30,8 +30,8 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
         $mail->SMTPAuth   = true;
         $mail->Username   = $smtp_user;
         $mail->Password   = $smtp_pass;
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port       = 587;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Use SSL
+        $mail->Port       = 465; // Port for SSL
 
         $mail->setFrom($smtp_user, $from_name);
         $mail->addAddress($to);
@@ -63,7 +63,7 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
         $mail->send();
         return true;
     } catch (Exception $e) {
-        error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+        error_log("Email could not be sent. Mailer Error: {$mail->ErrorInfo}");
         return false;
     }
 }
@@ -147,21 +147,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Set dynamic CSV file based on form type
-    $csv_file = "data/submissions_" . preg_replace('/[^a-zA-Z0-9_]/', '', strtolower($form_type)) . ".csv";
+    $sanitized_type = preg_replace('/[^a-zA-Z0-9_]/', '', strtolower($form_type));
+    $csv_file = __DIR__ . "/data/submissions_" . $sanitized_type . ".csv";
+
+    // Ensure data directory exists (just in case)
+    if (!is_dir(__DIR__ . '/data')) {
+        mkdir(__DIR__ . '/data', 0755, true);
+    }
 
     // Save to CSV
+    $is_new_file = !file_exists($csv_file);
     $file_handle = fopen($csv_file, 'a');
+    
     if ($file_handle) {
-        // If file is empty, add headers first
-        if (filesize($csv_file) === 0) {
+        // If file is new, add headers first
+        if ($is_new_file) {
             $headers = ['Timestamp', 'Form Type'];
             foreach ($data as $key => $value) {
                 $headers[] = ucwords(str_replace('_', ' ', $key));
             }
             fputcsv($file_handle, $headers);
         }
+        
         fputcsv($file_handle, $row);
+        fflush($file_handle);
         fclose($file_handle);
+        chmod($csv_file, 0644); // Ensure it's readable
+    } else {
+        error_log("Failed to open CSV file for writing: " . $csv_file);
     }
 
     // Save to Database
@@ -233,7 +246,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </table>
     </body>";
 
-    sendEmail($admin_email, $admin_subject, $admin_email_content, 'M Models System', $_FILES);
+    // 1. Admin Notification Email
+    $admin_subject = "New " . ucwords($form_type) . " Application: " . ($data['first_name'] ?? 'Talent');
+    
+    // We send to admin_email. If it fails, it might be due to attachment size.
+    $email_sent = sendEmail($admin_email, $admin_subject, $admin_email_content, 'M Models System', $_FILES);
+    
+    if (!$email_sent) {
+        // Retry without attachments if it failed (likely size issue)
+        sendEmail($admin_email, "[SIZE LIMIT] " . $admin_subject, $admin_email_content . "<p><strong>Note:</strong> Attachments were too large to email. Please check the admin panel.</p>", 'M Models System');
+    }
 
     // 2. Applicant Greeting Email
     $applicant_email = $_POST['email'] ?? '';
