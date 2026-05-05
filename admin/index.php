@@ -130,6 +130,46 @@ if (isset($_POST['delete_id'])) {
 }
 
 
+// News Management Logic
+if (isset($_POST['action'])) {
+    if ($_POST['action'] === 'add_news') {
+        $title = $_POST['news_title'];
+        $content = $_POST['news_content'];
+        $category = $_POST['news_category'];
+        $date = $_POST['news_date'];
+        
+        $stmt = $pdo->prepare("INSERT INTO news (title, content, category, news_date) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$title, $content, $category, $date]);
+        header('Location: index.php?tab=news');
+        exit;
+    }
+    
+    if ($_POST['action'] === 'edit_news') {
+        $id = (int)$_POST['news_id'];
+        $title = $_POST['news_title'];
+        $content = $_POST['news_content'];
+        $category = $_POST['news_category'];
+        $date = $_POST['news_date'];
+        
+        $stmt = $pdo->prepare("UPDATE news SET title = ?, content = ?, category = ?, news_date = ? WHERE id = ?");
+        $stmt->execute([$title, $content, $category, $date, $id]);
+        header('Location: index.php?tab=news');
+        exit;
+    }
+    
+    if ($_POST['action'] === 'delete_news') {
+        $id = (int)$_POST['news_id'];
+        $stmt = $pdo->prepare("DELETE FROM news WHERE id = ?");
+        $stmt->execute([$id]);
+        header('Location: index.php?tab=news');
+        exit;
+    }
+}
+
+// Fetch News Data
+$news_articles = $pdo->query("SELECT * FROM news ORDER BY news_date DESC")->fetchAll();
+
+
 // Data Processing - Fetch from Database
 $all_data = [];
 $total_submissions = 0;
@@ -293,9 +333,13 @@ try {
                     <span class="text-sm font-semibold"><?php echo $dataset['title']; ?></span>
                 </a>
             <?php endforeach; ?>
-        </nav>
-
-        <div class="p-6 border-t border-white/10">
+            <div class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-500 opacity-50 mt-4">Management</div>
+            <a href="javascript:void(0)" onclick="switchTab('news')" id="side_btn_news"
+                class="side-btn flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
+                <i class="fas fa-newspaper w-5"></i>
+                <span class="text-sm font-semibold">News Management</span>
+            </a>
+        </nav>        <div class="p-6 border-t border-white/10">
             <a href="?logout=1"
                 class="flex items-center space-x-3 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-xl transition">
                 <i class="fas fa-sign-out-alt w-5"></i>
@@ -534,6 +578,69 @@ try {
                         </div>
                     </div>
                 <?php endforeach; ?>
+
+                <!-- News Management Tab -->
+                <div id="tab_content_news" class="tab-content hidden h-full flex flex-col p-8">
+                    <div class="flex justify-between items-center mb-8">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900">News Articles</h2>
+                            <p class="text-sm text-gray-500">Manage articles appearing on the news page</p>
+                        </div>
+                        <a href="news-editor.php" class="bg-primary text-white px-6 py-3 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-black transition shadow-lg shadow-[#C50A76]/20 flex items-center gap-2">
+                            <i class="fas fa-plus"></i> Add Article
+                        </a>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table id="newsTable" class="w-full text-sm min-w-[1000px]">
+                            <thead class="text-gray-400 uppercase text-[10px] font-bold tracking-[0.2em] bg-gray-50/50">
+                                <tr>
+                                    <th class="px-6 py-5 text-left">Date</th>
+                                    <th class="px-6 py-5 text-left">Title</th>
+                                    <th class="px-6 py-5 text-left">Category</th>
+                                    <th class="px-6 py-5 text-left">Status</th>
+                                    <th class="px-6 py-5 text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <?php foreach ($news_articles as $article): ?>
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="px-6 py-4 font-medium text-gray-700"><?php echo date('M d, Y', strtotime($article['news_date'])); ?></td>
+                                        <td class="px-6 py-4 font-bold text-gray-900"><?php echo htmlspecialchars($article['title']); ?></td>
+                                        <td class="px-6 py-4">
+                                            <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-[10px] font-bold uppercase tracking-tighter">
+                                                <?php echo htmlspecialchars($article['category']); ?>
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="px-3 py-1 bg-green-50 text-green-600 rounded-full text-[10px] font-bold uppercase tracking-tighter">
+                                                <?php echo $article['status']; ?>
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex justify-center gap-2">
+                                                <a href="news-editor.php?id=<?php echo $article['id']; ?>" class="w-8 h-8 flex items-center justify-center rounded-lg bg-blue-50 text-blue-400 hover:bg-blue-500 hover:text-white transition-all shadow-sm">
+                                                    <i class="fas fa-edit text-xs"></i>
+                                                </a>
+                                                <form method="POST" id="deleteNews_<?php echo $article['id']; ?>" class="inline">
+                                                    <input type="hidden" name="action" value="delete_news">
+                                                    <input type="hidden" name="news_id" value="<?php echo $article['id']; ?>">
+                                                    <button type="button" onclick="confirmDelete('deleteNews_<?php echo $article['id']; ?>')" class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-50 text-red-400 hover:bg-red-500 hover:text-white transition-all shadow-sm">
+                                                        <i class="fas fa-trash-alt text-xs"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
             </div>
         </div>
     </main>
@@ -559,6 +666,8 @@ try {
             })
         }
 
+        // News Modal Functions - REMOVED for separate page editor
+
         function switchTab(tabId) {
             $('.tab-content').addClass('hidden');
             $('#tab_content_' + tabId).removeClass('hidden');
@@ -571,25 +680,42 @@ try {
             $('.side-btn').removeClass('bg-white/10 text-white').addClass('text-gray-400 hover:text-white hover:bg-white/5');
             $('#side_btn_' + tabId).addClass('bg-white/10 text-white').removeClass('text-gray-400 hover:text-white hover:bg-white/5');
 
-            // Adjust datatables column width since they might be hidden initially
+            // Adjust datatables column width
             setTimeout(function () {
                 $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
             }, 10);
+            
+            // Update URL for persistence if needed
+            const url = new URL(window.location);
+            url.searchParams.set('tab', tabId);
+            window.history.pushState({}, '', url);
         }
 
         $(document).ready(function () {
             let tables = {};
 
+            // Initialize News Table
+            tables['news'] = $('#newsTable').DataTable({
+                order: [[0, 'desc']],
+                pageLength: 10,
+                dom: '<"flex justify-between mb-4"f>rtip',
+                language: { search: "", searchPlaceholder: "Search news articles..." }
+            });
+
+            // Date picker for news
+            flatpickr("#news_date_picker", { dateFormat: "Y-m-d" });
+
             // Custom DataTable filtering for Date Range
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
+                    if (settings.nTable.id !== 'submissionsTable') return true; // Only apply to submissions
                     var range = $('#dateFilter').val();
                     if (!range || !range.includes(' to ')) return true;
 
                     var dates = range.split(' to ');
                     var min = moment(dates[0], 'Y-m-d');
                     var max = moment(dates[1], 'Y-m-d');
-                    var dateStr = data[0].split(' ')[0]; // Assuming first column is "YYYY-MM-DD HH:MM:SS"
+                    var dateStr = data[0].split(' ')[0]; 
                     var current = moment(dateStr, 'Y-m-d');
 
                     if (
@@ -602,7 +728,7 @@ try {
                 }
             );
 
-            // Initialize Flatpickr
+            // Initialize Flatpickr for filter
             flatpickr("#dateFilter", {
                 mode: "range",
                 dateFormat: "Y-m-d",
@@ -635,8 +761,10 @@ try {
                 }
             <?php endforeach; ?>
 
-            // Open 'Influencer Registration' tab by default
-            switchTab('Influencer_Registration');
+            // Open correct tab from URL or default
+            const urlParams = new URLSearchParams(window.location.search);
+            const activeTab = urlParams.get('tab') || 'Influencer_Registration';
+            switchTab(activeTab);
 
             // Mobile Sidebar Toggle
             const mobileToggle = $('#mobile-toggle');
@@ -654,7 +782,6 @@ try {
             closeSidebar.on('click', toggleMobileMenu);
             overlay.on('click', toggleMobileMenu);
 
-            // Close sidebar on tab switch on mobile
             $('.side-btn').on('click', function () {
                 if ($(window).width() < 1024) {
                     toggleMobileMenu();
