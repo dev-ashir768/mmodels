@@ -19,28 +19,68 @@ const i18nDict = {
   Showcase: { fr: "Vitrine", ja: "ショーケース" },
   Influencers: { fr: "Influenceurs", ja: "インフルエンサー" },
   "General Apply": { fr: "Postulation Générale", ja: "一般応募" },
+  "Influencer Registeration": {
+    fr: "Inscription Influenceur",
+    ja: "インフルエンサー登録",
+  },
   Information: { fr: "Informations", ja: "情報" },
   "FAQ's": { fr: "FAQ", ja: "よくある質問" },
   "Contact Us": { fr: "Contactez-nous", ja: "お問い合わせ" },
-  "Explore Portfolio": { fr: "Explorer le Portfolio", ja: "ポートフォリオを見る" },
+  "Explore Portfolio": {
+    fr: "Explorer le Portfolio",
+    ja: "ポートフォリオを見る",
+  },
   "Join & Booking": { fr: "Inscription & Réservation", ja: "応募・予約" },
-  "Campaign Highlights": { fr: "Points Forts des Campagnes", ja: "キャンペーンのハイライト" },
+  "Campaign Highlights": {
+    fr: "Points Forts des Campagnes",
+    ja: "キャンペーンのハイライト",
+  },
   "Latest Reels": { fr: "Derniers Reels", ja: "最新のリール" },
-  "Follow on Instagram": { fr: "Suivre sur Instagram", ja: "Instagramをフォロー" },
-  "About M Models & Talent Agency": { fr: "À propos de l'Agence M Models & Talent", ja: "M Models & Talent Agencyについて" },
-  "About M Models & Talent Agency - Toronto": { fr: "À propos de l'Agence M Models & Talent - Toronto", ja: "M Models & Talent Agencyについて - トロント" },
-  "About M Models & Talent Agency - Vancouver": { fr: "À propos de l'Agence M Models & Talent - Vancouver", ja: "M Models & Talent Agencyについて - バンクーバー" },
-  "About M Models & Talent Agency - Calgary": { fr: "À propos de l'Agence M Models & Talent - Calgary", ja: "M Models & Talent Agencyについて - カルガリー" },
-  "About M Models & Talent Agency - Japan": { fr: "À propos de l'Agence M Models & Talent - Japon", ja: "M Models & Talent Agencyについて - 日本" },
-  "Toronto": { fr: "Toronto", ja: "トロント" },
-  "Vancouver": { fr: "Vancouver", ja: "バンクーバー" },
-  "Calgary": { fr: "Calgary", ja: "カルガリー" },
-  "© 2026 M Models Global. All rights reserved.": { fr: "© 2026 M Models Global. Tous droits réservés.", ja: "© 2026 M Models Global. 全著作権所有。" },
-  "Privacy Policy": { fr: "Politique de Confidentialité", ja: "個人情報保護方針" },
-  "© 2026 M Models Global. All rights reserved. •": { fr: "© 2026 M Models Global. Tous droits réservés. •", ja: "© 2026 M Models Global. 全著作権所有。 •" },
+  "Follow on Instagram": {
+    fr: "Suivre sur Instagram",
+    ja: "Instagramをフォロー",
+  },
+  "About M Models & Talent Agency": {
+    fr: "À propos de l'Agence M Models & Talent",
+    ja: "M Models & Talent Agencyについて",
+  },
+  "About M Models & Talent Agency - Toronto": {
+    fr: "À propos de l'Agence M Models & Talent - Toronto",
+    ja: "M Models & Talent Agencyについて - トロント",
+  },
+  "About M Models & Talent Agency - Vancouver": {
+    fr: "À propos de l'Agence M Models & Talent - Vancouver",
+    ja: "M Models & Talent Agencyについて - バンクーバー",
+  },
+  "About M Models & Talent Agency - Calgary": {
+    fr: "À propos de l'Agence M Models & Talent - Calgary",
+    ja: "M Models & Talent Agencyについて - カルガリー",
+  },
+  "About M Models & Talent Agency - Japan": {
+    fr: "À propos de l'Agence M Models & Talent - Japon",
+    ja: "M Models & Talent Agencyについて - 日本",
+  },
+  Toronto: { fr: "Toronto", ja: "トロント" },
+  Vancouver: { fr: "Vancouver", ja: "バンクーバー" },
+  Calgary: { fr: "Calgary", ja: "カルガリー" },
+  "© 2026 M Models Global. All rights reserved.": {
+    fr: "© 2026 M Models Global. Tous droits réservés.",
+    ja: "© 2026 M Models Global. 全著作権所有。",
+  },
+  "Privacy Policy": {
+    fr: "Politique de Confidentialité",
+    ja: "個人情報保護方針",
+  },
+  "© 2026 M Models Global. All rights reserved. •": {
+    fr: "© 2026 M Models Global. Tous droits réservés. •",
+    ja: "© 2026 M Models Global. 全著作権所有。 •",
+  },
   "Trusted By": { fr: "Approuvé par", ja: "信頼の実績" },
   "Our Clients": { fr: "Nos Clients", ja: "取引先" },
-  "View All Clients": { fr: "Voir tous les clients", ja: "すべてのクライアントを見る" },
+  "View All Clients": {
+    fr: "Voir tous les clients",
+    ja: "すべてのクライアントを見る",
+  },
 
   // Index
   Toronto: { fr: "Toronto", ja: "トロント" },
