@@ -111,6 +111,12 @@
         border-color: #c50a76;
       }
 
+      .video-card iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
       .talent-info {
         padding: 1.5rem 1.25rem;
         background: white;
@@ -198,10 +204,10 @@
         box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
       }
 
-      #modalVideo {
+      #modalIframe {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        border: none;
       }
 
       .close-modal {
@@ -464,415 +470,338 @@
     <section class="py-24 bg-white relative z-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-10">
-          <!-- Serena Savoia -->
-          <div class="video-card group">
-            <!-- <div class="floating-label">Discovery</div> -->
+          <!-- Video 1 -->
+          <div class="video-card group" data-video-id="ZXBlmpK6vSE">
             <div class="video-container">
-              <video
-                class="talent-video"
-                playsinline
-                muted
-                loop
-                autoplay
-                preload="auto"
-              >
-                <source
-                  src="/assets/talent-introduction/serena-savoia.mov"
-                  type="video/mp4"
-                />
-                <source
-                  src="/assets/talent-introduction/serena-savoia.mov"
-                  type="video/quicktime"
-                />
-              </video>
+              <img
+                src="https://img.youtube.com/vi/ZXBlmpK6vSE/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
               <div class="video-overlay">
                 <div class="play-btn">
                   <i class="fa-solid fa-play ml-1"></i>
                 </div>
-              </div>
-            </div>
-            <div class="talent-info text-center">
-              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
-                Serena Savoia
-              </h3>
-              <p
-                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80 mb-3"
-              >
-                Talent Introduction
-              </p>
-              <div class="hidden">
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Introducing</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Emerging Model</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Fashion Talent</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >New Faces</span
-                >
               </div>
             </div>
           </div>
 
-          <!-- Seriah -->
-          <div class="video-card group">
+          <!-- Video 2 -->
+          <div class="video-card group" data-video-id="IvnZayZrUXQ">
             <div class="video-container">
-              <video
-                class="talent-video"
-                playsinline
-                muted
-                loop
-                autoplay
-                preload="auto"
-              >
-                <source
-                  src="/assets/talent-introduction/seriah.mov"
-                  type="video/mp4"
-                />
-                <source
-                  src="/assets/talent-introduction/seriah.mov"
-                  type="video/quicktime"
-                />
-              </video>
+              <img
+                src="https://img.youtube.com/vi/IvnZayZrUXQ/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
               <div class="video-overlay">
                 <div class="play-btn">
                   <i class="fa-solid fa-play ml-1"></i>
                 </div>
-              </div>
-            </div>
-            <div class="talent-info text-center">
-              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
-                Seriah
-              </h3>
-              <p
-                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80 mb-3"
-              >
-                Talent Introduction
-              </p>
-              <div class="hidden">
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Talent Spotlight</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Creative Artist</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Behind the Scenes</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Rising Talent</span
-                >
               </div>
             </div>
           </div>
 
-          <!--  Eyael Fikadu -->
-          <div class="video-card group">
+          <!-- Video 3 -->
+          <div class="video-card group" data-video-id="zNwU4dBecSI">
             <div class="video-container">
-              <video
-                class="talent-video"
-                playsinline
-                muted
-                loop
-                autoplay
-                preload="auto"
-              >
-                <source
-                  src="/assets/talent-introduction/eyael-fikadu.mp4"
-                  type="video/mp4"
-                />
-                <source
-                  src="/assets/talent-introduction/eyael-fikadu.mp4"
-                  type="video/quicktime"
-                />
-              </video>
+              <img
+                src="https://img.youtube.com/vi/zNwU4dBecSI/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
               <div class="video-overlay">
                 <div class="play-btn">
                   <i class="fa-solid fa-play ml-1"></i>
                 </div>
-              </div>
-            </div>
-            <div class="talent-info text-center">
-              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
-                Eyael Fikadu
-              </h3>
-              <p
-                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80 mb-3"
-              >
-                Talent Introduction
-              </p>
-              <div class="hidden">
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Editorial Shoot</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >M Models & Talent</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Emerging Models</span
-                >
               </div>
             </div>
           </div>
 
-          <!--  Deborah -->
-          <div class="video-card group">
+          <!-- Video 4 -->
+          <div class="video-card group" data-video-id="FYFnKxlva4Y">
             <div class="video-container">
-              <video
-                class="talent-video"
-                playsinline
-                muted
-                loop
-                autoplay
-                preload="auto"
-              >
-                <source
-                  src="/assets/talent-introduction/deborah.MOV"
-                  type="video/mp4"
-                />
-                <source
-                  src="/assets/talent-introduction/deborah.MOV"
-                  type="video/quicktime"
-                />
-              </video>
+              <img
+                src="https://img.youtube.com/vi/FYFnKxlva4Y/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
               <div class="video-overlay">
                 <div class="play-btn">
                   <i class="fa-solid fa-play ml-1"></i>
                 </div>
-              </div>
-            </div>
-            <div class="talent-info text-center">
-              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
-                Deborah
-              </h3>
-              <p
-                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80 mb-3"
-              >
-                Talent Introduction
-              </p>
-              <div class="hidden">
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >New Face</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Fashion Model</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Editorial</span
-                >
               </div>
             </div>
           </div>
 
-          <!--  James Dillon -->
-          <div class="video-card group">
+          <!-- Video 5 -->
+          <div class="video-card group" data-video-id="P6P_QBzTfgQ">
             <div class="video-container">
-              <video
-                class="talent-video"
-                playsinline
-                muted
-                loop
-                autoplay
-                preload="auto"
-              >
-                <source
-                  src="/assets/talent-introduction/james-dillon.mp4"
-                  type="video/mp4"
-                />
-                <source
-                  src="/assets/talent-introduction/james-dillon.mp4"
-                  type="video/quicktime"
-                />
-              </video>
+              <img
+                src="https://img.youtube.com/vi/P6P_QBzTfgQ/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
               <div class="video-overlay">
                 <div class="play-btn">
                   <i class="fa-solid fa-play ml-1"></i>
                 </div>
-              </div>
-            </div>
-            <div class="talent-info text-center">
-              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
-                James Dillon
-              </h3>
-              <p
-                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80 mb-3"
-              >
-                Talent Introduction
-              </p>
-              <div class="hidden">
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Minimal Aesthetic</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Portfolio Reel</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >M Models & Talent</span
-                >
               </div>
             </div>
           </div>
 
-          <!--  Areeb ALI -->
-          <div class="video-card group">
+          <!-- Video 6 -->
+          <div class="video-card group" data-video-id="k96Zm4zarQc">
             <div class="video-container">
-              <video
-                class="talent-video"
-                playsinline
-                muted
-                loop
-                autoplay
-                preload="auto"
-              >
-                <source
-                  src="/assets/talent-introduction/areeb-ALI.mov"
-                  type="video/mp4"
-                />
-                <source
-                  src="/assets/talent-introduction/areeb-ALI.mov"
-                  type="video/quicktime"
-                />
-              </video>
+              <img
+                src="https://img.youtube.com/vi/k96Zm4zarQc/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
               <div class="video-overlay">
                 <div class="play-btn">
                   <i class="fa-solid fa-play ml-1"></i>
                 </div>
-              </div>
-            </div>
-            <div class="talent-info text-center">
-              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
-                Areeb Ali
-              </h3>
-              <p
-                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80 mb-3"
-              >
-                Talent Introduction
-              </p>
-              <div class="hidden">
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Creative Talent Platform</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Discovery</span
-                >
               </div>
             </div>
           </div>
 
-          <!--  Amira -->
-          <div class="video-card group">
+          <!-- Video 7 -->
+          <div class="video-card group" data-video-id="O1qInc4cWKo">
             <div class="video-container">
-              <video
-                class="talent-video"
-                playsinline
-                muted
-                loop
-                autoplay
-                preload="auto"
-              >
-                <source
-                  src="/assets/talent-introduction/amira.MOV"
-                  type="video/mp4"
-                />
-                <source
-                  src="/assets/talent-introduction/amira.MOV"
-                  type="video/quicktime"
-                />
-              </video>
+              <img
+                src="https://img.youtube.com/vi/O1qInc4cWKo/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
               <div class="video-overlay">
                 <div class="play-btn">
                   <i class="fa-solid fa-play ml-1"></i>
                 </div>
-              </div>
-            </div>
-            <div class="talent-info text-center">
-              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
-                Amira
-              </h3>
-              <p
-                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80 mb-3"
-              >
-                Talent Introduction
-              </p>
-              <div class="hidden">
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Introducing</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Rising Talent</span
-                >
               </div>
             </div>
           </div>
 
-          <!--  Helen Li -->
-          <div class="video-card group">
+          <!-- Video 8 -->
+          <div class="video-card group" data-video-id="fkXqF8jCfFw">
             <div class="video-container">
-              <video
-                class="talent-video"
-                playsinline
-                muted
-                loop
-                autoplay
-                preload="auto"
-              >
-                <source
-                  src="/assets/talent-introduction/heyhelenli.mov"
-                  type="video/mp4"
-                />
-                <source
-                  src="/assets/talent-introduction/heyhelenli.mov"
-                  type="video/quicktime"
-                />
-              </video>
+              <img
+                src="https://img.youtube.com/vi/fkXqF8jCfFw/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
               <div class="video-overlay">
                 <div class="play-btn">
                   <i class="fa-solid fa-play ml-1"></i>
                 </div>
               </div>
             </div>
-            <div class="talent-info text-center">
-              <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">
-                Helen
-              </h3>
-              <p
-                class="text-primary font-bold uppercase tracking-[0.2em] text-[10px] opacity-80 mb-3"
-              >
-                Talent Introduction
-              </p>
-              <div class="hidden">
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >New Faces</span
-                >
-                <span
-                  class="text-[9px] text-gray-400 border border-gray-100 px-2 py-0.5 rounded-full"
-                  >Fashion Talent</span
-                >
+          </div>
+
+          <!-- Video 9 -->
+          <div class="video-card group" data-video-id="_s-HCOdPdoY">
+            <div class="video-container">
+              <img
+                src="https://img.youtube.com/vi/_s-HCOdPdoY/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 10 -->
+          <div class="video-card group" data-video-id="lehokZSEcww">
+            <div class="video-container">
+              <img
+                src="https://img.youtube.com/vi/lehokZSEcww/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 11 -->
+          <div class="video-card group" data-video-id="-RLlu4EHmeE">
+            <div class="video-container">
+              <img
+                src="https://img.youtube.com/vi/-RLlu4EHmeE/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 12 -->
+          <div class="video-card group" data-video-id="Z0MM1d26A7k">
+            <div class="video-container">
+              <img
+                src="https://img.youtube.com/vi/Z0MM1d26A7k/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 13 -->
+          <div class="video-card group" data-video-id="iYkwBxscKqY">
+            <div class="video-container">
+              <img
+                src="https://img.youtube.com/vi/iYkwBxscKqY/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 14 -->
+          <div class="video-card group" data-video-id="rgnHd_bJADI">
+            <div class="video-container">
+              <img
+                src="https://img.youtube.com/vi/rgnHd_bJADI/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 15 -->
+          <div class="video-card group" data-video-id="sHaL3oDEn7E">
+            <div class="video-container">
+              <img
+                src="https://img.youtube.com/vi/sHaL3oDEn7E/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 16 -->
+          <div class="video-card group" data-video-id="OKSWFnR7wnM">
+            <div class="video-container">
+              <img
+                src="https://img.youtube.com/vi/OKSWFnR7wnM/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 17 -->
+          <div class="video-card group" data-video-id="qaF4gsM_33Y">
+            <div class="video-container">
+              <img
+                src="https://img.youtube.com/vi/qaF4gsM_33Y/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 18 -->
+          <div class="video-card group" data-video-id="vSDe6K7r96I">
+            <div class="video-container">
+              <img
+                src="https://img.youtube.com/vi/vSDe6K7r96I/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 19 -->
+          <div class="video-card group" data-video-id="FJx1ASWs-Yc">
+            <div class="video-container">
+              <img
+                src="https://img.youtube.com/vi/FJx1ASWs-Yc/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 20 -->
+          <div class="video-card group" data-video-id="ELC7WV__R5s">
+            <div class="video-container">
+              <img
+                src="https://img.youtube.com/vi/ELC7WV__R5s/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+             <!-- Video 20 -->
+          <div class="video-card group" data-video-id="ELC7WV__R5s">
+            <div class="video-container">
+              <img
+                src="https://img.youtube.com/vi/ELC7WV__R5s/maxresdefault.jpg"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                alt="Shorts Thumbnail"
+              />
+              <div class="video-overlay">
+                <div class="play-btn">
+                  <i class="fa-solid fa-play ml-1"></i>
+                </div>
               </div>
             </div>
           </div>
@@ -926,9 +855,12 @@
       <div class="modal-container">
         <button class="close-modal"><i class="fas fa-times"></i></button>
         <div class="modal-video-wrapper">
-          <video id="modalVideo" controls playsinline>
-            <source src="" type="video/mp4" />
-          </video>
+          <iframe
+            id="modalIframe"
+            src=""
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+          ></iframe>
         </div>
       </div>
     </div>
@@ -952,14 +884,13 @@
 
       // Video Modal Logic
       const $modal = $("#videoModal");
-      const $modalVideo = document.getElementById("modalVideo");
+      const $modalIframe = document.getElementById("modalIframe");
 
       $(".video-card").on("click", function () {
-        const videoSrc = $(this).find("video source").first().attr("src");
-        if (videoSrc) {
-          $modalVideo.src = videoSrc;
+        const videoId = $(this).attr("data-video-id");
+        if (videoId) {
+          $modalIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
           $modal.css("display", "flex").hide().fadeIn(400);
-          $modalVideo.play();
           $("body").addClass("overflow-hidden");
         }
       });
@@ -967,8 +898,7 @@
       function closeModal() {
         $modal.fadeOut(300, function () {
           $(this).hide();
-          $modalVideo.pause();
-          $modalVideo.src = "";
+          $modalIframe.src = "";
           $("body").removeClass("overflow-hidden");
         });
       }
@@ -976,22 +906,6 @@
       $(".close-modal").on("click", closeModal);
       $modal.on("click", function (e) {
         if (e.target === this) closeModal();
-      });
-
-      // Simple video interaction for preview (keeping them muted)
-      document.querySelectorAll(".talent-video").forEach((video) => {
-        const card = video.closest(".video-card");
-        const playBtn = card.querySelector(".play-btn");
-
-        video.addEventListener("play", () => {
-          playBtn.style.opacity = "0";
-          playBtn.style.transform = "scale(0.5)";
-        });
-
-        video.addEventListener("pause", () => {
-          playBtn.style.opacity = "1";
-          playBtn.style.transform = "scale(1)";
-        });
       });
 
       // Mobile menu toggle
