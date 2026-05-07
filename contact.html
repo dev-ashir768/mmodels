@@ -409,6 +409,38 @@
                   tabindex="0"
                 ></iframe>
               </div>
+
+              <!-- Vancouver -->
+              <div
+                class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm"
+              >
+                <h4
+                  class="font-bold text-gray-900 uppercase tracking-widest text-sm mb-2 text-primary"
+                >
+                  Vancouver
+                </h4>
+                <p class="text-gray-600 text-sm mb-3">
+                  Virtual Office By appointments only<br />Park Place, 666 Burrard St Suite 500, Vancouver, BC V6C 2X8
+                </p>
+                <div class="space-y-1 mb-4">
+                  <p class="text-gray-600 text-sm">
+                    <i class="fas fa-phone mr-2"></i>+17788016107
+                  </p>
+                  <!-- <p class="text-gray-600 text-sm">
+                    <i class="fas fa-envelope mr-2"></i>vancouver@mmodels.ca
+                  </p> -->
+                </div>
+                <iframe
+                  class="w-full h-48 rounded"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.5452325208134!2d-123.12173052299609!3d49.28501387139317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54867181eca564c3%3A0x3455bd8f7f938cc5!2sPark%20Place!5e0!3m2!1sen!2s!4v1778193564241!5m2!1sen!2s"
+                  
+                  frameborder="0"
+                  style="border: 0"
+                  allowfullscreen=""
+                  aria-hidden="false"
+                  tabindex="0"
+                ></iframe>
+              </div>
             </div>
           </div>
 
@@ -523,7 +555,10 @@
             processData: false,
             contentType: false,
             success: (response) => {
-              if (response.status === 'partial_success' || (response.email_status && !response.email_status.admin)) {
+              if (
+                response.status === "partial_success" ||
+                (response.email_status && !response.email_status.admin)
+              ) {
                 Swal.fire({
                   title: "Partial Success",
                   text: "Your message was saved, but we encountered a temporary issue sending the notification email. Our team will still see your message in our records.",
@@ -555,8 +590,6 @@
             },
           });
         });
-
-
       });
     </script>
   </body>
