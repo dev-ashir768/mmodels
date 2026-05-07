@@ -3,11 +3,10 @@
  * M Models - Database Configuration
  */
 
-// $db_host = 'srv1466.hstgr.io';
-$db_host = 'localhost';
-$db_name = 'u774534919_mmodels_db';
-$db_user = 'u774534919_admin';
-$db_pass = 'Ty=gj,ja4FF)8Z';
+$db_host = 'custsql-nf10.eigbox.net';
+$db_name = 'mmodels_database';
+$db_user = 'editor_dev';
+$db_pass = 'Editor@2026';
 
 try {
     $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8mb4", $db_user, $db_pass);
