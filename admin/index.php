@@ -322,7 +322,7 @@ try {
             <div class="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-500 opacity-50">Submissions
             </div>
             <?php foreach ($all_data as $key => $dataset): ?>
-                <a href="javascript:void(0)" onclick="switchTab('<?php echo $key; ?>')" id="side_btn_<?php echo $key; ?>"
+                <a href="javascript:void(0)" onclick="switchTab('<?php echo $dataset['tabId']; ?>')" id="side_btn_<?php echo $dataset['tabId']; ?>"
                     class="side-btn flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
                     <i class="fas <?php
                     echo ($key == 'Influencer Registration') ? 'fa-star' :
@@ -637,10 +637,6 @@ try {
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
-    </main>
-
             </div>
         </div>
     </main>
