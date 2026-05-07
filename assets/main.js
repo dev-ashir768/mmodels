@@ -864,6 +864,7 @@ function applyLanguage(lang) {
   $("html").attr("lang", lang);
   localStorage.setItem("mmodels_lang", lang);
   $("#lang-switcher").val(lang);
+  $(".nav-current-lang").text(lang.toUpperCase());
 
   // Global Parsley translations if available
   if (window.Parsley) {
@@ -929,12 +930,13 @@ $(document).ready(function () {
     $("head").append(`
         <style>
             @keyframes switcher-glow {
-                0% { box-shadow: 0 0 0 0 rgba(197, 10, 118, 0.7); }
-                70% { box-shadow: 0 0 0 15px rgba(197, 10, 118, 0); }
+                0% { box-shadow: 0 0 0 0 rgba(197, 10, 118, 0.8); }
+                70% { box-shadow: 0 0 0 12px rgba(197, 10, 118, 0); }
                 100% { box-shadow: 0 0 0 0 rgba(197, 10, 118, 0); }
             }
             .switcher-active-glow {
-                animation: switcher-glow 2s infinite;
+                animation: switcher-glow 1.5s infinite;
+                border-radius: 9999px;
             }
         </style>
     `);
