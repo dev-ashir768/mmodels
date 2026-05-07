@@ -926,13 +926,26 @@ function applyLanguage(lang) {
 $(document).ready(function () {
   // Inject floating language selector
   if (!$("#lang-switcher").length) {
+    $("head").append(`
+        <style>
+            @keyframes switcher-glow {
+                0% { box-shadow: 0 0 0 0 rgba(197, 10, 118, 0.7); }
+                70% { box-shadow: 0 0 0 15px rgba(197, 10, 118, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(197, 10, 118, 0); }
+            }
+            .switcher-active-glow {
+                animation: switcher-glow 2s infinite;
+            }
+        </style>
+    `);
+
     $("body").append(`
             <div class="fixed bottom-6 right-6 z-50 group">
                 <div class="absolute -top-10 right-0 bg-primary text-white text-[10px] px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold tracking-widest uppercase shadow-lg mb-2">
                     Select Language
                 </div>
                 <div class="relative">
-                    <select id="lang-switcher" class="bg-primary text-white border-2 border-white/20 text-xs rounded-full pl-5 pr-11 py-3 shadow-2xl focus:outline-none cursor-pointer font-bold uppercase tracking-widest appearance-none hover:bg-black hover:scale-110 transition-all duration-300">
+                    <select id="lang-switcher" class="bg-primary text-white border-2 border-white/20 text-xs rounded-full pl-5 pr-11 py-3 shadow-2xl focus:outline-none cursor-pointer font-bold uppercase tracking-widest appearance-none hover:bg-black hover:scale-110 transition-all duration-300 switcher-active-glow">
                         <option value="en" class="bg-white text-black">EN</option>
                         <option value="fr" class="bg-white text-black">FR</option>
                         <option value="ja" class="bg-white text-black">JA</option>
