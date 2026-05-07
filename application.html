@@ -198,6 +198,36 @@
                 ></a>
               </div>
             </div>
+
+            <!-- Language Switcher -->
+            <div class="dropdown-wrapper group">
+              <span
+                class="menu-link flex items-center text-gray-600 switcher-active-glow px-3 py-1.5"
+                ><i class="fas fa-globe mr-2"></i>
+                <span class="nav-current-lang">EN</span>
+                <i class="fas fa-chevron-down nav-arrow"></i
+              ></span>
+              <div class="dropdown-menu">
+                <a
+                  href="javascript:void(0)"
+                  onclick="applyLanguage('en')"
+                  class="dropdown-item"
+                  >English</a
+                >
+                <a
+                  href="javascript:void(0)"
+                  onclick="applyLanguage('fr')"
+                  class="dropdown-item"
+                  >Français</a
+                >
+                <a
+                  href="javascript:void(0)"
+                  onclick="applyLanguage('ja')"
+                  class="dropdown-item"
+                  >日本語</a
+                >
+              </div>
+            </div>
           </div>
           <div class="xl:hidden flex items-center">
             <button id="mobile-btn" class="text-gray-600 hover:text-primary">
@@ -277,6 +307,28 @@
           <a href="contact.html" class="mobile-link"
             >Contact Us <i class="fas fa-chevron-right"></i
           ></a>
+
+          <div class="mobile-section-title">Language</div>
+          <div class="flex gap-2 mt-2">
+            <button
+              onclick="applyLanguage('en')"
+              class="flex-1 py-3 border border-gray-200 rounded-lg text-[10px] font-bold hover:bg-primary hover:text-white transition-all"
+            >
+              EN
+            </button>
+            <button
+              onclick="applyLanguage('fr')"
+              class="flex-1 py-3 border border-gray-200 rounded-lg text-[10px] font-bold hover:bg-primary hover:text-white transition-all"
+            >
+              FR
+            </button>
+            <button
+              onclick="applyLanguage('ja')"
+              class="flex-1 py-3 border border-gray-200 rounded-lg text-[10px] font-bold hover:bg-primary hover:text-white transition-all"
+            >
+              JA
+            </button>
+          </div>
         </div>
       </div>
     </nav>
