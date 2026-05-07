@@ -6,12 +6,12 @@
 
 // Configuration
 // We dynamically set the csv_file later based on form_type
-// $admin_email = 'info@mmodels.ca'; // Now dynamically set below based on form type
-$smtp_user = 'toolgram3@gmail.com';
-$smtp_pass = 'fihwrjdzscwhxixy';
+$smtp_user = 'info@mmodels.ca';
+$smtp_pass = 'Shahzab889!889&!!!!!';
 
 // Debug Logger
-function debugLog($msg) {
+function debugLog($msg)
+{
     $log_file = __DIR__ . '/data/form_debug.log';
     $timestamp = date('Y-m-d H:i:s');
     file_put_contents($log_file, "[$timestamp] $msg\n", FILE_APPEND);
@@ -28,17 +28,18 @@ require 'includes/db.php';
 
 
 // Helper function to send email via SMTP
-function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachments = []) {
+function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachments = [])
+{
     global $smtp_user, $smtp_pass;
     $mail = new PHPMailer(true);
     try {
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = $smtp_user;
-        $mail->Password   = $smtp_pass;
+        $mail->Host = 'mail.canadianfashionw.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = $smtp_user;
+        $mail->Password = $smtp_pass;
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Use SSL
-        $mail->Port       = 465; // Port for SSL
+        $mail->Port = 465; // Port for SSL
 
         $mail->setFrom($smtp_user, $from_name);
         $mail->addAddress($to);
@@ -52,7 +53,7 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
                     if (file_exists($file)) {
                         $mail->addAttachment($file);
                     }
-                } 
+                }
                 // Check if it's a standard PHP upload array
                 else if (isset($file['name']) && is_array($file['name'])) {
                     foreach ($file['name'] as $idx => $name) {
@@ -60,8 +61,7 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
                             $mail->addAttachment($file['tmp_name'][$idx], $name);
                         }
                     }
-                } 
-                else if (isset($file['tmp_name']) && file_exists($file['tmp_name'])) {
+                } else if (isset($file['tmp_name']) && file_exists($file['tmp_name'])) {
                     $mail->addAttachment($file['tmp_name'], $file['name']);
                 }
             }
@@ -69,7 +69,7 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
 
         $mail->isHTML(true);
         $mail->Subject = $subject;
-        $mail->Body    = $message;
+        $mail->Body = $message;
         $mail->AltBody = strip_tags(str_replace(['<br>', '<br/>', '</p>'], "\n", $message));
 
         $mail->send();
@@ -124,12 +124,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // --- IMMEDIATE CSV WRITE (Before any other processing) ---
     $sanitized_type = preg_replace('/[^a-zA-Z0-9_]/', '', strtolower($form_type));
-    if ($form_type === 'Influencer Registration') $sanitized_type = 'influencer_talent';
-    
+    if ($form_type === 'Influencer Registration')
+        $sanitized_type = 'influencer_talent';
+
     $csv_file = __DIR__ . "/data/submissions_" . $sanitized_type . ".csv";
     $is_new_file = !file_exists($csv_file);
     $file_handle = fopen($csv_file, 'a');
-    
+
     if ($file_handle) {
         if ($is_new_file) {
             $headers = ['Timestamp', 'Form Type'];
@@ -138,12 +139,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             fputcsv($file_handle, $headers);
         }
-        
+
         $row = [$timestamp, $form_type];
         foreach ($data as $key => $value) {
-            $row[] = is_array($value) ? implode(', ', $value) : (string)$value;
+            $row[] = is_array($value) ? implode(', ', $value) : (string) $value;
         }
-        
+
         fputcsv($file_handle, $row);
         fflush($file_handle);
         fclose($file_handle);
@@ -163,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $ext = pathinfo($name, PATHINFO_EXTENSION);
                     $filename = uniqid($key . '_') . '.' . $ext;
                     $target_path = $upload_dir . $filename;
-                    
+
                     if (move_uploaded_file($file['tmp_name'][$idx], $target_path)) {
                         $attachment_paths[] = $target_path;
                         $data[$key . '_' . $idx] = "[File: $filename]";
@@ -182,9 +183,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             } else if ($file['error'] !== UPLOAD_ERR_NO_FILE) {
                 switch ($file['error']) {
-                    case UPLOAD_ERR_INI_SIZE: $err = "File exceeds server limit ($max_upload)"; break;
-                    case UPLOAD_ERR_PARTIAL: $err = "Upload was partial"; break;
-                    default: $err = "Upload error (" . $file['error'] . ")";
+                    case UPLOAD_ERR_INI_SIZE:
+                        $err = "File exceeds server limit ($max_upload)";
+                        break;
+                    case UPLOAD_ERR_PARTIAL:
+                        $err = "Upload was partial";
+                        break;
+                    default:
+                        $err = "Upload error (" . $file['error'] . ")";
                 }
                 $data[$key] = $err;
                 $upload_errors[] = "$key: $err";
@@ -200,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif (is_string($value) && strpos($value, 'data:') === 0 && strpos($value, ';base64,') !== false) {
             $row[] = "[Base64 Image]";
         } else {
-            $row[] = str_replace(["\r", "\n", ","], [" ", " ", ";"], (string)$value);
+            $row[] = str_replace(["\r", "\n", ","], [" ", " ", ";"], (string) $value);
         }
     }
 
@@ -216,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Save to CSV
     $is_new_file = !file_exists($csv_file);
     $file_handle = fopen($csv_file, 'a');
-    
+
     if ($file_handle) {
         // If file is new, add headers first
         if ($is_new_file) {
@@ -226,7 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             fputcsv($file_handle, $headers);
         }
-        
+
         fputcsv($file_handle, $row);
         fflush($file_handle);
         fclose($file_handle);
@@ -251,7 +257,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 1. Admin Notification Email
     $admin_subject = "New Form Submission: " . ucwords(str_replace('_', ' ', $form_type));
-    
+
     // Build Details Table for Admin
     $details_html = "";
     foreach ($data as $key => $value) {
@@ -306,17 +312,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 1. Admin Notification Email
     $admin_subject = "!! NEW TALENT: " . ($data['first_name'] ?? 'Inquiry') . " (" . $form_type . ")";
-    
+
     debugLog("Attempting Admin Email to $admin_email");
     // Use moved file paths ($attachment_paths) for attachments instead of $_FILES 
     // because files were moved from temp location already.
     $email_sent = sendEmail($admin_email, $admin_subject, $admin_email_content, 'M Models Scout', $attachment_paths);
-    
+
     if (!$email_sent) {
         debugLog("Admin Email with attachments FAILED. Retrying without attachments...");
         $email_sent = sendEmail($admin_email, "LOW-RES: " . $admin_subject, $admin_email_content . "<p>Check admin panel for HD photos.</p>", 'M Models Scout');
     }
-    
+
     debugLog("Admin Email Final Status: " . ($email_sent ? "SUCCESS" : "FAILED"));
 
     // 2. Applicant Greeting Email
@@ -324,7 +330,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($applicant_email)) {
         $first_name = $_POST['first_name'] ?? 'there';
         $greet_subject = "Thank you for applying to M Models!";
-        
+
         $greet_email_content = "
         <body style='margin: 0; padding: 0; background-color: #f4f7f9;'>
             <table width='100%' border='0' cellspacing='0' cellpadding='0' style='background-color: #f4f7f9; padding: 40px 20px;'>
@@ -340,14 +346,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <td style='padding: 50px; text-align: center;'>
                                     <h1 style='font-family: sans-serif; font-size: 28px; font-weight: 700; color: #C50A76; margin: 0 0 20px 0;'>Hello $first_name,</h1>
                                     <p style='font-family: sans-serif; font-size: 16px; line-height: 1.6; color: #333333; margin: 0 0 25px 0;'>
-                                        " . ($form_type === 'Influencer Registration' 
-                                            ? "Thank you for applying to join the <strong>M Models Influencer Network</strong>. We’ve received your portfolio and social analytics, and our creative team is excited to review your content style."
-                                            : "Thank you for choosing <strong>M Models & Talent Agency</strong>. We’ve successfully received your application and our scouts are eager to review your profile.") . "
+                                        " . ($form_type === 'Influencer Registration'
+            ? "Thank you for applying to join the <strong>M Models Influencer Network</strong>. We’ve received your portfolio and social analytics, and our creative team is excited to review your content style."
+            : "Thank you for choosing <strong>M Models & Talent Agency</strong>. We’ve successfully received your application and our scouts are eager to review your profile.") . "
                                     </p>
                                     <p style='font-family: sans-serif; font-size: 15px; color: #666666; margin: 0 0 35px 0;'>
                                         " . ($form_type === 'Influencer Registration'
-                                            ? "If your profile aligns with our upcoming brand campaigns, one of our talent managers will contact you to discuss representation and partnership opportunities."
-                                            : "If your look matches our current portfolio needs, one of our agents will reach out to you directly for a personal interview.") . "
+            ? "If your profile aligns with our upcoming brand campaigns, one of our talent managers will contact you to discuss representation and partnership opportunities."
+            : "If your look matches our current portfolio needs, one of our agents will reach out to you directly for a personal interview.") . "
                                     </p>
                                     <a href='https://mmodels.ca' style='display: inline-block; background-color: #C50A76; color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(197, 10, 118, 0.2); transition: all 0.3s ease;'>Explore M Models</a>
                                     
