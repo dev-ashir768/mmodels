@@ -778,6 +778,16 @@ const i18nDict = {
     ja: "本社（トロント）",
   },
   Mississauga: { fr: "Mississauga", ja: "ミシサガ" },
+  "Our Clients in": { fr: "Nos Clients à", ja: "私たちの取引先" },
+  "Experience our talent in high-production commercials, music videos, and cinematic campaigns. We bring stories to life through movement and professional performance.":
+    {
+      fr: "Découvrez nos talents dans des publicités de haute production, des clips musicaux et des campagnes cinématographiques. Nous donnons vie aux histoires par le mouvement et la performance professionnelle.",
+      ja: "ハイクオリティなCM、ミュージックビデオ、映画のようなキャンペーンで、当社のタレントをご体験ください。動きとプロフェッショナルなパフォーマンスを通じて、物語に命を吹き込みます。",
+    },
+  "Visit YouTube Channel": {
+    fr: "Visiter la chaîne YouTube",
+    ja: "YouTubeチャンネルを見る",
+  },
 };
 
 function applyLanguage(lang) {
@@ -899,14 +909,17 @@ $(document).ready(function () {
   // Inject floating language selector
   if (!$("#lang-switcher").length) {
     $("body").append(`
-            <div class="fixed bottom-6 right-6 z-50">
+            <div class="fixed bottom-6 right-6 z-50 group">
+                <div class="absolute -top-10 right-0 bg-primary text-white text-[10px] px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold tracking-widest uppercase shadow-lg mb-2">
+                    Select Language
+                </div>
                 <div class="relative">
-                    <select id="lang-switcher" class="bg-white border border-gray-300 text-gray-900 text-xs rounded-full pl-4 pr-8 py-2 shadow-lg focus:outline-none focus:border-primary cursor-pointer font-bold uppercase tracking-widest appearance-none">
-                        <option value="en">EN</option>
-                        <option value="fr">FR</option>
-                        <option value="ja">JA</option>
+                    <select id="lang-switcher" class="bg-primary text-white border-2 border-white/20 text-xs rounded-full pl-5 pr-11 py-3 shadow-2xl focus:outline-none cursor-pointer font-bold uppercase tracking-widest appearance-none hover:bg-black hover:scale-110 transition-all duration-300">
+                        <option value="en" class="bg-white text-black">EN</option>
+                        <option value="fr" class="bg-white text-black">FR</option>
+                        <option value="ja" class="bg-white text-black">JA</option>
                     </select>
-                    <i class="fas fa-globe absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
+                    <i class="fas fa-globe absolute right-4 top-1/2 -translate-y-1/2 text-white pointer-events-none text-sm"></i>
                 </div>
             </div>
         `);
