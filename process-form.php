@@ -6,7 +6,7 @@
 
 // Configuration
 // We dynamically set the csv_file later based on form_type
-$admin_email = 'info@mmodels.ca';
+// $admin_email = 'info@mmodels.ca'; // Now dynamically set below based on form type
 $smtp_user = 'toolgram3@gmail.com';
 $smtp_pass = 'fihwrjdzscwhxixy';
 
@@ -100,6 +100,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $form_type = $_POST['form_type'] ?? 'general';
+
+    // Route to correct email based on form type
+    switch ($form_type) {
+        case 'hire_a_model':
+            $admin_email = 'bookings@mmodels.ca';
+            break;
+        case 'become_a_model':
+        case 'Influencer Registration':
+        case 'application':
+            $admin_email = 'applications@mmodels.ca';
+            break;
+        case 'contact':
+        default:
+            $admin_email = 'info@mmodels.ca';
+            break;
+    }
     $timestamp = date('Y-m-d H:i:s');
     $data = $_POST;
     unset($data['form_type']);
