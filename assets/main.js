@@ -788,6 +788,20 @@ const i18nDict = {
     fr: "Visiter la chaîne YouTube",
     ja: "YouTubeチャンネルを見る",
   },
+  "Become a": { fr: "Devenir un", ja: "になる" },
+  "Start Your Journey": {
+    fr: "Commencez Votre Voyage",
+    ja: "あなたの旅を始めましょう",
+  },
+  "We are scouting new faces for fashion, editorial, and commercial modeling. Unleash your potential with M Models global agency.":
+    {
+      fr: "Nous recherchons de nouveaux visages pour le mannequinat de mode, éditorial et commercial. Libérez votre potentiel avec l'agence mondiale M Models.",
+      ja: "ファッション、エディトリアル、コマーシャルのモデリングの新しい顔をスカウトしています。M Models グローバル エージェンシーであなたの可能性を解き放ちましょう。",
+    },
+  "Indicates required field for application": {
+    fr: "Indique un champ obligatoire pour la candidature",
+    ja: "申請の必須フィールドを示します",
+  },
 };
 
 function applyLanguage(lang) {
