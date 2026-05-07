@@ -32,37 +32,36 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
 {
     global $smtp_user, $smtp_pass;
     $mail = new PHPMailer(true);
+    $last_error = "";
+    
+    // Attempt 1: SSL on 465
     try {
         $mail->isSMTP();
-        $mail->Host = 'mail.canadianfashionw.com';
+        $mail->Host = 'mail.mmodels.ca';
         $mail->SMTPAuth = true;
         $mail->Username = $smtp_user;
         $mail->Password = $smtp_pass;
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Use SSL
-        $mail->Port = 465; // Port for SSL
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port = 465;
+        $mail->Timeout = 30; // Increased timeout for attachments
+        
+        // Add SSL options for compatibility with some shared hosts
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
 
         $mail->setFrom($smtp_user, $from_name);
         $mail->addAddress($to);
-        $mail->addReplyTo('info@mmodels.com', 'M Models');
+        $mail->addReplyTo('info@mmodels.ca', 'M Models');
 
-        // Add attachments
         if (!empty($attachments)) {
-            foreach ($attachments as $key => $file) {
-                // Check if it's a direct path string
-                if (is_string($file)) {
-                    if (file_exists($file)) {
-                        $mail->addAttachment($file);
-                    }
-                }
-                // Check if it's a standard PHP upload array
-                else if (isset($file['name']) && is_array($file['name'])) {
-                    foreach ($file['name'] as $idx => $name) {
-                        if (isset($file['tmp_name'][$idx]) && file_exists($file['tmp_name'][$idx])) {
-                            $mail->addAttachment($file['tmp_name'][$idx], $name);
-                        }
-                    }
-                } else if (isset($file['tmp_name']) && file_exists($file['tmp_name'])) {
-                    $mail->addAttachment($file['tmp_name'], $file['name']);
+            foreach ($attachments as $file) {
+                if (is_string($file) && file_exists($file)) {
+                    $mail->addAttachment($file);
                 }
             }
         }
@@ -73,10 +72,39 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
         $mail->AltBody = strip_tags(str_replace(['<br>', '<br/>', '</p>'], "\n", $message));
 
         $mail->send();
-        return true;
+        debugLog("Email sent successfully to $to via SSL/465");
+        return ['success' => true];
     } catch (Exception $e) {
-        error_log("Email could not be sent. Mailer Error: {$mail->ErrorInfo}");
-        return false;
+        $last_error = $mail->ErrorInfo;
+        debugLog("SSL/465 Failed for $to: $last_error. Retrying with TLS/587...");
+        
+        // Attempt 2: TLS on 587
+        try {
+            $mail->clearAddresses();
+            $mail->clearAttachments();
+            
+            $mail->Port = 587;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Timeout = 30;
+            
+            $mail->addAddress($to);
+            if (!empty($attachments)) {
+                foreach ($attachments as $file) {
+                    if (is_string($file) && file_exists($file)) {
+                        $mail->addAttachment($file);
+                    }
+                }
+            }
+            
+            $mail->send();
+            debugLog("Email sent successfully to $to via TLS/587");
+            return ['success' => true];
+        } catch (Exception $e2) {
+            $last_error = $mail->ErrorInfo;
+            debugLog("CRITICAL: Email failed for $to: $last_error");
+            error_log("Email could not be sent. Mailer Error: $last_error");
+            return ['success' => false, 'error' => $last_error];
+        }
     }
 }
 
@@ -102,14 +130,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $form_type = $_POST['form_type'] ?? 'general';
 
     // Route to correct email based on form type
-    switch ($form_type) {
+    switch (trim($form_type)) {
         case 'hire_a_model':
             $admin_email = 'bookings@mmodels.ca';
             break;
         case 'become_a_model':
         case 'Influencer Registration':
         case 'application':
-            $admin_email = 'applications@mmodels.ca';
+            $admin_email = 'application@mmodels.ca';
             break;
         case 'contact':
         default:
@@ -121,38 +149,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     unset($data['form_type']);
 
     debugLog("New Submission: $form_type from " . ($data['email'] ?? 'unknown'));
-
-    // --- IMMEDIATE CSV WRITE (Before any other processing) ---
-    $sanitized_type = preg_replace('/[^a-zA-Z0-9_]/', '', strtolower($form_type));
-    if ($form_type === 'Influencer Registration')
-        $sanitized_type = 'influencer_talent';
-
-    $csv_file = __DIR__ . "/data/submissions_" . $sanitized_type . ".csv";
-    $is_new_file = !file_exists($csv_file);
-    $file_handle = fopen($csv_file, 'a');
-
-    if ($file_handle) {
-        if ($is_new_file) {
-            $headers = ['Timestamp', 'Form Type'];
-            foreach ($data as $key => $value) {
-                $headers[] = ucwords(str_replace('_', ' ', $key));
-            }
-            fputcsv($file_handle, $headers);
-        }
-
-        $row = [$timestamp, $form_type];
-        foreach ($data as $key => $value) {
-            $row[] = is_array($value) ? implode(', ', $value) : (string) $value;
-        }
-
-        fputcsv($file_handle, $row);
-        fflush($file_handle);
-        fclose($file_handle);
-        chmod($csv_file, 0644);
-        debugLog("CSV Write Success: $csv_file");
-    } else {
-        debugLog("CSV Write FAILED: Could not open $csv_file");
-    }
 
     // --- Continue with File Uploads ---
     $upload_errors = [];
@@ -198,33 +194,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Add metadata
-    $row = [$timestamp, $form_type];
-    foreach ($data as $key => $value) {
-        if (is_array($value)) {
-            $row[] = implode(', ', $value);
-        } elseif (is_string($value) && strpos($value, 'data:') === 0 && strpos($value, ';base64,') !== false) {
-            $row[] = "[Base64 Image]";
-        } else {
-            $row[] = str_replace(["\r", "\n", ","], [" ", " ", ";"], (string) $value);
-        }
-    }
-
-    // Set dynamic CSV file based on form type
+    // Consolidation: CSV writing moved here after all data is processed (including file paths)
     $sanitized_type = preg_replace('/[^a-zA-Z0-9_]/', '', strtolower($form_type));
+    if ($form_type === 'Influencer Registration')
+        $sanitized_type = 'influencer_talent';
+
     $csv_file = __DIR__ . "/data/submissions_" . $sanitized_type . ".csv";
-
-    // Ensure data directory exists (just in case)
-    if (!is_dir(__DIR__ . '/data')) {
-        mkdir(__DIR__ . '/data', 0755, true);
-    }
-
-    // Save to CSV
     $is_new_file = !file_exists($csv_file);
     $file_handle = fopen($csv_file, 'a');
 
     if ($file_handle) {
-        // If file is new, add headers first
         if ($is_new_file) {
             $headers = ['Timestamp', 'Form Type'];
             foreach ($data as $key => $value) {
@@ -233,12 +212,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             fputcsv($file_handle, $headers);
         }
 
+        $row = [$timestamp, $form_type];
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $row[] = implode(', ', $value);
+            } elseif (is_string($value) && strpos($value, 'data:') === 0 && strpos($value, ';base64,') !== false) {
+                $row[] = "[Base64 Image]";
+            } else {
+                $row[] = str_replace(["\r", "\n", ","], [" ", " ", ";"], (string) $value);
+            }
+        }
+
         fputcsv($file_handle, $row);
         fflush($file_handle);
         fclose($file_handle);
-        chmod($csv_file, 0644); // Ensure it's readable
+        chmod($csv_file, 0666); 
+        debugLog("CSV Write Success: $csv_file");
     } else {
-        error_log("Failed to open CSV file for writing: " . $csv_file);
+        debugLog("CSV Write FAILED: Could not open $csv_file");
     }
 
     // Save to Database
@@ -254,9 +245,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error_log("Database Insert Failed: " . $e->getMessage());
     }
 
-
-    // 1. Admin Notification Email
-    $admin_subject = "New Form Submission: " . ucwords(str_replace('_', ' ', $form_type));
 
     // Build Details Table for Admin
     $details_html = "";
@@ -276,6 +264,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
     $logo_url = $base_url . "/assets/others/logo.png";
 
+    // 1. Admin Notification Email
+    $admin_subject = "!! NEW TALENT: " . ($data['first_name'] ?? ($data['firstName'] ?? 'Inquiry')) . " (" . $form_type . ")";
+
+    // Build Admin Email Body (Note: $details_html and $logo_url are already prepared)
     $admin_email_content = "
     <body style='margin: 0; padding: 0; background-color: #f4f7f9;'>
         <table width='100%' border='0' cellspacing='0' cellpadding='0' style='background-color: #f4f7f9; padding: 40px 20px;'>
@@ -310,25 +302,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </table>
     </body>";
 
-    // 1. Admin Notification Email
-    $admin_subject = "!! NEW TALENT: " . ($data['first_name'] ?? 'Inquiry') . " (" . $form_type . ")";
-
     debugLog("Attempting Admin Email to $admin_email");
-    // Use moved file paths ($attachment_paths) for attachments instead of $_FILES 
-    // because files were moved from temp location already.
-    $email_sent = sendEmail($admin_email, $admin_subject, $admin_email_content, 'M Models Scout', $attachment_paths);
+    $admin_res = sendEmail($admin_email, $admin_subject, $admin_email_content, 'M Models Scout', $attachment_paths);
+    $admin_email_sent = $admin_res['success'];
+    $admin_error = $admin_res['error'] ?? "";
 
-    if (!$email_sent) {
+    if (!$admin_email_sent) {
         debugLog("Admin Email with attachments FAILED. Retrying without attachments...");
-        $email_sent = sendEmail($admin_email, "LOW-RES: " . $admin_subject, $admin_email_content . "<p>Check admin panel for HD photos.</p>", 'M Models Scout');
+        $admin_res = sendEmail($admin_email, "LOW-RES: " . $admin_subject, $admin_email_content . "<p>Check admin panel for HD photos.</p>", 'M Models Scout');
+        $admin_email_sent = $admin_res['success'];
+        $admin_error = $admin_res['error'] ?? "";
     }
 
-    debugLog("Admin Email Final Status: " . ($email_sent ? "SUCCESS" : "FAILED"));
+    debugLog("Admin Email Final Status: " . ($admin_email_sent ? "SUCCESS" : "FAILED"));
 
     // 2. Applicant Greeting Email
-    $applicant_email = $_POST['email'] ?? '';
+    $applicant_email = $data['email'] ?? ($data['E-mail'] ?? ($_POST['email'] ?? ''));
+    $applicant_email_sent = false;
+    $applicant_error = "";
+    
     if (!empty($applicant_email)) {
-        $first_name = $_POST['first_name'] ?? 'there';
+        $first_name = $data['first_name'] ?? ($data['firstName'] ?? 'there');
         $greet_subject = "Thank you for applying to M Models!";
 
         $greet_email_content = "
@@ -375,14 +369,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </table>
         </body>";
 
-        sendEmail($applicant_email, $greet_subject, $greet_email_content);
+        $applicant_res = sendEmail($applicant_email, $greet_subject, $greet_email_content);
+        $applicant_email_sent = $applicant_res['success'];
+        $applicant_error = $applicant_res['error'] ?? "";
+        debugLog("Applicant Email Status: " . ($applicant_email_sent ? "SUCCESS" : "FAILED"));
+    } else {
+        debugLog("Applicant Email skipped: No email provided in data.");
     }
 
     // Return response for AJAX
     header('Content-Type: application/json');
     echo json_encode([
-        'status' => 'success',
-        'message' => 'Application received!',
+        'status' => ($admin_email_sent) ? 'success' : 'partial_success',
+        'message' => ($admin_email_sent) ? 'Application received!' : 'Application saved, but notification failed.',
+        'email_status' => [
+            'admin' => $admin_email_sent,
+            'admin_error' => $admin_error,
+            'applicant' => $applicant_email_sent,
+            'applicant_error' => $applicant_error,
+            'applicant_email' => $applicant_email
+        ],
         'debug' => [
             'upload_errors' => $upload_errors,
             'server_limits' => [

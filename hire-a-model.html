@@ -857,18 +857,27 @@
             processData: false,
             contentType: false,
             success: function (response) {
-              Swal.fire({
-                title: "Request Received!",
-                text: "Thank you. Our casting team will contact you shortly.",
-                icon: "success",
-                confirmButtonColor: "#C50A76",
-                background: "#ffffff",
-                customClass: {
-                  title: "font-serif text-2xl",
-                  confirmButton:
-                    "px-8 py-3 rounded-lg uppercase tracking-wider font-bold",
-                },
-              });
+              if (response.status === 'partial_success' || (response.email_status && !response.email_status.admin)) {
+                Swal.fire({
+                  title: "Partial Success",
+                  text: "Your request was saved, but we encountered a temporary issue sending the notification email. Our casting team will still see your request in our records.",
+                  icon: "warning",
+                  confirmButtonColor: "#C50A76",
+                });
+              } else {
+                Swal.fire({
+                  title: "Request Received!",
+                  text: "Thank you. Our casting team will contact you shortly.",
+                  icon: "success",
+                  confirmButtonColor: "#C50A76",
+                  background: "#ffffff",
+                  customClass: {
+                    title: "font-serif text-2xl",
+                    confirmButton:
+                      "px-8 py-3 rounded-lg uppercase tracking-wider font-bold",
+                  },
+                });
+              }
 
               $form[0].reset();
               $form.parsley().reset();

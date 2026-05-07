@@ -445,21 +445,35 @@
             </div>
           </div>
 
-          <!-- Phone -->
-          <div class="relative group">
-            <label class="block text-sm font-semibold text-gray-700 mb-2"
-              >Phone *</label
-            >
-            <input
-              type="tel"
-              name="phone"
-              required
-              data-parsley-type="digits"
-              data-parsley-length="[10, 10]"
-              data-parsley-length-message="This value should be a valid 10 digit phone number"
-              placeholder="e.g. 5555555555"
-              class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800 placeholder:text-gray-400"
-            />
+          <!-- Phone & Email -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="relative group">
+              <label class="block text-sm font-semibold text-gray-700 mb-2"
+                >Phone *</label
+              >
+              <input
+                type="tel"
+                name="phone"
+                required
+                data-parsley-type="digits"
+                data-parsley-length="[10, 10]"
+                data-parsley-length-message="This value should be a valid 10 digit phone number"
+                placeholder="e.g. 5555555555"
+                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800 placeholder:text-gray-400"
+              />
+            </div>
+            <div class="relative group">
+              <label class="block text-sm font-semibold text-gray-700 mb-2"
+                >E-mail *</label
+              >
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="e.g. name@example.com"
+                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-gray-800 placeholder:text-gray-400"
+              />
+            </div>
           </div>
 
           <!-- Dynamic File Upload -->
@@ -679,6 +693,27 @@
             processData: false,
             contentType: false,
             success: function (response) {
+              // If it's partial success (saved to DB/CSV but email failed)
+              if (response.status === 'partial_success' || (response.email_status && !response.email_status.admin)) {
+                Swal.fire({
+                  title: "Partial Success",
+                  text: "Your application was saved, but we encountered a temporary issue sending the notification email. Our team will still see your submission in our records.",
+                  icon: "warning",
+                  confirmButtonColor: "#C50A76",
+                });
+              } else {
+                // Show Success SweetAlert
+                const successMsg =
+                  getT("Application submitted successfully!") ||
+                  "Application submitted successfully!";
+                Swal.fire({
+                  title: "Success!",
+                  text: successMsg,
+                  icon: "success",
+                  confirmButtonColor: "#C50A76",
+                });
+              }
+
               // Reset Form Data
               $("#application-form")[0].reset();
               $("#application-form").parsley().reset();
@@ -696,17 +731,6 @@
                 $("#other-referral-container").addClass("hidden");
                 $("#other-referral-input").removeAttr("required").val("");
               }
-
-              // Show Success SweetAlert
-              const successMsg =
-                getT("Application submitted successfully!") ||
-                "Application submitted successfully!";
-              Swal.fire({
-                title: "Success!",
-                text: successMsg,
-                icon: "success",
-                confirmButtonColor: "#C50A76",
-              });
             },
             error: function () {
               Swal.fire({

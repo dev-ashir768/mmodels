@@ -1208,10 +1208,14 @@
             processData: false,
             contentType: false,
             success: function (response) {
-              if (response.status === "success") {
+              if (response.status === "success" || response.status === "partial_success") {
                 $("#confirm-email").text(email);
                 $("#success-msg").removeClass("hidden").fadeIn();
                 window.scrollTo({ top: 0, behavior: "smooth" });
+                
+                if (response.status === "partial_success") {
+                    console.warn("Notification email failed, but application was saved.");
+                }
               } else {
                 alert("System Error: " + response.message);
                 btn.prop("disabled", false).html(originalText);

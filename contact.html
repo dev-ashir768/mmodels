@@ -523,12 +523,21 @@
             processData: false,
             contentType: false,
             success: (response) => {
-              Swal.fire({
-                title: "Success!",
-                text: "Your message has been sent successfully.",
-                icon: "success",
-                confirmButtonColor: "#C50A76",
-              });
+              if (response.status === 'partial_success' || (response.email_status && !response.email_status.admin)) {
+                Swal.fire({
+                  title: "Partial Success",
+                  text: "Your message was saved, but we encountered a temporary issue sending the notification email. Our team will still see your message in our records.",
+                  icon: "warning",
+                  confirmButtonColor: "#C50A76",
+                });
+              } else {
+                Swal.fire({
+                  title: "Success!",
+                  text: "Your message has been sent successfully.",
+                  icon: "success",
+                  confirmButtonColor: "#C50A76",
+                });
+              }
 
               $(this)[0].reset();
               $(this).parsley().reset();

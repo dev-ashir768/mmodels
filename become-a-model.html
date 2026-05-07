@@ -1045,12 +1045,21 @@
             processData: false,
             contentType: false,
             success: function (response) {
-              Swal.fire({
-                title: "Success!",
-                text: "Your application has been submitted successfully.",
-                icon: "success",
-                confirmButtonColor: "#C50A76",
-              });
+              if (response.status === 'partial_success' || (response.email_status && !response.email_status.admin)) {
+                Swal.fire({
+                  title: "Partial Success",
+                  text: "Your application was saved, but we encountered a temporary issue sending the notification email. Our team will still see your submission in our records.",
+                  icon: "warning",
+                  confirmButtonColor: "#C50A76",
+                });
+              } else {
+                Swal.fire({
+                  title: "Success!",
+                  text: "Your application has been submitted successfully.",
+                  icon: "success",
+                  confirmButtonColor: "#C50A76",
+                });
+              }
               $form[0].reset();
               $form.parsley().reset();
             },
