@@ -37,7 +37,7 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
     // Attempt 1: SSL on 465
     try {
         $mail->isSMTP();
-        $mail->Host = 'mail.mmodels.ca';
+        $mail->Host = 'smtp.mmodels.ca';
         $mail->SMTPAuth = true;
         $mail->Username = $smtp_user;
         $mail->Password = $smtp_pass;
@@ -269,6 +269,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Build Admin Email Body (Note: $details_html and $logo_url are already prepared)
     $admin_email_content = "
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset='UTF-8'>
+        <title>New Application Received</title>
+    </head>
     <body style='margin: 0; padding: 0; background-color: #f4f7f9;'>
         <table width='100%' border='0' cellspacing='0' cellpadding='0' style='background-color: #f4f7f9; padding: 40px 20px;'>
             <tr>
@@ -300,7 +306,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </td>
             </tr>
         </table>
-    </body>";
+    </body>
+    </html>";
 
     debugLog("Attempting Admin Email to $admin_email");
     $admin_res = sendEmail($admin_email, $admin_subject, $admin_email_content, 'M Models Scout', $attachment_paths);
@@ -326,6 +333,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $greet_subject = "Thank you for applying to M Models!";
 
         $greet_email_content = "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <title>$greet_subject</title>
+        </head>
         <body style='margin: 0; padding: 0; background-color: #f4f7f9;'>
             <table width='100%' border='0' cellspacing='0' cellpadding='0' style='background-color: #f4f7f9; padding: 40px 20px;'>
                 <tr>
@@ -367,7 +380,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </td>
                 </tr>
             </table>
-        </body>";
+        </body>
+        </html>";
 
         $applicant_res = sendEmail($applicant_email, $greet_subject, $greet_email_content);
         $applicant_email_sent = $applicant_res['success'];
