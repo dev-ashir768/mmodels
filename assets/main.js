@@ -802,6 +802,10 @@ const i18nDict = {
     fr: "Indique un champ obligatoire pour la candidature",
     ja: "申請の必須フィールドを示します",
   },
+  "view all video work": {
+    fr: "voir tous les travaux vidéo",
+    ja: "すべてのビデオ作品を見る",
+  },
 };
 
 function applyLanguage(lang) {
