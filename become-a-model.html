@@ -669,34 +669,10 @@
                 >How did you hear about us?
                 <span class="required">*</span></label
               >
-              <select
-                id="referral-select"
-                name="referral_source"
-                required
-                class="w-full form-input px-4 py-3 text-sm rounded-md bg-white border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-              >
-                <option value="">HOW DID YOU HEAR ABOUT US?</option>
-                <option value="Billboard">Billboard</option>
-                <option value="Friend">Friend</option>
-                <option value="Internet">Internet</option>
-                <option value="Newspaper">Newspaper</option>
-                <option value="Radio">Radio</option>
-                <option value="Scout">Scout</option>
-                <option value="Social Media">Social Media</option>
-                <option value="TV">TV</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            <!-- Other Referral Input -->
-            <div id="other-referral-container" class="hidden animate-fade-in">
-              <label class="form-label"
-                >Please specify <span class="required">*</span></label
-              >
               <input
                 type="text"
-                id="other-referral-input"
-                name="referral_other"
+                name="referral_source"
+                required
                 class="w-full form-input px-4 py-3 text-sm rounded-md"
                 placeholder="How did you hear about us?"
               />
@@ -1025,8 +1001,6 @@
               });
               $form[0].reset();
               $form.parsley().reset();
-              $("#other-referral-container").addClass("hidden");
-              $("#other-referral-input").removeAttr("required").val("");
             },
             error: function () {
               Swal.fire({
@@ -1042,16 +1016,7 @@
           });
         });
 
-        // Referral "Other" logic
-        $("#referral-select").on("change", function () {
-          if ($(this).val() === "Other") {
-            $("#other-referral-container").removeClass("hidden");
-            $("#other-referral-input").attr("required", true);
-          } else {
-            $("#other-referral-container").addClass("hidden");
-            $("#other-referral-input").removeAttr("required").val("");
-          }
-        });
+
       });
     </script>
     <!-- Video Lightbox Script -->

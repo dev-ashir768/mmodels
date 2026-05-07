@@ -480,10 +480,6 @@
 
               $(this)[0].reset();
               $(this).parsley().reset();
-              if ($("#other-referral-container").length) {
-                $("#other-referral-container").addClass("hidden");
-                $("#other-referral-input").removeAttr("required").val("");
-              }
             },
             error: () => {
               Swal.fire({
@@ -499,16 +495,7 @@
           });
         });
 
-        // Referral "Other" logic
-        $("#referral-select").on("change", function () {
-          if ($(this).val() === "Other") {
-            $("#other-referral-container").removeClass("hidden");
-            $("#other-referral-input").attr("required", true);
-          } else {
-            $("#other-referral-container").addClass("hidden");
-            $("#other-referral-input").removeAttr("required").val("");
-          }
-        });
+
       });
     </script>
   </body>
