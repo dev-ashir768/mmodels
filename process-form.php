@@ -6,12 +6,8 @@
 
 // Configuration
 // We dynamically set the csv_file later based on form_type
-$smtp_host = 'mail.canadianfashionw.com';
-$smtp_user = 'info@canadianfashionw.com';
-$smtp_pass = 'Canadianfashionp2026!';
-
-// $smtp_user = 'info@mmodels.ca';
-// $smtp_pass = 'Shahzab889!889&!!!!!';
+$smtp_user = 'info@mmodels.ca';
+$smtp_pass = 'Shahzab889!889&!!!!!';
 
 // Debug Logger
 function debugLog($msg)
@@ -34,19 +30,22 @@ require 'includes/db.php';
 // Helper function to send email via SMTP
 function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachments = [])
 {
-    global $smtp_host, $smtp_user, $smtp_pass;
+    global $smtp_user, $smtp_pass;
     $mail = new PHPMailer(true);
-    
+    $last_error = "";
+
+    // Attempt 1: SSL on 465
     try {
         $mail->isSMTP();
-        $mail->Host = $smtp_host;
+        $mail->Host = 'smtp.mmodels.ca';
         $mail->SMTPAuth = true;
         $mail->Username = $smtp_user;
         $mail->Password = $smtp_pass;
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
-        
-        // Bypass SSL certificate verification (common for custom mail servers)
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port = 465;
+        $mail->Timeout = 30; // Increased timeout for attachments
+
+        // Add SSL options for compatibility with some shared hosts
         $mail->SMTPOptions = array(
             'ssl' => array(
                 'verify_peer' => false,
@@ -57,7 +56,7 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
 
         $mail->setFrom($smtp_user, $from_name);
         $mail->addAddress($to);
-        $mail->addReplyTo($smtp_user, 'M Models');
+        $mail->addReplyTo('info@mmodels.ca', 'M Models');
 
         if (!empty($attachments)) {
             foreach ($attachments as $file) {
@@ -73,13 +72,39 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
         $mail->AltBody = strip_tags(str_replace(['<br>', '<br/>', '</p>'], "\n", $message));
 
         $mail->send();
-        debugLog("Email sent successfully to $to via TLS/587");
+        debugLog("Email sent successfully to $to via SSL/465");
         return ['success' => true];
     } catch (Exception $e) {
         $last_error = $mail->ErrorInfo;
-        debugLog("CRITICAL: Email failed for $to: $last_error");
-        error_log("Email could not be sent. Mailer Error: $last_error");
-        return ['success' => false, 'error' => $last_error];
+        debugLog("SSL/465 Failed for $to: $last_error. Retrying with TLS/587...");
+
+        // Attempt 2: TLS on 587
+        try {
+            $mail->clearAddresses();
+            $mail->clearAttachments();
+
+            $mail->Port = 587;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Timeout = 30;
+
+            $mail->addAddress($to);
+            if (!empty($attachments)) {
+                foreach ($attachments as $file) {
+                    if (is_string($file) && file_exists($file)) {
+                        $mail->addAttachment($file);
+                    }
+                }
+            }
+
+            $mail->send();
+            debugLog("Email sent successfully to $to via TLS/587");
+            return ['success' => true];
+        } catch (Exception $e2) {
+            $last_error = $mail->ErrorInfo;
+            debugLog("CRITICAL: Email failed for $to: $last_error");
+            error_log("Email could not be sent. Mailer Error: $last_error");
+            return ['success' => false, 'error' => $last_error];
+        }
     }
 }
 
@@ -201,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         fputcsv($file_handle, $row);
         fflush($file_handle);
         fclose($file_handle);
-        chmod($csv_file, 0666); 
+        chmod($csv_file, 0666);
         debugLog("CSV Write Success: $csv_file");
     } else {
         debugLog("CSV Write FAILED: Could not open $csv_file");
@@ -302,7 +327,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $applicant_email = $data['email'] ?? ($data['E-mail'] ?? ($_POST['email'] ?? ''));
     $applicant_email_sent = false;
     $applicant_error = "";
-    
+
     if (!empty($applicant_email)) {
         $first_name = $data['first_name'] ?? ($data['firstName'] ?? 'there');
         $greet_subject = "Thank you for applying to M Models!";
