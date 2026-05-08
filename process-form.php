@@ -36,6 +36,7 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
 
     // Attempt 1: SSL on 465
     try {
+        $mail->SMTPDebug = 2;
         $mail->isSMTP();
         $mail->Host = 'smtp.mmodels.ca';
         $mail->SMTPAuth = true;
@@ -56,7 +57,16 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
 
         $mail->setFrom($smtp_user, $from_name);
         $mail->addAddress($to);
-        $mail->addReplyTo('info@mmodels.ca', 'M Models');
+        $mail->addReplyTo($smtp_user, 'M Models');
+
+        // Log email details
+        debugLog("EMAIL DETAILS:");
+        debugLog("  From: $smtp_user ($from_name)");
+        debugLog("  To: $to");
+        debugLog("  ReplyTo: $smtp_user");
+        debugLog("  Subject: $subject");
+        debugLog("  Message Length: " . strlen($message) . " chars");
+        debugLog("  Message Type: " . ($mail->ContentType));
 
         if (!empty($attachments)) {
             foreach ($attachments as $file) {
@@ -148,6 +158,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
     unset($data['form_type']);
 
+    // Debug: Log all incoming POST data
+    debugLog("=== NEW SUBMISSION START ===");
+    debugLog("Form Type: $form_type");
+    debugLog("All POST Data Keys: " . implode(', ', array_keys($data)));
+    debugLog("Full POST Data: " . json_encode($data));
+
+    // Check for email in various fields
+    $debug_email = '';
+    if (!empty($data['email']))
+        $debug_email = "email={$data['email']}";
+    elseif (!empty($data['E-mail']))
+        $debug_email = "E-mail={$data['E-mail']}";
+    elseif (!empty($data['Email']))
+        $debug_email = "Email={$data['Email']}";
+    elseif (!empty($_POST['email']))
+        $debug_email = "_POST[email]={$_POST['email']}";
+    else
+        $debug_email = "NO EMAIL FOUND";
+
+    debugLog("Email Field Check: $debug_email");
     debugLog("New Submission: $form_type from " . ($data['email'] ?? 'unknown'));
 
     // --- Continue with File Uploads ---
@@ -324,7 +354,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     debugLog("Admin Email Final Status: " . ($admin_email_sent ? "SUCCESS" : "FAILED"));
 
     // 2. Applicant Greeting Email
-    $applicant_email = $data['email'] ?? ($data['E-mail'] ?? ($_POST['email'] ?? ''));
+    // Try multiple common email field names
+    $applicant_email = '';
+    $email_field_names = ['email', 'E-mail', 'Email', 'contact_email', 'user_email', 'applicant_email'];
+    foreach ($email_field_names as $field) {
+        if (!empty($data[$field])) {
+            $applicant_email = $data[$field];
+            break;
+        }
+    }
+
+    debugLog("Captured Applicant Email: $applicant_email");
     $applicant_email_sent = false;
     $applicant_error = "";
 
@@ -354,8 +394,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <h1 style='font-family: sans-serif; font-size: 28px; font-weight: 700; color: #C50A76; margin: 0 0 20px 0;'>Hello $first_name,</h1>
                                     <p style='font-family: sans-serif; font-size: 16px; line-height: 1.6; color: #333333; margin: 0 0 25px 0;'>
                                         " . ($form_type === 'Influencer Registration'
-            ? "Thank you for applying to join the <strong>M Models Influencer Network</strong>. We’ve received your portfolio and social analytics, and our creative team is excited to review your content style."
-            : "Thank you for choosing <strong>M Models & Talent Agency</strong>. We’ve successfully received your application and our scouts are eager to review your profile.") . "
+            ? "Thank you for applying to join the <strong>M Models Influencer Network</strong>. We've received your portfolio and social analytics, and our creative team is excited to review your content style."
+            : "Thank you for choosing <strong>M Models & Talent Agency</strong>. We've successfully received your application and our scouts are eager to review your profile.") . "
                                     </p>
                                     <p style='font-family: sans-serif; font-size: 15px; color: #666666; margin: 0 0 35px 0;'>
                                         " . ($form_type === 'Influencer Registration'
@@ -387,6 +427,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $applicant_email_sent = $applicant_res['success'];
         $applicant_error = $applicant_res['error'] ?? "";
         debugLog("Applicant Email Status: " . ($applicant_email_sent ? "SUCCESS" : "FAILED"));
+
+        // Also send a plain text test email for verification
+        if ($applicant_email_sent) {
+            debugLog("Sending PLAIN TEXT confirmation to $applicant_email as fallback...");
+            $plain_text_subject = "M Models - Application Received";
+            $plain_text_body = "Hello " . $first_name . ",\n\n";
+            $plain_text_body .= "Thank you for your application to M Models.\n";
+            $plain_text_body .= "We have received your submission and our team will review it shortly.\n\n";
+            $plain_text_body .= "Submitted: " . $timestamp . "\n";
+            $plain_text_body .= "Form Type: " . $form_type . "\n\n";
+            $plain_text_body .= "Best regards,\nM Models Team\nwww.mmodels.ca";
+
+            $plain_test = sendEmail($applicant_email, $plain_text_subject, $plain_text_body);
+            debugLog("Plain Text Email Result: " . ($plain_test['success'] ? "SENT" : "FAILED - " . $plain_test['error']));
+        }
     } else {
         debugLog("Applicant Email skipped: No email provided in data.");
     }
@@ -408,7 +463,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'server_limits' => [
                 'upload_max_filesize' => $max_upload,
                 'post_max_size' => $max_post
-            ]
+            ],
+            'all_post_keys' => array_keys($data),
+            'email_field_found' => !empty($applicant_email),
+            'captured_applicant_email' => $applicant_email,
+            'form_type' => $form_type
         ]
     ]);
     exit;
