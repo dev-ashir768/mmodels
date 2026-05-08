@@ -694,14 +694,7 @@
         if (idx < 0) idx = sliderImages.length - 1;
         if (idx >= sliderImages.length) idx = 0;
         sliderIndex = idx;
-        var $img = $("#modalImg");
-        $img.css("opacity", 0);
-        var preload = new Image();
-        preload.onload = function () {
-          $img.attr("src", sliderImages[sliderIndex]);
-          $img.css("opacity", 1);
-        };
-        preload.src = sliderImages[sliderIndex];
+        $("#modalImg").attr("src", sliderImages[sliderIndex]);
         $(".slider-dot").removeClass("active");
         $('.slider-dot[data-idx="' + sliderIndex + '"]').addClass("active");
       }
