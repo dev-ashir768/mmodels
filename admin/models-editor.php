@@ -27,9 +27,11 @@ if ($id > 0) {
 // Handle Save
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['model_name']);
-    $category = $_POST['model_category'];
-    
+    if (empty($_POST) && isset($_SERVER['CONTENT_LENGTH']) && $_SERVER['CONTENT_LENGTH'] > 0) {
+        $error = "The images you selected exceed the server's maximum upload limit (" . ini_get('post_max_size') . "). Please upload fewer images at once.";
+    } else {
+        $name = isset($_POST['model_name']) ? trim($_POST['model_name']) : '';
+        $category = isset($_POST['model_category']) ? $_POST['model_category'] : 'Women';
     // Process dynamic measurements
     $measurements = [];
     if (isset($_POST['meas_keys']) && isset($_POST['meas_vals'])) {
@@ -88,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         header('Location: index.php?tab=models');
         exit;
+    }
     }
 }
 ?>
@@ -244,6 +247,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             previewContainer.innerHTML = ''; // Clear old previews
             
             if (input.files && input.files.length > 0) {
+                // Validation logic
+                let totalSize = 0;
+                const maxSingleFileSize = 5 * 1024 * 1024; // 5MB
+                const maxTotalSize = 8 * 1024 * 1024; // 8MB safe limit
+                let hasError = false;
+
+                for (let i = 0; i < input.files.length; i++) {
+                    const file = input.files[i];
+                    totalSize += file.size;
+                    if (file.size > maxSingleFileSize) {
+                        alert(`Image "${file.name}" is too large! Each image must be under 5MB.`);
+                        hasError = true;
+                        break;
+                    }
+                }
+
+                if (!hasError && totalSize > maxTotalSize) {
+                    alert(`The total size of selected images exceeds the safe 8MB server limit. Please select fewer images at once.`);
+                    hasError = true;
+                }
+
+                if (hasError) {
+                    input.value = ''; // Clear selection
+                    text.innerHTML = 'Click or drag multiple images to upload';
+                    previewContainer.classList.add('hidden');
+                    return;
+                }
+
                 text.innerHTML = `<span class="text-primary font-bold">${input.files.length} new file(s) selected</span> - Ready to upload on save`;
                 previewContainer.classList.remove('hidden');
                 
