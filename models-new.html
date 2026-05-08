@@ -1,0 +1,1614 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fashion Models Portfolio | M Models & Talent Agency</title>
+    <meta
+      name="description"
+      content="Browse our diverse portfolio of professional fashion models. Representing women, men, and kids across our global locations at M Models & Talent Agency."
+    />
+    <meta
+      name="keywords"
+      content="Fashion Models, Model Portfolio, Women Models, Men Models, Kids Models, M Models Talent"
+    />
+    <link rel="icon" href="/assets/others/logo.png" type="image/png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+            colors: { primary: "#C50A76" },
+          },
+        },
+      };
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <style>
+      .model-card {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 3/4;
+        cursor: pointer;
+        border-radius: 1.5rem;
+        background: #f1f5f9;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .model-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+      .model-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.8) 0%,
+          transparent 60%
+        );
+        opacity: 0.6;
+        transition: all 0.5s ease;
+      }
+      .model-card:hover .model-overlay {
+        opacity: 1;
+        background: linear-gradient(
+          to top,
+          #c50a76 0%,
+          rgba(0, 0, 0, 0.4) 100%
+        );
+      }
+      .model-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 2rem;
+        color: white;
+        z-index: 2;
+      }
+
+      /* Proper Modal UI */
+      #modelModal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(12px);
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+      }
+      .modal-content {
+        background: white;
+        width: 100%;
+        max-width: 950px;
+        border-radius: 2.5rem;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+        animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        max-height: 90vh;
+      }
+      @media (min-width: 768px) {
+        .modal-content {
+          flex-direction: row;
+          height: 600px;
+          max-height: none;
+        }
+      }
+      @keyframes modalPop {
+        from {
+          opacity: 0;
+          transform: scale(0.9) translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+      .modal-img-container {
+        width: 100%;
+        height: 300px;
+        background: #f8fafc;
+        flex-shrink: 0;
+        position: relative;
+        overflow: hidden;
+      }
+      @media (min-width: 768px) {
+        .modal-img-container {
+          width: 45%;
+          height: 100%;
+        }
+      }
+      .modal-img-container img {
+        transition: opacity 0.3s ease;
+      }
+      .slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 2.5rem;
+        height: 2.5rem;
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        color: #1e293b;
+        cursor: pointer;
+        z-index: 5;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+      }
+      .slider-btn:hover {
+        background: #c50a76;
+        color: white;
+      }
+      .slider-btn.prev {
+        left: 0.75rem;
+      }
+      .slider-btn.next {
+        right: 0.75rem;
+      }
+      .slider-dots {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0.4rem;
+        z-index: 5;
+      }
+      .slider-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+      }
+      .slider-dot.active {
+        background: #c50a76;
+        transform: scale(1.3);
+      }
+      .modal-body {
+        padding: 2rem;
+        flex: 1;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+      @media (min-width: 768px) {
+        .modal-body {
+          padding: 3.5rem;
+        }
+      }
+      .close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        color: #1e293b;
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+      @media (min-width: 768px) {
+        .close-modal {
+          top: 1.5rem;
+          right: 1.5rem;
+          width: 3rem;
+          height: 3rem;
+          font-size: 1.25rem;
+        }
+      }
+      .close-modal:hover {
+        background: #c50a76;
+        color: white;
+        transform: rotate(90deg);
+      }
+
+      .measurement-grid {
+        display: grid;
+        grid-template-cols: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+      @media (min-width: 768px) {
+        .measurement-grid {
+          gap: 2.5rem;
+        }
+      }
+      .m-item {
+        position: relative;
+        padding-left: 1.5rem;
+      }
+      .m-item::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.25rem;
+        bottom: 0.25rem;
+        width: 3px;
+        background: #c50a76;
+        border-radius: 2px;
+        opacity: 0.3;
+      }
+      .m-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        font-weight: 800;
+        color: #94a3b8;
+        margin-bottom: 0.25rem;
+      }
+      .m-val {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #0f172a;
+        font-family: "Playfair Display", serif;
+      }
+    </style>
+  </head>
+  <body
+    class="antialiased overflow-x-hidden selection:bg-primary selection:text-white"
+  >
+    <!-- Navbar -->
+    <nav
+      id="navbar"
+      class="fixed w-full z-50 glass-nav transition-all duration-300"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-24">
+          <div class="flex-shrink-0 flex items-center">
+            <a href="index.html" class="block"
+              ><img
+                src="/assets/others/logo.png"
+                alt="M Models"
+                class="h-10 md:h-12 w-auto object-contain"
+            /></a>
+          </div>
+          <div
+            class="hidden xl:flex items-center space-x-8 text-xs font-bold uppercase tracking-wider"
+          >
+            <a href="index.html" class="menu-link text-gray-600">Home</a>
+
+            <!-- Talent -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center active text-primary"
+                >Talent <i class="fas fa-chevron-down nav-arrow"></i
+              ></span>
+              <div class="dropdown-menu">
+                <a href="models.html" class="dropdown-item active"
+                  >Models <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="influencers.html" class="dropdown-item"
+                  >Influencers <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="talent-introduction.html" class="dropdown-item"
+                  >Introduction <i class="fas fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- Locations -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600"
+                >Locations <i class="fas fa-chevron-down nav-arrow"></i
+              ></span>
+              <div class="dropdown-menu">
+                <a href="toronto.html?lang=en" class="dropdown-item"
+                  >Toronto <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="vancouver.html?lang=en" class="dropdown-item"
+                  >Vancouver <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="calgary.html?lang=en" class="dropdown-item"
+                  >Calgary <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="japan.html?lang=ja" class="dropdown-item"
+                  >Japan <i class="fas fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- Work -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600"
+                >Our Work <i class="fas fa-chevron-down nav-arrow"></i
+              ></span>
+              <div class="dropdown-menu">
+                <a href="our-works.html" class="dropdown-item"
+                  >Showcase <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="video.html" class="dropdown-item"
+                  >Video <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="clients.html" class="dropdown-item"
+                  >Our Clients <i class="fas fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- News -->
+            <a href="news.php" class="menu-link text-gray-600">News</a>
+
+            <!-- Join/Hire -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600"
+                >Join Us <i class="fas fa-chevron-down nav-arrow"></i
+              ></span>
+              <div class="dropdown-menu">
+                <a href="become-a-model.html" class="dropdown-item"
+                  >Become a Model <i class="fas fa-arrow-right"></i
+                ></a>
+                <!-- <a href="application.html" class="dropdown-item"
+                  >General Apply <i class="fas fa-arrow-right"></i
+                ></a> -->
+                <a href="influencer-registration.html" class="dropdown-item"
+                  >Influencer Registeration <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="hire-a-model.html" class="dropdown-item"
+                  >Hire a Model <i class="fas fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- More -->
+            <div class="dropdown-wrapper group">
+              <span class="menu-link flex items-center text-gray-600"
+                >Contact <i class="fas fa-chevron-down nav-arrow"></i
+              ></span>
+              <div class="dropdown-menu">
+                <a href="faq.html" class="dropdown-item"
+                  >FAQ's <i class="fas fa-arrow-right"></i
+                ></a>
+                <a href="contact.html" class="dropdown-item"
+                  >Contact Us <i class="fas fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- Language Switcher -->
+            <div class="dropdown-wrapper group">
+              <span
+                class="menu-link flex items-center text-gray-600 switcher-active-glow px-3 py-1.5"
+                ><i class="fas fa-globe mr-2"></i>
+                <span class="nav-current-lang">EN</span>
+                <i class="fas fa-chevron-down nav-arrow"></i
+              ></span>
+              <div class="dropdown-menu">
+                <a
+                  href="javascript:void(0)"
+                  onclick="applyLanguage('en')"
+                  class="dropdown-item"
+                  >English</a
+                >
+                <a
+                  href="javascript:void(0)"
+                  onclick="applyLanguage('fr')"
+                  class="dropdown-item"
+                  >Français</a
+                >
+                <a
+                  href="javascript:void(0)"
+                  onclick="applyLanguage('ja')"
+                  class="dropdown-item"
+                  >日本語</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="xl:hidden flex items-center">
+            <button id="mobile-btn" class="text-gray-600 hover:text-primary">
+              <i class="fas fa-bars text-2xl"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        id="mobile-menu"
+        class="hidden xl:hidden bg-white border-t border-gray-100 shadow-xl pb-4"
+      >
+        <div
+          class="px-8 pt-2 pb-8 flex flex-col space-y-0.5 text-sm font-bold uppercase tracking-wider"
+        >
+          <a href="index.html" class="mobile-link"
+            >Home <i class="fas fa-chevron-right"></i
+          ></a>
+
+          <div class="mobile-section-title">Talent</div>
+          <a href="models.html" class="mobile-link active"
+            >Models <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="influencers.html" class="mobile-link"
+            >Influencers <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="talent-introduction.html" class="mobile-link"
+            >Introduction <i class="fas fa-chevron-right"></i
+          ></a>
+
+          <div class="mobile-section-title">Locations</div>
+          <a href="toronto.html?lang=en" class="mobile-link"
+            >Toronto <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="vancouver.html?lang=en" class="mobile-link"
+            >Vancouver <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="calgary.html?lang=en" class="mobile-link"
+            >Calgary <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="japan.html?lang=ja" class="mobile-link"
+            >Japan <i class="fas fa-chevron-right"></i
+          ></a>
+
+          <div class="mobile-section-title">Our Work</div>
+          <a href="our-works.html" class="mobile-link"
+            >Showcase <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="video.html" class="mobile-link"
+            >Video <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="clients.html" class="mobile-link"
+            >Our Clients <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="news.php" class="mobile-link"
+            >News <i class="fas fa-chevron-right"></i
+          ></a>
+
+          <div class="mobile-section-title">Join & Booking</div>
+          <a href="become-a-model.html" class="mobile-link"
+            >Become a Model <i class="fas fa-chevron-right"></i
+          ></a>
+          <!-- <a href="application.html" class="mobile-link"
+            >Apply <i class="fas fa-chevron-right"></i
+          ></a> -->
+          <a href="influencer-registration.html" class="mobile-link"
+            >Influencer Registeration <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="hire-a-model.html" class="mobile-link"
+            >Hire a Model <i class="fas fa-chevron-right"></i
+          ></a>
+
+          <div class="mobile-section-title">Information</div>
+          <a href="faq.html" class="mobile-link"
+            >FAQ's <i class="fas fa-chevron-right"></i
+          ></a>
+          <a href="contact.html" class="mobile-link"
+            >Contact Us <i class="fas fa-chevron-right"></i
+          ></a>
+
+          <div class="mobile-section-title">Language</div>
+          <div class="flex gap-2 mt-2">
+            <button
+              onclick="applyLanguage('en')"
+              class="flex-1 py-3 border border-gray-200 rounded-lg text-[10px] font-bold hover:bg-primary hover:text-white transition-all"
+            >
+              EN
+            </button>
+            <button
+              onclick="applyLanguage('fr')"
+              class="flex-1 py-3 border border-gray-200 rounded-lg text-[10px] font-bold hover:bg-primary hover:text-white transition-all"
+            >
+              FR
+            </button>
+            <button
+              onclick="applyLanguage('ja')"
+              class="flex-1 py-3 border border-gray-200 rounded-lg text-[10px] font-bold hover:bg-primary hover:text-white transition-all"
+            >
+              JA
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="pt-40 pb-16 bg-white border-b border-gray-200">
+      <div class="text-center container mx-auto px-4">
+        <h1
+          class="text-primary font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-4"
+        >
+          Portfolio
+        </h1>
+        <h2
+          class="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6 uppercase"
+        >
+          Our Models
+        </h2>
+        <div class="h-1 w-24 bg-primary mx-auto mb-10"></div>
+        <!-- Filter Category -->
+        <div
+          class="flex justify-center space-x-6 md:space-x-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]"
+          id="portfolio-filters"
+        >
+          <a
+            href="#"
+            data-target="women"
+            class="text-primary border-b-2 border-primary pb-2 filter-btn transition-all"
+            >Women</a
+          >
+          <a
+            href="#"
+            data-target="men"
+            class="text-gray-400 hover:text-gray-900 transition pb-2 filter-btn transition-all"
+            >Men</a
+          >
+          <a
+            href="#"
+            data-target="kids"
+            class="text-gray-400 hover:text-gray-900 transition pb-2 filter-btn transition-all"
+            >Kids</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <!-- Modal -->
+    <div id="modelModal" class="hidden">
+      <div class="modal-content">
+        <span class="close-modal"><i class="fas fa-times"></i></span>
+        <div class="modal-img-container">
+          <img
+            src=""
+            id="modalImg"
+            class="w-full h-full object-cover object-top"
+          />
+          <button class="slider-btn prev" id="sliderPrev" style="display: none">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="slider-btn next" id="sliderNext" style="display: none">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <div class="slider-dots" id="sliderDots"></div>
+        </div>
+        <div class="modal-body">
+          <div class="mb-8 md:mb-12">
+            <h2
+              id="modalName"
+              class="font-serif text-3xl md:text-5xl font-bold text-gray-900 mb-2"
+            ></h2>
+            <p
+              id="modalCategory"
+              class="text-primary font-bold uppercase tracking-[0.3em] text-[9px] md:text-[10px]"
+            ></p>
+          </div>
+          <div class="measurement-grid flex-1" id="modalMeasurements"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="py-12 bg-gray-50 min-h-screen">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          id="women"
+          class="model-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
+        >
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Tetiana',
+                'Female',
+                {
+                  Height: '5’7',
+                  Chest: '31”',
+                  Waist: '23”',
+                  Hips: '35”',
+                  'Shoe Size': '7.5-8',
+                  'Hair Color': 'blonde',
+                  'Eye Color': 'blue',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/women-models/tetiana.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Tetiana
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Raya',
+                'Female',
+                {
+                  Height: '5’5',
+                  Chest: '32C',
+                  Waist: '25',
+                  Hips: '30',
+                  'Shoe Size': '7',
+                  'Hair Color': 'Black',
+                  'Eye Color': 'Brown',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/women-models/raya.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Raya
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Paula',
+                'Female',
+                {
+                  Height: '5’5',
+                  Chest: '34B',
+                  Waist: '26',
+                  Hips: '37 In',
+                  'Shoe Size': '(US SIZE): 6.5',
+                  'Hair Color': 'Honey',
+                  'Eye Color': 'Hazel',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/women-models/paula.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Paula
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Nadia',
+                'Female',
+                {
+                  Height: '5’3',
+                  Chest: '34.5',
+                  Waist: '26',
+                  Hips: '36',
+                  'Shoe Size': '7.5 W',
+                  'Hair Color': 'Dark Brown',
+                  'Eye Color': 'Dark Brown',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/women-models/nadia.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Nadia
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Chelsea',
+                'Female',
+                {
+                  Height: '173cm 5’8”',
+                  Chest: '34',
+                  Waist: '26',
+                  Hips: '37',
+                  'Shoe Size': '8',
+                  'Hair Color': 'Brown',
+                  'Eye Color': 'Brown',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/women-models/chelsea.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Chelsea
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Alisa',
+                'Female',
+                {
+                  Height: '162 cm / 5’4”',
+                  Chest: '32”',
+                  Waist: '25”',
+                  Hips: '36”',
+                  'Shoe Size': '7.5 (EU 38)',
+                  'Hair Color': 'Dark Brown',
+                  'Eye Color': 'Dark Brown',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/women-models/alisa.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Alisa
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            data-images='["/assets/women-models/Alanna-1.JPG","/assets/women-models/Alanna.JPG","/assets/women-models/Alanna-2.JPG"]'
+            onclick="viewSizing('Alanna','Female',{Height:'5ft 4in',Chest:'32B',Waist:'25',Hips:'28','Shoe Size':'6','Hair Color':'Blonde','Eye Color':'Blue'},this)"
+          >
+            <img loading="lazy" decoding="async" src="/assets/women-models/Alanna-1.JPG" alt="Model" class="w-full h-full object-cover object-top" />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">Alanna</h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            data-images='["/assets/women-models/HARMEET.JPG","/assets/women-models/HARMEET-1.JPG","/assets/women-models/HARMEET-2.JPG"]'
+            onclick="viewSizing('Harmeet','Female',{Height:'5ft 7in',Chest:'34D',Waist:'29',Hips:'40','Shoe Size':'6.5','Hair Color':'Brown','Eye Color':'Black'},this)"
+          >
+            <img loading="lazy" decoding="async" src="/assets/women-models/HARMEET.JPG" alt="Model" class="w-full h-full object-cover object-top" />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">Harmeet</h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            data-images='["/assets/women-models/Chloe.JPG","/assets/women-models/Chloe-1.JPG","/assets/women-models/Chloe-2.JPG"]'
+            onclick="viewSizing('Chloe','Female',{Height:'5ft 7in',Chest:'34B',Waist:'26',Hips:'35','Shoe Size':'8','Hair Color':'Light Brown','Eye Color':'Blue'},this)"
+          >
+            <img loading="lazy" decoding="async" src="/assets/women-models/Chloe.JPG" alt="Model" class="w-full h-full object-cover object-top" />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">Chloe</h3>
+            </div>
+          </div>
+          <!-- 
+<div class="model-card">
+  <img
+    loading="lazy"
+    decoding="async"
+    src="/assets/women-models/KAIRA.jpg"
+    alt="Model"
+    class="w-full h-full object-cover object-top"
+  />
+  <div class="model-overlay"></div>
+  <div class="model-info">
+    <h3 class="font-serif text-2xl font-bold text-white mb-1">Kaira</h3>
+  </div>
+</div>
+<div class="model-card">
+  <img
+    loading="lazy"
+    decoding="async"
+    src="/assets/women-models/zining.jpg"
+    alt="Model"
+    class="w-full h-full object-cover object-top"
+  />
+  <div class="model-overlay"></div>
+  <div class="model-info">
+    <h3 class="font-serif text-2xl font-bold text-white mb-1">Zining</h3>
+  </div>
+</div>
+<div class="model-card">
+  <img
+    loading="lazy"
+    decoding="async"
+    src="/assets/women-models/SOPHIA.jpg"
+    alt="Model"
+    class="w-full h-full object-cover object-top"
+  />
+  <div class="model-overlay"></div>
+  <div class="model-info">
+    <h3 class="font-serif text-2xl font-bold text-white mb-1">Sophia</h3>
+  </div>
+</div>
+<div class="model-card">
+  <img
+    loading="lazy"
+    decoding="async"
+    src="/assets/women-models/SHEA.jpg"
+    alt="Model"
+    class="w-full h-full object-cover object-top"
+  />
+  <div class="model-overlay"></div>
+  <div class="model-info">
+    <h3 class="font-serif text-2xl font-bold text-white mb-1">Shea</h3>
+  </div>
+</div>
+<div class="model-card">
+  <img
+    loading="lazy"
+    decoding="async"
+    src="/assets/women-models/REENA.jpg"
+    alt="Model"
+    class="w-full h-full object-cover object-top"
+  />
+  <div class="model-overlay"></div>
+  <div class="model-info">
+    <h3 class="font-serif text-2xl font-bold text-white mb-1">Reena</h3>
+  </div>
+</div> -->
+        </div>
+
+        <div
+          id="men"
+          class="model-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 hidden"
+        >
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Sumit',
+                'Male',
+                {
+                  Height: '5’10',
+                  Chest: '42 In',
+                  Waist: '30 In',
+                  'Shoe Size': '10.5 US',
+                  'Hair Color': 'Black',
+                  'Eye Color': 'Brown',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/men-models/sumit.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Sumit
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Stanley',
+                'Male',
+                {
+                  Height: '5’9',
+                  Chest: '42 In',
+                  Waist: '33 In',
+                  'Shoe Size': '9.5 US',
+                  'Hair Color': 'Black',
+                  'Eye Color': 'Black',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/men-models/stanley.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Stanley
+              </h3>
+            </div>
+          </div>
+          <!-- <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Lucas',
+                'Male',
+                {
+                  Height: '6’2.5”',
+                  Chest: '41”',
+                  Waist: '32”',
+                  Hips: '34”',
+                  'Shoe Size': '11',
+                  'Hair Color': 'Black',
+                  'Eye Color': 'Hazel',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/men-models/lucas.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Lucas
+              </h3>
+            </div>
+          </div> -->
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Julian',
+                'Male',
+                {
+                  Height: '6’1',
+                  Chest: '38 In',
+                  Waist: '30 In',
+                  Hips: '42 In',
+                  'Shoe Size': '12 US',
+                  'Hair Color': 'Dark Brown',
+                  'Eye Color': 'Green',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/men-models/julian.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Julian
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Jamie',
+                'Male',
+                {
+                  Height: '5’11',
+                  Chest: '42',
+                  Waist: '32',
+                  Hips: '39',
+                  'Shoe Size': '11',
+                  'Hair Color': 'brown',
+                  'Eye Color': 'brown',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/men-models/jamie.JPG"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Jamie
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Ama',
+                'Male',
+                {
+                  Height: '5’9',
+                  Chest: '38 In',
+                  Waist: '29 In',
+                  Hips: '37 In',
+                  'Shoe Size': '9 US',
+                  'Hair Color': 'Black',
+                  'Eye Color': 'Brown',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/men-models/ama.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">Ama</h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            data-images='["/assets/men-models/tristan-1.JPG","/assets/men-models/tristan-2.JPG"]'
+            onclick="
+              viewSizing(
+                'Tristan',
+                'Male',
+                {
+                  Height: '5 ft 10 in',
+                  Weight: '116 Lbs',
+                  Chest: '30 In',
+                  Waist: '26 In',
+                  Neck: '14 In',
+                  'Shoe Size': '9 US',
+                  'Hair Color': 'Black',
+                  'Eye Color': 'Brown',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/men-models/tristan-1.JPG"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Tristan
+              </h3>
+            </div>
+          </div>
+          <!-- <div class="model-card">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/men-models/SHEZAD.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Shezad
+              </h3>
+            </div>
+          </div>
+          <div class="model-card">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/men-models/LIAM.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Liam
+              </h3>
+            </div>
+          </div>
+          <div class="model-card">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/men-models/JOSH.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Josh
+              </h3>
+            </div>
+          </div>
+          <div class="model-card">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/men-models/FRANKLIN.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Franklin
+              </h3>
+            </div>
+          </div>
+          <div class="model-card">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/men-models/PABLO.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Pablo
+              </h3>
+            </div>
+          </div>
+          <div class="model-card">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/men-models/scott.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Scott
+              </h3>
+            </div>
+          </div> -->
+        </div>
+
+        <div
+          id="kids"
+          class="model-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 hidden"
+        >
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Azaria',
+                'Kids',
+                {
+                  Height: '5 ft 3 in',
+                  Weight: '92 lbs',
+                  Bust: '23B',
+                  Hip: '26',
+                  'Hair Color': 'Black',
+                  'Eye Color': 'Brown',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/kids/AZARIA.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Azaria
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Eldina',
+                'Kids',
+                {
+                  Height: '4 ft 4 inch',
+                  'Shoe Size': '(US SIZE): 2',
+                  'Hair Color': 'brown',
+                  'Eye Color': 'blue',
+                  'Tshirt size': 'Medium 7/8',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/kids/kid-2.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Eldina
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Jack',
+                'Kids',
+                {
+                  Height: '76 cm',
+                  'Shoe Size': '(US SIZE): 6.5',
+                  'Hair Color': 'brown',
+                  'Eye Color': 'blue',
+                  'Tshirt size': '28-24 months',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/kids/kid-5.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Jack
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Rebekah',
+                'Kids',
+                {
+                  Height: '40 inches',
+                  'Tshirt size': '4-5 years old',
+                  'Eye Color': 'brown',
+                  'Shoe Size': '(US SIZE): 9',
+                  'Hair Color': 'dark brown',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/kids/kid-7.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Rebekah
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Zolton',
+                'Kids',
+                {
+                  Height: '110 cm',
+                  'Tshirt size': '6',
+                  'Eye Color': 'brown',
+                  'Shoe Size': '(US SIZE): 11',
+                  'Hair Color': 'dark brown',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/kids/kid-8.jpg"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Zolton
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            onclick="
+              viewSizing(
+                'Betty',
+                'Kids',
+                {
+                  Height: '97 cm 3ft2',
+                  'Tshirt size': '6-7',
+                  'Eye Color': 'brown',
+                  'Shoe Size': '(US SIZE): 12',
+                  'Hair Color': 'black',
+                },
+                this,
+              )
+            "
+          >
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/assets/kids/betty.JPG"
+              alt="Model"
+              class="w-full h-full object-cover object-top"
+            />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">
+                Betty
+              </h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            data-images='["/assets/kids/Elle.jpg","/assets/kids/Elle-1.jpg","/assets/kids/Elle-2.jpg"]'
+            onclick="viewSizing('Elle','Kids',{Height:'5`4',Chest:'32&quot;',Waist:'26&quot;',Hips:'31&quot;','Shoe Size':'6','Hair Color':'Blue','Eye Color':'Blonde'},this)"
+          >
+            <img loading="lazy" decoding="async" src="/assets/kids/Elle.jpg" alt="Model" class="w-full h-full object-cover object-top" />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">Elle</h3>
+            </div>
+          </div>
+          <div
+            class="model-card"
+            data-images='["/assets/kids/Kalina.JPEG","/assets/kids/Kalina-1.JPEG","/assets/kids/Kalina-2.JPEG","/assets/kids/Kalina-3.JPEG"]'
+            onclick="viewSizing('Kalina','Kids',{Height:'5ft 5in',Chest:'32B&quot;',Waist:'25&quot;',Hips:'31&quot;','Shoe Size':'8.5','Hair Color':'Blue/Green','Eye Color':'Dark Brown'},this)"
+          >
+            <img loading="lazy" decoding="async" src="/assets/kids/Kalina.JPEG" alt="Model" class="w-full h-full object-cover object-top" />
+            <div class="model-overlay"></div>
+            <div class="model-info">
+              <h3 class="font-serif text-2xl font-bold text-white mb-1">Kalina</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12 border-t border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <a href="index.html" class="block mb-6"
+          ><img
+            loading="lazy"
+            decoding="async"
+            src="/assets/others/logo.png"
+            alt="M Models"
+            class="max-h-16 w-auto object-contain mx-auto"
+        /></a>
+        <p class="text-gray-400 text-xs">
+          © 2026 M Models Global. All rights reserved. •
+          <a
+            href="privacy-policy.html"
+            class="hover:text-primary transition-colors"
+            >Privacy Policy</a
+          >
+        </p>
+      </div>
+    </footer>
+    <script>
+      var sliderImages = [];
+      var sliderIndex = 0;
+
+      function viewSizing(name, cat, measurements, el) {
+        // Get images: from data-images attribute or fallback to card image
+        var imagesAttr = $(el).attr("data-images");
+        if (imagesAttr) {
+          sliderImages = JSON.parse(imagesAttr);
+        } else {
+          sliderImages = [$(el).find("img").attr("src")];
+        }
+        sliderIndex = 0;
+        $("#modalImg").attr("src", sliderImages[0]);
+        $("#modalName").text(name);
+        $("#modalCategory").text(cat);
+
+        // Show/hide slider nav
+        if (sliderImages.length > 1) {
+          $("#sliderPrev, #sliderNext").show();
+          var dotsHtml = "";
+          for (var i = 0; i < sliderImages.length; i++) {
+            dotsHtml +=
+              '<button class="slider-dot' +
+              (i === 0 ? " active" : "") +
+              '" data-idx="' +
+              i +
+              '"></button>';
+          }
+          $("#sliderDots").html(dotsHtml).show();
+        } else {
+          $("#sliderPrev, #sliderNext").hide();
+          $("#sliderDots").hide();
+        }
+
+        let html = "";
+        for (let key in measurements) {
+          html += `<div class="m-item"><p class="m-label">${key}</p><p class="m-val">${measurements[key]}</p></div>`;
+        }
+        $("#modalMeasurements").html(html);
+        $("#modelModal").css("display", "flex").hide().fadeIn(300);
+        $("body").css("overflow", "hidden");
+      }
+
+      function goToSlide(idx) {
+        if (idx < 0) idx = sliderImages.length - 1;
+        if (idx >= sliderImages.length) idx = 0;
+        sliderIndex = idx;
+        var $img = $('#modalImg');
+        $img.css('opacity', 0);
+        var preload = new Image();
+        preload.onload = function() {
+          $img.attr('src', sliderImages[sliderIndex]);
+          $img.css('opacity', 1);
+        };
+        preload.src = sliderImages[sliderIndex];
+        $('.slider-dot').removeClass('active');
+        $('.slider-dot[data-idx="' + sliderIndex + '"]').addClass('active');
+      }
+
+      function closeModel() {
+        $("#modelModal").fadeOut(200, function () {
+          $(this).css("display", "none");
+        });
+        $("body").css("overflow", "auto");
+      }
+
+      $(document).ready(function () {
+        // Fetch dynamic models
+        $.get('/includes/get-models.php', function(res) {
+          if (res && res.status === 'success' && res.data) {
+            res.data.forEach(function(m) {
+              var imagesAttr = JSON.stringify(m.images || []).replace(/'/g, '&#39;');
+              var measAttr = JSON.stringify(m.measurements || {}).replace(/'/g, '&#39;');
+              var catId = m.category.toLowerCase();
+              var firstImg = m.images && m.images.length > 0 ? m.images[0] : '';
+              
+              var cardHtml = '<div class="model-card" data-images=\'' + imagesAttr + '\' onclick=\'viewSizing("' + m.name + '", "' + m.category + '", ' + measAttr + ', this)\'>' +
+                '<img loading="lazy" decoding="async" src="' + firstImg + '" alt="Model" class="w-full h-full object-cover object-top" />' +
+                '<div class="model-overlay"></div>' +
+                '<div class="model-info">' +
+                  '<h3 class="font-serif text-2xl font-bold text-white mb-1">' + m.name + '</h3>' +
+                '</div>' +
+              '</div>';
+              
+              if ($('#' + catId).length) {
+                  $('#' + catId).prepend(cardHtml);
+              }
+            });
+          }
+        });
+
+        $(".close-modal").click(function () {
+          closeModel();
+        });
+        $("#modelModal").click(function (e) {
+          if (e.target === this) closeModel();
+        });
+        $("#sliderPrev").click(function (e) {
+          e.stopPropagation();
+          goToSlide(sliderIndex - 1);
+        });
+        $("#sliderNext").click(function (e) {
+          e.stopPropagation();
+          goToSlide(sliderIndex + 1);
+        });
+        $(document).on("click", ".slider-dot", function (e) {
+          e.stopPropagation();
+          goToSlide($(this).data("idx"));
+        });
+
+        $(".filter-btn").click(function (e) {
+          e.preventDefault();
+          $(".filter-btn")
+            .removeClass("text-primary border-b-2 border-primary")
+            .addClass("text-gray-400 hover:text-gray-900 transition");
+          $(this)
+            .addClass("text-primary border-b-2 border-primary")
+            .removeClass("text-gray-400 hover:text-gray-900 transition");
+          const target = $(this).data("target");
+          $(".model-grid").addClass("hidden");
+          $("#" + target).removeClass("hidden");
+          $("#" + target + " .model-card")
+            .css({ opacity: 0, marginTop: "20px" })
+            .animate({ opacity: 1, marginTop: "0px" }, 400);
+        });
+
+        $(document).keydown(function (e) {
+          if (e.keyCode === 27) closeModel();
+          if (e.keyCode === 37) goToSlide(sliderIndex - 1);
+          if (e.keyCode === 39) goToSlide(sliderIndex + 1);
+        });
+      });
+    </script>
+    <!-- Global JavaScript -->
+    <script src="/assets/main.js"></script>
+  </body>
+</html>

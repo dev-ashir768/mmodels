@@ -169,6 +169,25 @@ if (isset($_POST['action'])) {
 // Fetch News Data
 $news_articles = $pdo->query("SELECT * FROM news ORDER BY news_date DESC")->fetchAll();
 
+// Models Management Logic
+if (isset($_POST['action'])) {
+    if ($_POST['action'] === 'delete_model') {
+        $id = (int)$_POST['model_id'];
+        $stmt = $pdo->prepare("DELETE FROM models WHERE id = ?");
+        $stmt->execute([$id]);
+        header('Location: index.php?tab=models');
+        exit;
+    }
+}
+
+// Fetch Models Data
+$models_data = [];
+try {
+    $models_data = $pdo->query("SELECT * FROM models ORDER BY created_at DESC")->fetchAll();
+} catch (PDOException $e) {
+    // ignore if table doesn't exist yet
+}
+
 
 // Data Processing - Fetch from Database
 $all_data = [];
@@ -338,6 +357,11 @@ try {
                 class="side-btn flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
                 <i class="fas fa-newspaper w-5"></i>
                 <span class="text-sm font-semibold">News Management</span>
+            </a>
+            <a href="javascript:void(0)" onclick="switchTab('models')" id="side_btn_models"
+                class="side-btn flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition">
+                <i class="fas fa-users w-5"></i>
+                <span class="text-sm font-semibold">Models Management</span>
             </a>
         </nav>        <div class="p-6 border-t border-white/10">
             <a href="?logout=1"
@@ -637,6 +661,81 @@ try {
                         </table>
                     </div>
                 </div>
+
+                <!-- Models Management Tab -->
+                <div id="tab_content_models" class="tab-content hidden h-full flex flex-col p-8">
+                    <div class="flex justify-between items-center mb-8">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-900">Models Portfolio</h2>
+                            <p class="text-sm text-gray-500">Manage dynamic models appearing on the portfolio page</p>
+                        </div>
+                        <a href="models-editor.php" class="bg-primary text-white px-6 py-3 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-black transition shadow-lg shadow-[#C50A76]/20 flex items-center gap-2">
+                            <i class="fas fa-plus"></i> Add Model
+                        </a>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table id="modelsTable" class="w-full text-sm min-w-[1000px]">
+                            <thead class="text-gray-400 uppercase text-[10px] font-bold tracking-[0.2em] bg-gray-50/50">
+                                <tr>
+                                    <th class="px-6 py-5 text-left">Photo</th>
+                                    <th class="px-6 py-5 text-left">Name</th>
+                                    <th class="px-6 py-5 text-left">Category</th>
+                                    <th class="px-6 py-5 text-left">Measurements</th>
+                                    <th class="px-6 py-5 text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <?php foreach ($models_data as $model): 
+                                    $images = json_decode($model['images'], true);
+                                    $firstImage = (!empty($images) && isset($images[0])) ? htmlspecialchars($images[0]) : '';
+                                    $measurements = json_decode($model['measurements'], true);
+                                    $measurementsStr = '';
+                                    if ($measurements) {
+                                        $mList = [];
+                                        foreach ($measurements as $k => $v) {
+                                            $mList[] = "$k: $v";
+                                        }
+                                        $measurementsStr = implode(', ', $mList);
+                                    }
+                                ?>
+                                    <tr class="hover:bg-gray-50/50 transition-colors">
+                                        <td class="px-6 py-4">
+                                            <?php if ($firstImage): ?>
+                                                <img src="<?php echo $firstImage; ?>" alt="Model" class="w-12 h-12 rounded-lg object-cover border border-gray-100">
+                                            <?php else: ?>
+                                                <div class="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400"><i class="fas fa-user"></i></div>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="px-6 py-4 font-bold text-gray-900"><?php echo htmlspecialchars($model['name']); ?></td>
+                                        <td class="px-6 py-4">
+                                            <span class="px-3 py-1 bg-pink-50 text-[#C50A76] rounded-full text-[10px] font-bold uppercase tracking-tighter">
+                                                <?php echo htmlspecialchars($model['category']); ?>
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 text-xs text-gray-500 max-w-xs truncate" title="<?php echo htmlspecialchars($measurementsStr); ?>">
+                                            <?php echo htmlspecialchars($measurementsStr); ?>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex justify-center gap-2">
+                                                <a href="models-editor.php?id=<?php echo $model['id']; ?>" class="w-8 h-8 flex items-center justify-center rounded-lg bg-blue-50 text-blue-400 hover:bg-blue-500 hover:text-white transition-all shadow-sm">
+                                                    <i class="fas fa-edit text-xs"></i>
+                                                </a>
+                                                <form method="POST" id="deleteModel_<?php echo $model['id']; ?>" class="inline">
+                                                    <input type="hidden" name="action" value="delete_model">
+                                                    <input type="hidden" name="model_id" value="<?php echo $model['id']; ?>">
+                                                    <button type="button" onclick="confirmDelete('deleteModel_<?php echo $model['id']; ?>')" class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-50 text-red-400 hover:bg-red-500 hover:text-white transition-all shadow-sm">
+                                                        <i class="fas fa-trash-alt text-xs"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -696,6 +795,14 @@ try {
                 pageLength: 10,
                 dom: '<"flex justify-between mb-4"f>rtip',
                 language: { search: "", searchPlaceholder: "Search news articles..." }
+            });
+
+            // Initialize Models Table
+            tables['models'] = $('#modelsTable').DataTable({
+                order: [[1, 'asc']], // Order by name
+                pageLength: 10,
+                dom: '<"flex justify-between mb-4"f>rtip',
+                language: { search: "", searchPlaceholder: "Search models..." }
             });
 
             // Date picker for news

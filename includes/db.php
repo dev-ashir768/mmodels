@@ -42,6 +42,19 @@ try {
 
     $pdo->exec($createNewsTable);
 
+    // Create models table if it doesn't exist
+    $createModelsTable = "CREATE TABLE IF NOT EXISTS models (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        category VARCHAR(50) NOT NULL,
+        measurements LONGTEXT,
+        images LONGTEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX (category)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+
+    $pdo->exec($createModelsTable);
+
 } catch (PDOException $e) {
     // Log error and stop if connection fails
     error_log("Database Connection Failed: " . $e->getMessage());
