@@ -241,12 +241,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             container.appendChild(row);
         }
 
-        function previewFiles(input) {
+        function compressImage(file, maxWidth, maxHeight, quality) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = event => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        let width = img.width;
+                        let height = img.height;
+                        if (width > height) {
+                            if (width > maxWidth) {
+                                height = Math.round((height * maxWidth) / width);
+                                width = maxWidth;
+                            }
+                        } else {
+                            if (height > maxHeight) {
+                                width = Math.round((width * maxHeight) / height);
+                                height = maxHeight;
+                            }
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        canvas.toBlob((blob) => {
+                            resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
+                        }, 'image/jpeg', quality);
+                    };
+                };
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        async function previewFiles(input) {
             const text = document.getElementById('file_count_text');
             const previewContainer = document.getElementById('new_images_preview');
             previewContainer.innerHTML = ''; // Clear old previews
             
             if (input.files && input.files.length > 0) {
+                text.innerHTML = '<span class="text-primary font-bold"><i class="fas fa-spinner fa-spin mr-2"></i>Compressing large images...</span>';
+                
+                try {
+                    const dt = new DataTransfer();
+                    for (let i = 0; i < input.files.length; i++) {
+                        let file = input.files[i];
+                        if (file.type.match(/image.*/) && file.size > 2 * 1024 * 1024) { // Compress if > 2MB
+                            file = await compressImage(file, 1920, 1920, 0.85);
+                        }
+                        dt.items.add(file);
+                    }
+                    input.files = dt.files;
+                } catch(e) {
+                    console.error("Compression failed", e);
+                }
+
                 // Validation logic
                 let totalSize = 0;
                 const maxSingleFileSize = 5 * 1024 * 1024; // 5MB
