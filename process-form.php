@@ -36,7 +36,7 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
 
     // Attempt 1: SSL on 465
     try {
-        $mail->SMTPDebug = 2;
+        $mail->SMTPDebug = 0;
         $mail->isSMTP();
         $mail->Host = 'smtp.mmodels.ca';
         $mail->SMTPAuth = true;
@@ -119,8 +119,8 @@ function sendEmail($to, $subject, $message, $from_name = 'M Models', $attachment
 }
 
 // Error Reporting for Debugging (Remove in production)
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
