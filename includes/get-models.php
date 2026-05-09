@@ -7,7 +7,7 @@ require 'db.php';
 header('Content-Type: application/json');
 
 try {
-    $stmt = $pdo->query("SELECT * FROM models ORDER BY id DESC");
+    $stmt = $pdo->query("SELECT * FROM models ORDER BY CASE WHEN sequence = 0 THEN 999999 ELSE sequence END ASC, id DESC");
     $models = $stmt->fetchAll();
     
     // Process JSON strings for output

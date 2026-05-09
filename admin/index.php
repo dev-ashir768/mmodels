@@ -183,7 +183,7 @@ if (isset($_POST['action'])) {
 // Fetch Models Data
 $models_data = [];
 try {
-    $models_data = $pdo->query("SELECT * FROM models ORDER BY created_at DESC")->fetchAll();
+    $models_data = $pdo->query("SELECT * FROM models ORDER BY CASE WHEN sequence = 0 THEN 999999 ELSE sequence END ASC, created_at DESC")->fetchAll();
 } catch (PDOException $e) {
     // ignore if table doesn't exist yet
 }
@@ -681,6 +681,7 @@ try {
                                     <th class="px-6 py-5 text-left">Photo</th>
                                     <th class="px-6 py-5 text-left">Name</th>
                                     <th class="px-6 py-5 text-left">Category</th>
+                                    <th class="px-6 py-5 text-center">Sequence</th>
                                     <th class="px-6 py-5 text-left">Measurements</th>
                                     <th class="px-6 py-5 text-center">Actions</th>
                                 </tr>
@@ -712,6 +713,9 @@ try {
                                             <span class="px-3 py-1 bg-pink-50 text-[#C50A76] rounded-full text-[10px] font-bold uppercase tracking-tighter">
                                                 <?php echo htmlspecialchars($model['category']); ?>
                                             </span>
+                                        </td>
+                                        <td class="px-6 py-4 text-center font-bold text-primary">
+                                            <?php echo (int)($model['sequence'] ?? 0); ?>
                                         </td>
                                         <td class="px-6 py-4 text-xs text-gray-500 max-w-xs truncate" title="<?php echo htmlspecialchars($measurementsStr); ?>">
                                             <?php echo htmlspecialchars($measurementsStr); ?>

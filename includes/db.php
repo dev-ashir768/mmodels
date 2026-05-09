@@ -55,6 +55,13 @@ try {
 
     $pdo->exec($createModelsTable);
 
+    // Add sequence column if it doesn't exist
+    try {
+        $pdo->exec("ALTER TABLE models ADD COLUMN sequence INT DEFAULT 0");
+    } catch (PDOException $e) {
+        // Ignore error if column already exists
+    }
+
 } catch (PDOException $e) {
     // Log error and stop if connection fails
     error_log("Database Connection Failed: " . $e->getMessage());
