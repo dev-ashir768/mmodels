@@ -157,6 +157,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $timestamp = date('Y-m-d H:i:s');
     $data = $_POST;
     unset($data['form_type']);
+    if (isset($data['area_code'])) {
+        unset($data['area_code']);
+    }
 
     // Debug: Log all incoming POST data
     debugLog("=== NEW SUBMISSION START ===");
