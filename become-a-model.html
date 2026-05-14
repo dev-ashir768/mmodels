@@ -425,26 +425,13 @@
                 <label class="form-label"
                   >Name <span class="required">*</span></label
                 >
-                <div class="flex gap-4">
-                  <div class="w-1/2">
-                    <input
-                      type="text"
-                      name="first_name"
-                      required
-                      class="w-full form-input px-4 py-3 text-sm rounded-md"
-                      placeholder="First Name"
-                    />
-                  </div>
-                  <div class="w-1/2">
-                    <input
-                      type="text"
-                      name="last_name"
-                      required
-                      class="w-full form-input px-4 py-3 text-sm rounded-md"
-                      placeholder="Last Name"
-                    />
-                  </div>
-                </div>
+                <input
+                  type="text"
+                  name="full_name"
+                  required
+                  class="w-full form-input px-4 py-3 text-sm rounded-md"
+                  placeholder="Full Name"
+                />
               </div>
 
               <div>
@@ -1031,7 +1018,10 @@
             processData: false,
             contentType: false,
             success: function (response) {
-              if (response.status === 'partial_success' || (response.email_status && !response.email_status.admin)) {
+              if (
+                response.status === "partial_success" ||
+                (response.email_status && !response.email_status.admin)
+              ) {
                 Swal.fire({
                   title: "Partial Success",
                   text: "Your application was saved, but we encountered a temporary issue sending the notification email. Our team will still see your submission in our records.",

@@ -298,7 +298,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $logo_url = $base_url . "/assets/others/logo.png";
 
     // 1. Admin Notification Email
-    $admin_subject = "!! NEW TALENT: " . ($data['first_name'] ?? ($data['firstName'] ?? 'Inquiry')) . " (" . $form_type . ")";
+    $admin_subject = "!! NEW TALENT: " . ($data['full_name'] ?? ($data['first_name'] ?? ($data['firstName'] ?? 'Inquiry'))) . " (" . $form_type . ")";
 
     // Build Admin Email Body (Note: $details_html and $logo_url are already prepared)
     $admin_email_content = "
@@ -372,7 +372,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $applicant_error = "";
 
     if (!empty($applicant_email)) {
-        $first_name = $data['first_name'] ?? ($data['firstName'] ?? 'there');
+        $first_name = $data['full_name'] ?? ($data['first_name'] ?? ($data['firstName'] ?? 'there'));
         $greet_subject = "Thank you for applying to M Models!";
 
         $greet_email_content = "
